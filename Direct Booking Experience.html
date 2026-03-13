@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luar Properties — Direct Booking Demo</title>
+<style>
+  :root {
+    --dark-blue: #1B2A4A;
+    --terracotta: #C4613A;
+    --blush: #E8B4B8;
+    --blush-light: #F5DFE1;
+    --cream: #FBF7F4;
+    --white: #FFFFFF;
+    --gray-100: #F7F7F7;
+    --gray-200: #EBEBEB;
+    --gray-300: #DDDDDD;
+    --gray-400: #B0B0B0;
+    --gray-500: #717171;
+    --gray-600: #484848;
+    --gray-800: #222222;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.08);
+    --shadow-md: 0 2px 8px rgba(0,0,0,0.12);
+    --shadow-lg: 0 4px 16px rgba(0,0,0,0.16);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: var(--gray-800);
+    background: var(--white);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .screen { display: none; min-height: 100vh; }
+  .screen.active { display: block; }
+
+  /* ========== NAVIGATION ========== */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 0 24px;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    font-size: 22px; font-weight: 700;
+    color: var(--dark-blue);
+    letter-spacing: -0.5px;
+    cursor: pointer;
+  }
+  .logo span { color: var(--blush); }
+  .nav-links { display: flex; gap: 24px; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: var(--gray-600);
+    font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--dark-blue); }
+
+  /* ========== HOME PAGE ========== */
+  .hero {
+    background: linear-gradient(135deg, var(--dark-blue) 0%, #2C3E6B 100%);
+    padding: 80px 24px 60px;
+    text-align: center; color: var(--white);
+  }
+  .hero h1 {
+    font-size: 42px; font-weight: 700; margin-bottom: 16px;
+    letter-spacing: -1px;
+  }
+  .hero p {
+    font-size: 18px; opacity: 0.85; max-width: 560px; margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+  .hero-badge {
+    display: inline-block; background: var(--blush);
+    color: var(--dark-blue); font-size: 13px; font-weight: 600;
+    padding: 6px 16px; border-radius: 20px; letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .properties-section {
+    max-width: 1000px; margin: -40px auto 60px; padding: 0 24px;
+    position: relative; z-index: 10;
+  }
+  .properties-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  }
+  @media (max-width: 700px) {
+    .properties-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 28px; }
+    .hero p { font-size: 16px; }
+    .gallery-grid { grid-template-columns: 1fr !important; }
+    .detail-grid { grid-template-columns: 1fr !important; }
+  }
+
+  .property-card {
+    background: var(--white); border-radius: var(--radius);
+    box-shadow: var(--shadow-md); overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer; position: relative;
+  }
+  .property-card:hover {
+    transform: translateY(-4px); box-shadow: var(--shadow-lg);
+  }
+  .property-card.coming-soon { cursor: default; }
+  .property-card.coming-soon:hover { transform: none; box-shadow: var(--shadow-md); }
+
+  .card-img {
+    width: 100%; height: 220px; object-fit: cover; display: block;
+  }
+  .coming-soon-badge {
+    position: absolute; top: 16px; left: 16px;
+    background: var(--dark-blue); color: var(--white);
+    font-size: 12px; font-weight: 600; padding: 4px 12px;
+    border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .card-body { padding: 20px; }
+  .card-body h3 {
+    font-size: 18px; font-weight: 600; margin-bottom: 6px;
+    color: var(--gray-800);
+  }
+  .card-body .card-location {
+    font-size: 14px; color: var(--gray-500); margin-bottom: 12px;
+  }
+  .card-specs {
+    display: flex; gap: 16px; font-size: 13px; color: var(--gray-500);
+    margin-bottom: 12px;
+  }
+  .card-specs span { display: flex; align-items: center; gap: 4px; }
+  .card-price {
+    font-size: 16px; font-weight: 600; color: var(--dark-blue);
+  }
+  .card-price .accent { color: var(--blush); }
+  .card-price small { font-weight: 400; color: var(--gray-500); }
+
+  /* ========== VALUE PROPOSITION ========== */
+  .value-section {
+    background: var(--cream); padding: 60px 24px; text-align: center;
+  }
+  .value-section h2 {
+    font-size: 28px; font-weight: 700; color: var(--dark-blue);
+    margin-bottom: 12px; letter-spacing: -0.5px;
+  }
+  .value-section p {
+    font-size: 16px; color: var(--gray-500); max-width: 500px;
+    margin: 0 auto 40px;
+  }
+  .value-grid {
+    display: flex; gap: 32px; max-width: 800px; margin: 0 auto;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .value-item {
+    flex: 1; min-width: 200px; text-align: center;
+  }
+  .value-icon {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--blush-light); display: flex; align-items: center;
+    justify-content: center; margin: 0 auto 16px;
+    font-size: 24px;
+  }
+  .value-item h4 {
+    font-size: 16px; font-weight: 600; margin-bottom: 6px;
+    color: var(--dark-blue);
+  }
+  .value-item p { font-size: 14px; color: var(--gray-500); margin: 0; }
+
+  /* ========== FOOTER ========== */
+  .footer {
+    background: var(--dark-blue); color: rgba(255,255,255,0.7);
+    padding: 40px 24px; text-align: center; font-size: 14px;
+  }
+  .footer .logo { color: var(--white); margin-bottom: 12px; }
+  .footer .logo span { color: var(--blush); }
+
+  /* ========== PROPERTY DETAIL ========== */
+  .detail-header { padding: 24px 24px 0; max-width: 1100px; margin: 0 auto; }
+  .detail-header h1 {
+    font-size: 28px; font-weight: 700; margin-bottom: 4px;
+  }
+  .detail-header .detail-location {
+    font-size: 15px; color: var(--gray-500); margin-bottom: 16px;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 200px 200px;
+    gap: 8px;
+    max-width: 1100px; margin: 0 auto 32px; padding: 0 24px;
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .gallery-grid img {
+    width: 100%; height: 100%; object-fit: cover; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .gallery-grid img:hover { opacity: 0.9; }
+  .gallery-grid img:first-child { grid-row: 1 / 3; }
+  .gallery-more {
+    position: relative; display: flex; align-items: center;
+    justify-content: center;
+  }
+  .gallery-more img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-more-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.4); display: flex; align-items: center;
+    justify-content: center; color: white; font-weight: 600;
+    font-size: 14px; cursor: pointer;
+  }
+
+  .detail-grid {
+    display: grid; grid-template-columns: 1fr 380px; gap: 40px;
+    max-width: 1100px; margin: 0 auto; padding: 0 24px 60px;
+  }
+
+  .detail-info h2 {
+    font-size: 22px; font-weight: 600; margin-bottom: 4px;
+  }
+  .detail-specs {
+    font-size: 15px; color: var(--gray-500); margin-bottom: 20px;
+    padding-bottom: 20px; border-bottom: 1px solid var(--gray-200);
+  }
+
+  .host-row {
+    display: flex; align-items: center; gap: 12px;
+    padding-bottom: 20px; border-bottom: 1px solid var(--gray-200);
+    margin-bottom: 20px;
+  }
+  .host-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--blush-light); display: flex; align-items: center;
+    justify-content: center; font-size: 18px; font-weight: 600;
+    color: var(--dark-blue);
+  }
+  .host-info .host-name { font-weight: 600; font-size: 15px; }
+  .host-info .host-badge { font-size: 13px; color: var(--gray-500); }
+
+  .highlight-row {
+    display: flex; gap: 12px; align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .highlight-icon {
+    width: 32px; height: 32px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .highlight-text h4 { font-size: 14px; font-weight: 600; }
+  .highlight-text p { font-size: 13px; color: var(--gray-500); }
+
+  .description {
+    padding: 20px 0; border-top: 1px solid var(--gray-200);
+    margin-top: 8px;
+  }
+  .description h3 {
+    font-size: 18px; font-weight: 600; margin-bottom: 12px;
+  }
+  .description p {
+    font-size: 15px; color: var(--gray-600); line-height: 1.6;
+  }
+
+  .amenities-section {
+    padding: 20px 0; border-top: 1px solid var(--gray-200);
+  }
+  .amenities-section h3 {
+    font-size: 18px; font-weight: 600; margin-bottom: 16px;
+  }
+  .amenities-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .amenity-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; color: var(--gray-600);
+  }
+  .amenity-icon { font-size: 18px; width: 24px; text-align: center; }
+
+  /* ========== BOOKING CARD ========== */
+  .booking-card {
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: var(--radius); padding: 24px;
+    box-shadow: var(--shadow-md); position: sticky; top: 80px;
+  }
+  .booking-price-display {
+    font-size: 22px; font-weight: 600; margin-bottom: 20px;
+  }
+  .booking-price-display small {
+    font-size: 15px; font-weight: 400; color: var(--gray-500);
+  }
+
+  .date-inputs {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--gray-300); border-radius: var(--radius-sm);
+    margin-bottom: 12px; overflow: hidden;
+  }
+  .date-input {
+    padding: 10px 12px; cursor: pointer; transition: background 0.2s;
+  }
+  .date-input:first-child { border-right: 1px solid var(--gray-300); }
+  .date-input:hover { background: var(--gray-100); }
+  .date-input label {
+    display: block; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-800);
+  }
+  .date-input span {
+    font-size: 14px; color: var(--gray-400);
+  }
+  .date-input span.filled { color: var(--gray-800); }
+
+  .guests-input {
+    border: 1px solid var(--gray-300); border-radius: var(--radius-sm);
+    padding: 10px 12px; margin-bottom: 16px;
+  }
+  .guests-input label {
+    display: block; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-800);
+  }
+  .guests-input span { font-size: 14px; color: var(--gray-800); }
+
+  .btn-book {
+    width: 100%; padding: 14px; border: none; border-radius: var(--radius-sm);
+    background: var(--dark-blue);
+    color: var(--white); font-size: 16px; font-weight: 600;
+    cursor: pointer; transition: opacity 0.2s;
+  }
+  .btn-book:hover { opacity: 0.9; }
+  .btn-book:disabled {
+    background: var(--gray-300); color: var(--gray-500); cursor: not-allowed;
+  }
+
+  .price-breakdown {
+    margin-top: 20px; padding-top: 20px;
+    border-top: 1px solid var(--gray-200);
+  }
+  .price-line {
+    display: flex; justify-content: space-between;
+    font-size: 14px; margin-bottom: 10px; color: var(--gray-600);
+  }
+  .price-line.total {
+    font-weight: 600; font-size: 16px; color: var(--gray-800);
+    padding-top: 12px; border-top: 1px solid var(--gray-200);
+    margin-top: 4px;
+  }
+  .price-line.discount {
+    color: #2E7D32; font-weight: 500;
+  }
+
+  /* ========== MINI CALENDAR ========== */
+  .calendar-section {
+    padding: 20px 0; border-top: 1px solid var(--gray-200);
+  }
+  .calendar-section h3 {
+    font-size: 18px; font-weight: 600; margin-bottom: 16px;
+  }
+  .mini-calendar {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 2px; max-width: 350px;
+  }
+  .cal-header {
+    font-size: 12px; font-weight: 600; text-align: center;
+    padding: 8px 0; color: var(--gray-500);
+  }
+  .cal-day {
+    text-align: center; padding: 10px 0; font-size: 14px;
+    border-radius: 50%; cursor: pointer; transition: all 0.15s;
+    position: relative;
+  }
+  .cal-day:hover:not(.blocked):not(.empty) {
+    background: var(--gray-100);
+  }
+  .cal-day.blocked {
+    color: var(--gray-300); text-decoration: line-through;
+    cursor: not-allowed;
+  }
+  .cal-day.selected {
+    background: var(--dark-blue); color: var(--white);
+  }
+  .cal-day.in-range {
+    background: var(--blush-light); color: var(--dark-blue);
+    border-radius: 0;
+  }
+  .cal-day.empty { cursor: default; }
+  .cal-month-label {
+    grid-column: 1 / -1; font-size: 16px; font-weight: 600;
+    padding: 12px 0 8px; text-align: center;
+  }
+
+  /* ========== CHECKOUT SCREEN ========== */
+  .checkout-container {
+    max-width: 900px; margin: 0 auto; padding: 40px 24px;
+  }
+  .checkout-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; color: var(--gray-500); text-decoration: none;
+    margin-bottom: 24px; cursor: pointer;
+  }
+  .checkout-back:hover { color: var(--gray-800); }
+  .checkout-container h1 {
+    font-size: 28px; font-weight: 700; margin-bottom: 32px;
+  }
+  .checkout-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+  }
+  @media (max-width: 700px) {
+    .checkout-grid { grid-template-columns: 1fr; }
+  }
+
+  .checkout-summary {
+    background: var(--gray-100); border-radius: var(--radius);
+    padding: 24px;
+  }
+  .checkout-property {
+    display: flex; gap: 16px; margin-bottom: 20px;
+    padding-bottom: 20px; border-bottom: 1px solid var(--gray-200);
+  }
+  .checkout-property img {
+    width: 120px; height: 80px; object-fit: cover;
+    border-radius: var(--radius-sm);
+  }
+  .checkout-property-info h4 { font-size: 15px; font-weight: 600; }
+  .checkout-property-info p { font-size: 13px; color: var(--gray-500); }
+
+  .stripe-mock {
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: var(--radius); padding: 24px;
+  }
+  .stripe-header {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 24px;
+  }
+  .stripe-logo {
+    font-weight: 700; font-size: 20px; color: #635BFF;
+  }
+  .stripe-field {
+    margin-bottom: 16px;
+  }
+  .stripe-field label {
+    display: block; font-size: 13px; font-weight: 500;
+    margin-bottom: 6px; color: var(--gray-600);
+  }
+  .stripe-field input {
+    width: 100%; padding: 10px 12px; border: 1px solid var(--gray-300);
+    border-radius: 6px; font-size: 14px; background: var(--white);
+    color: var(--gray-400);
+  }
+  .stripe-field .card-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+  }
+  .btn-pay {
+    width: 100%; padding: 14px; border: none; border-radius: 6px;
+    background: #635BFF; color: var(--white);
+    font-size: 16px; font-weight: 600; cursor: pointer;
+    transition: opacity 0.2s; margin-top: 8px;
+  }
+  .btn-pay:hover { opacity: 0.9; }
+
+  /* ========== CONFIRMATION SCREEN ========== */
+  .confirmation-container {
+    max-width: 640px; margin: 0 auto; padding: 60px 24px; text-align: center;
+  }
+  .confirm-check {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: #E8F5E9; display: flex; align-items: center;
+    justify-content: center; margin: 0 auto 24px;
+    font-size: 36px; color: #2E7D32;
+  }
+  .confirmation-container h1 {
+    font-size: 28px; font-weight: 700; margin-bottom: 8px;
+  }
+  .confirmation-container .confirm-subtitle {
+    font-size: 16px; color: var(--gray-500); margin-bottom: 32px;
+  }
+
+  .confirm-card {
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: var(--radius); overflow: hidden; text-align: left;
+    box-shadow: var(--shadow-md);
+  }
+  .confirm-card-img {
+    width: 100%; height: 200px; object-fit: cover;
+  }
+  .confirm-card-body { padding: 24px; }
+  .confirm-card-body h3 {
+    font-size: 18px; font-weight: 600; margin-bottom: 4px;
+  }
+  .confirm-card-body .confirm-address {
+    font-size: 14px; color: var(--gray-500); margin-bottom: 20px;
+  }
+  .confirm-dates {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin-bottom: 20px; padding-bottom: 20px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .confirm-date-col label {
+    display: block; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-400);
+    margin-bottom: 4px;
+  }
+  .confirm-date-col span {
+    font-size: 15px; font-weight: 500;
+  }
+
+  .confirm-receipt h4 {
+    font-size: 15px; font-weight: 600; margin-bottom: 12px;
+  }
+  .confirm-receipt .price-line { margin-bottom: 8px; }
+
+  .refund-notice {
+    background: #FFF3E0; border-radius: var(--radius-sm);
+    padding: 12px 16px; margin-top: 20px;
+    font-size: 13px; color: #E65100;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+
+  .btn-home {
+    display: inline-block; margin-top: 32px;
+    padding: 14px 40px; background: var(--dark-blue);
+    color: var(--blush); border: none; border-radius: var(--radius-sm);
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    text-decoration: none; transition: opacity 0.2s;
+  }
+  .btn-home:hover { opacity: 0.9; }
+
+  /* ========== PHOTO MODAL ========== */
+  .photo-modal {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.92);
+    align-items: center; justify-content: center;
+    flex-direction: column;
+  }
+  .photo-modal.open { display: flex; }
+  .photo-modal img {
+    max-width: 90%; max-height: 80vh; object-fit: contain;
+    border-radius: 8px;
+  }
+  .photo-modal-close {
+    position: absolute; top: 20px; right: 24px;
+    color: white; font-size: 28px; cursor: pointer;
+    background: rgba(255,255,255,0.15); width: 40px; height: 40px;
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; border: none;
+  }
+  .photo-modal-nav {
+    display: flex; gap: 16px; margin-top: 16px;
+  }
+  .photo-modal-nav button {
+    background: rgba(255,255,255,0.15); color: white; border: none;
+    padding: 10px 20px; border-radius: 8px; font-size: 14px;
+    cursor: pointer; font-weight: 500;
+  }
+  .photo-modal-nav button:hover { background: rgba(255,255,255,0.25); }
+  .photo-modal-counter {
+    color: rgba(255,255,255,0.7); font-size: 14px; margin-top: 12px;
+  }
+
+  /* ========== CONTACT PAGE ========== */
+  .contact-hero {
+    background: linear-gradient(135deg, var(--dark-blue) 0%, #2C3E6B 100%);
+    padding: 64px 24px 48px;
+    text-align: center; color: var(--white);
+  }
+  .contact-hero h1 {
+    font-size: 36px; font-weight: 700; margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .contact-hero p {
+    font-size: 17px; opacity: 0.85; max-width: 480px;
+    margin: 0 auto; line-height: 1.6;
+  }
+
+  .contact-form-wrapper {
+    max-width: 580px;
+    margin: -32px auto 0;
+    padding: 0 24px 48px;
+    position: relative; z-index: 10;
+  }
+  .contact-form-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    padding: 36px 32px;
+  }
+  .contact-form-card h2 {
+    font-size: 20px; font-weight: 700; color: var(--dark-blue);
+    margin-bottom: 4px;
+  }
+  .contact-form-card .form-hint {
+    font-size: 14px; color: var(--gray-500); margin-bottom: 28px;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 20px; }
+  .form-row { display: flex; gap: 16px; }
+  .form-row > .form-group { flex: 1; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label {
+    font-size: 13px; font-weight: 600; color: var(--dark-blue);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .form-group input,
+  .form-group textarea {
+    padding: 12px 14px;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    font-size: 15px; font-family: inherit;
+    color: var(--gray-800);
+    background: var(--white);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none; border-color: var(--blush);
+    box-shadow: 0 0 0 3px rgba(232,180,184,0.25);
+  }
+  .form-group textarea { resize: vertical; min-height: 130px; }
+  .btn-send {
+    width: 100%;
+    background: var(--terracotta); color: white;
+    border: none; padding: 16px 28px; border-radius: var(--radius-sm);
+    font-size: 16px; font-weight: 600; cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-send:hover { background: #b3552f; transform: translateY(-1px); }
+  .btn-send:active { transform: translateY(0); }
+
+  .contact-bottom-strip {
+    background: var(--cream); padding: 48px 24px;
+    text-align: center;
+  }
+  .contact-bottom-strip h3 {
+    font-size: 18px; font-weight: 700; color: var(--dark-blue);
+    margin-bottom: 8px;
+  }
+  .contact-bottom-strip .strip-subtitle {
+    font-size: 14px; color: var(--gray-500); margin-bottom: 28px;
+  }
+  .contact-info-row {
+    display: flex; gap: 24px; justify-content: center;
+    flex-wrap: wrap; max-width: 500px; margin: 0 auto;
+  }
+  .contact-info-card {
+    flex: 1; min-width: 200px;
+    background: var(--white);
+    border-radius: var(--radius-sm);
+    padding: 24px 20px;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+  }
+  .contact-info-card .info-icon {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--blush-light);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px; font-size: 22px;
+  }
+  .contact-info-card strong {
+    display: block; font-size: 14px; font-weight: 600;
+    color: var(--dark-blue); margin-bottom: 4px;
+  }
+  .contact-info-card span {
+    font-size: 14px; color: var(--gray-600);
+  }
+
+  .contact-sent {
+    display: none; text-align: center; padding: 60px 24px;
+  }
+  .contact-sent .sent-check {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: #E8F5E9; display: flex; align-items: center;
+    justify-content: center; margin: 0 auto 24px;
+    font-size: 36px; color: #2E7D32;
+  }
+  .contact-sent h2 {
+    font-size: 24px; font-weight: 700; color: var(--dark-blue);
+    margin-bottom: 8px;
+  }
+  .contact-sent p {
+    font-size: 15px; color: var(--gray-500); margin-bottom: 28px;
+    max-width: 400px; margin-left: auto; margin-right: auto;
+  }
+
+  @media (max-width: 540px) {
+    .form-row { flex-direction: column; gap: 20px; }
+    .contact-info-row { flex-direction: column; align-items: center; }
+    .contact-info-card { min-width: 260px; }
+    .contact-form-card { padding: 28px 20px; }
+    .contact-hero h1 { font-size: 28px; }
+  }
+
+  /* Demo badge */
+  .demo-banner {
+    background: var(--dark-blue); color: var(--blush); text-align: center;
+    padding: 8px; font-size: 13px; font-weight: 500;
+  }
+
+  /* House rules */
+  .rules-section {
+    padding: 20px 0; border-top: 1px solid var(--gray-200);
+  }
+  .rules-section h3 {
+    font-size: 18px; font-weight: 600; margin-bottom: 12px;
+  }
+  .rule-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; color: var(--gray-600); margin-bottom: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  ✨ Interactive Demo — Luar Properties Direct Booking Experience
+</div>
+
+<!-- ==================== SCREEN 1: HOME PAGE ==================== -->
+<div class="screen active" id="screen-home">
+  <nav class="nav">
+    <div class="logo" onclick="showScreen('screen-home')">Luar <span>Properties</span></div>
+    <div class="nav-links">
+      <a href="#" onclick="showScreen('screen-home'); return false;">Properties</a>
+      <a href="#" onclick="showScreen('screen-contact'); return false;">Contact</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-badge">Book Direct & Save</div>
+    <h1>Your Home Away<br>From Home in Peoria</h1>
+    <p>Skip the platform fees. Book directly with Luar Properties and save up to 10% on your stay — same great homes, better price.</p>
+  </section>
+
+  <section class="properties-section">
+    <div class="properties-grid">
+      <!-- Property 1 -->
+      <div class="property-card" onclick="showScreen('screen-detail')">
+        <img class="card-img" src="https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/03a9c8c3-e84c-4438-ab4b-8e122f5f8cab.jpeg" alt="Spacious 5 Bed Home">
+        <div class="card-body">
+          <h3>Spacious 5 Bed Home Near Bradley & Hospitals</h3>
+          <div class="card-location">Peoria, Illinois</div>
+          <div class="card-specs">
+            <span>🛏 5 bedrooms</span>
+            <span>🚿 1.5 baths</span>
+            <span>👥 10 guests</span>
+          </div>
+          <div class="card-price">From $95 <small>/ night</small></div>
+        </div>
+      </div>
+
+      <!-- Property 2 — Coming Soon -->
+      <div class="property-card coming-soon">
+        <div class="coming-soon-badge">Coming Soon</div>
+        <img class="card-img" src="https://photos.zillowstatic.com/fp/5123b2bb48507f66d6a99047afa3a65e-cc_ft_960.jpg" alt="Charming Home on Main St">
+        <div class="card-body">
+          <h3>Charming 4 Bed Home Across from Bradley</h3>
+          <div class="card-location">Peoria, Illinois</div>
+          <div class="card-specs">
+            <span>🛏 4 bedrooms</span>
+            <span>🚿 2 baths</span>
+            <span>👥 8 guests</span>
+          </div>
+          <div class="card-price" style="color: var(--gray-400);">Pricing TBD</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="value-section">
+    <h2>Why Book Direct?</h2>
+    <p>Get the same beautiful homes at a better price — no middleman fees.</p>
+    <div class="value-grid">
+      <div class="value-item">
+        <div class="value-icon">💰</div>
+        <h4>Save 10%</h4>
+        <p>No Airbnb service fees. You pay the real price.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">🔒</div>
+        <h4>Secure Payment</h4>
+        <p>Powered by Stripe, the same payment system top brands use.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">📞</div>
+        <h4>Direct Support</h4>
+        <p>Talk to your host directly — no corporate runaround.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="logo">Luar <span>Properties</span></div>
+    <p style="margin-top: 8px;">Peoria, IL · © 2026 Luar Properties. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- ==================== SCREEN 2: PROPERTY DETAIL ==================== -->
+<div class="screen" id="screen-detail">
+  <nav class="nav">
+    <div class="logo" onclick="showScreen('screen-home')">Luar <span>Properties</span></div>
+    <div class="nav-links">
+      <a href="#" onclick="showScreen('screen-home'); return false;">← All Properties</a>
+      <a href="#" onclick="showScreen('screen-contact'); return false;">Contact</a>
+    </div>
+  </nav>
+
+  <div class="detail-header">
+    <h1>Spacious 5 Bed Home Near Bradley & Hospitals</h1>
+    <div class="detail-location">Peoria, Illinois · ★ New</div>
+  </div>
+
+  <!-- Photo Gallery -->
+  <div class="gallery-grid">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/f9f10657-6895-404c-be67-2f04a73a29b7.jpeg" alt="Living room" onclick="openGallery(0)">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/54e6db28-e3da-4d8d-8599-26c9a72c097a.jpeg" alt="Kitchen" onclick="openGallery(1)">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/96cac663-a918-4342-b979-64e4bd9ce67f.jpeg" alt="Bedroom" onclick="openGallery(2)">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/63104944-8987-4064-a324-19dc6cc8742d.jpeg" alt="Dining" onclick="openGallery(3)">
+    <div class="gallery-more" onclick="openGallery(4)">
+      <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/b1528b06-f23d-40ef-9732-a30ee9f11048.jpeg" alt="Bedroom 2">
+      <div class="gallery-more-overlay">Show all photos</div>
+    </div>
+  </div>
+
+  <div class="detail-grid">
+    <div class="detail-info">
+      <h2>Entire home hosted by Luar Properties</h2>
+      <div class="detail-specs">10 guests · 5 bedrooms · 5 beds · 1.5 baths</div>
+
+      <div class="host-row">
+        <div class="host-avatar">LP</div>
+        <div class="host-info">
+          <div class="host-name">Hosted by Luar Properties</div>
+          <div class="host-badge">Responds within an hour</div>
+        </div>
+      </div>
+
+      <div class="highlight-row">
+        <div class="highlight-icon">🔑</div>
+        <div class="highlight-text">
+          <h4>Self check-in</h4>
+          <p>Check yourself in with the keypad.</p>
+        </div>
+      </div>
+      <div class="highlight-row">
+        <div class="highlight-icon">🏠</div>
+        <div class="highlight-text">
+          <h4>Entire home</h4>
+          <p>You'll have the whole house to yourself.</p>
+        </div>
+      </div>
+      <div class="highlight-row">
+        <div class="highlight-icon">🧺</div>
+        <div class="highlight-text">
+          <h4>In-unit laundry</h4>
+          <p>Washer available for extended stays.</p>
+        </div>
+      </div>
+
+      <div class="description">
+        <h3>About this property</h3>
+        <p>Spacious, fully furnished 5-bedroom home near Bradley University, hospitals, and I-74. Enjoy a refreshed kitchen, stylish dining area, large living space, and comfortable bedrooms designed for extended stays. In-unit laundry, abundant natural light, and a functional layout make this home perfect for traveling professionals, corporate stays, relocations, or families needing extra space.</p>
+      </div>
+
+      <div class="amenities-section">
+        <h3>What this place offers</h3>
+        <div class="amenities-grid">
+          <div class="amenity-item"><span class="amenity-icon">🍳</span> Kitchen</div>
+          <div class="amenity-item"><span class="amenity-icon">📶</span> Wifi</div>
+          <div class="amenity-item"><span class="amenity-icon">🅿️</span> Free parking on premises</div>
+          <div class="amenity-item"><span class="amenity-icon">📺</span> TV</div>
+          <div class="amenity-item"><span class="amenity-icon">🧺</span> Washer</div>
+          <div class="amenity-item"><span class="amenity-icon">❄️</span> Air conditioning</div>
+          <div class="amenity-item"><span class="amenity-icon">🔥</span> BBQ grill</div>
+          <div class="amenity-item"><span class="amenity-icon">🍽</span> Outdoor dining area</div>
+          <div class="amenity-item"><span class="amenity-icon">📷</span> Security cameras (exterior)</div>
+          <div class="amenity-item"><span class="amenity-icon">🔔</span> Smoke alarm</div>
+        </div>
+      </div>
+
+      <!-- Calendar -->
+      <div class="calendar-section">
+        <h3>Select your dates</h3>
+        <p style="font-size: 14px; color: var(--gray-500); margin-bottom: 16px;">Minimum stay: 7 nights</p>
+        <div class="mini-calendar" id="calendar"></div>
+      </div>
+
+      <div class="rules-section">
+        <h3>House rules</h3>
+        <div class="rule-item">🕓 Check-in after 4:00 PM</div>
+        <div class="rule-item">🕚 Checkout before 11:00 AM</div>
+        <div class="rule-item">👥 10 guests maximum</div>
+        <div class="rule-item">🔑 Self check-in with keypad</div>
+      </div>
+    </div>
+
+    <!-- Booking Card -->
+    <div>
+      <div class="booking-card">
+        <div class="booking-price-display">$95 <small>/ night</small></div>
+
+        <div class="date-inputs">
+          <div class="date-input" onclick="scrollToCalendar()">
+            <label>Check-in</label>
+            <span id="checkin-display">Add date</span>
+          </div>
+          <div class="date-input" onclick="scrollToCalendar()">
+            <label>Checkout</label>
+            <span id="checkout-display">Add date</span>
+          </div>
+        </div>
+
+        <div class="guests-input">
+          <label>Guests</label>
+          <span>2 guests</span>
+        </div>
+
+        <button class="btn-book" id="btn-reserve" disabled onclick="showScreen('screen-checkout')">
+          Check availability
+        </button>
+
+        <div class="price-breakdown" id="price-breakdown" style="display: none;">
+          <div class="price-line">
+            <span id="nightly-calc">$95 × 7 nights</span>
+            <span id="nightly-total">$665</span>
+          </div>
+          <div class="price-line discount">
+            <span>Direct booking discount (10%)</span>
+            <span id="discount-amount">-$67</span>
+          </div>
+          <div class="price-line">
+            <span>Cleaning fee</span>
+            <span>$150</span>
+          </div>
+          <div class="price-line">
+            <span>Occupancy tax (7%)</span>
+            <span id="tax-amount">$57</span>
+          </div>
+          <div class="price-line total">
+            <span>Total</span>
+            <span id="grand-total">$805</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="logo">Luar <span>Properties</span></div>
+    <p style="margin-top: 8px;">Peoria, IL · © 2026 Luar Properties. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- ==================== SCREEN 3: CHECKOUT ==================== -->
+<div class="screen" id="screen-checkout">
+  <nav class="nav">
+    <div class="logo" onclick="showScreen('screen-home')">Luar <span>Properties</span></div>
+    <div class="nav-links">
+      <a href="#" onclick="showScreen('screen-detail'); return false;">← Back</a>
+    </div>
+  </nav>
+
+  <div class="checkout-container">
+    <a class="checkout-back" onclick="showScreen('screen-detail')">← Back to property</a>
+    <h1>Confirm and Pay</h1>
+
+    <div class="checkout-grid">
+      <div>
+        <div class="stripe-mock">
+          <div class="stripe-header">
+            <div class="stripe-logo">stripe</div>
+            <span style="font-size: 13px; color: var(--gray-400);">Secure checkout</span>
+          </div>
+
+          <div class="stripe-field">
+            <label>Email</label>
+            <input type="text" value="guest@example.com" disabled>
+          </div>
+          <div class="stripe-field">
+            <label>Name on card</label>
+            <input type="text" value="Jane Smith" disabled>
+          </div>
+          <div class="stripe-field">
+            <label>Card information</label>
+            <input type="text" value="4242 4242 4242 4242" disabled style="margin-bottom: 8px;">
+            <div class="card-row">
+              <input type="text" value="12 / 27" disabled>
+              <input type="text" value="123" disabled>
+              <input type="text" value="61602" disabled>
+            </div>
+          </div>
+
+          <button class="btn-pay" onclick="showScreen('screen-confirm')">
+            Pay <span id="pay-amount">$872</span>
+          </button>
+
+          <p style="font-size: 12px; color: var(--gray-400); text-align: center; margin-top: 12px;">
+            Payments are processed securely by Stripe. Luar Properties never sees your card details.
+          </p>
+        </div>
+      </div>
+
+      <div class="checkout-summary">
+        <div class="checkout-property">
+          <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/03a9c8c3-e84c-4438-ab4b-8e122f5f8cab.jpeg" alt="Property">
+          <div class="checkout-property-info">
+            <h4>Spacious 5 Bed Home</h4>
+            <p>Near Bradley & Hospitals</p>
+            <p>Peoria, Illinois</p>
+          </div>
+        </div>
+
+        <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 12px;">Your trip</h4>
+        <div class="price-line">
+          <span>Dates</span>
+          <span id="checkout-dates">Apr 1 – Apr 8, 2026</span>
+        </div>
+        <div class="price-line">
+          <span>Guests</span>
+          <span>2 guests</span>
+        </div>
+
+        <h4 style="font-size: 15px; font-weight: 600; margin: 16px 0 12px;">Price details</h4>
+        <div class="price-line">
+          <span id="checkout-nightly">$95 × 7 nights</span>
+          <span id="checkout-nightly-total">$665</span>
+        </div>
+        <div class="price-line discount">
+          <span>Direct booking discount (10%)</span>
+          <span id="checkout-discount">-$67</span>
+        </div>
+        <div class="price-line">
+          <span>Cleaning fee</span>
+          <span>$150</span>
+        </div>
+        <div class="price-line">
+          <span>Occupancy tax (7%)</span>
+          <span id="checkout-tax">$57</span>
+        </div>
+        <div class="price-line total">
+          <span>Total (USD)</span>
+          <span id="checkout-total">$805</span>
+        </div>
+
+        <div class="refund-notice" style="margin-top: 16px;">
+          <span>⚠️</span>
+          <span>This booking is non-refundable. Full payment is collected at the time of booking.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SCREEN 4: CONFIRMATION ==================== -->
+<div class="screen" id="screen-confirm">
+  <nav class="nav">
+    <div class="logo" onclick="showScreen('screen-home')">Luar <span>Properties</span></div>
+  </nav>
+
+  <div class="confirmation-container">
+    <div class="confirm-check">✓</div>
+    <h1>Booking Confirmed!</h1>
+    <p class="confirm-subtitle">A confirmation email has been sent to guest@example.com</p>
+
+    <div class="confirm-card">
+      <img class="confirm-card-img" src="https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/03a9c8c3-e84c-4438-ab4b-8e122f5f8cab.jpeg" alt="Property">
+      <div class="confirm-card-body">
+        <h3>Spacious 5 Bed Home Near Bradley & Hospitals</h3>
+        <div class="confirm-address">📍 Peoria, Illinois (Full address sent via email)</div>
+
+        <div class="confirm-dates">
+          <div class="confirm-date-col">
+            <label>Check-in</label>
+            <span id="confirm-checkin">April 1, 2026</span>
+          </div>
+          <div class="confirm-date-col">
+            <label>Checkout</label>
+            <span id="confirm-checkout">April 8, 2026</span>
+          </div>
+          <div class="confirm-date-col">
+            <label>Nights</label>
+            <span id="confirm-nights">7</span>
+          </div>
+          <div class="confirm-date-col">
+            <label>Guests</label>
+            <span>2</span>
+          </div>
+        </div>
+
+        <div class="confirm-receipt">
+          <h4>Receipt</h4>
+          <div class="price-line">
+            <span id="confirm-nightly">$95 × 7 nights</span>
+            <span id="confirm-nightly-total">$665</span>
+          </div>
+          <div class="price-line discount">
+            <span>Direct booking discount (10%)</span>
+            <span id="confirm-discount">-$67</span>
+          </div>
+          <div class="price-line">
+            <span>Cleaning fee</span>
+            <span>$150</span>
+          </div>
+          <div class="price-line">
+            <span>Occupancy tax (7%)</span>
+            <span id="confirm-tax">$57</span>
+          </div>
+          <div class="price-line total">
+            <span>Total paid</span>
+            <span id="confirm-total">$805</span>
+          </div>
+        </div>
+
+        <div class="refund-notice">
+          <span>⚠️</span>
+          <span>Reminder: This booking is non-refundable. Please review your dates carefully.</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-home" onclick="showScreen('screen-home')">Back to Home</button>
+  </div>
+</div>
+
+<!-- ==================== SCREEN 5: CONTACT PAGE ==================== -->
+<div class="screen" id="screen-contact">
+  <nav class="nav">
+    <div class="logo" onclick="showScreen('screen-home')">Luar <span>Properties</span></div>
+    <div class="nav-links">
+      <a href="#" onclick="showScreen('screen-home'); return false;">Properties</a>
+      <a href="#" onclick="showScreen('screen-contact'); return false;" style="color: var(--dark-blue); font-weight: 600;">Contact</a>
+    </div>
+  </nav>
+
+  <div id="contact-form-section">
+    <div class="contact-hero">
+      <h1>We'd Love to Hear<br>From You</h1>
+      <p>Planning a trip to Peoria? Have questions about our properties? Drop us a line and we'll get back to you within 24 hours.</p>
+    </div>
+
+    <div class="contact-form-wrapper">
+      <div class="contact-form-card">
+        <h2>Send Us a Message</h2>
+        <p class="form-hint">Fill out the form below and we'll be in touch soon.</p>
+        <form class="contact-form" onsubmit="submitContactForm(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contact-name">Name</label>
+              <input type="text" id="contact-name" placeholder="Your full name" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-phone">Phone</label>
+              <input type="tel" id="contact-phone" placeholder="(555) 123-4567">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="contact-email">Email</label>
+            <input type="email" id="contact-email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" placeholder="Tell us about your upcoming trip, preferred dates, group size, or anything else..." required></textarea>
+          </div>
+          <button type="submit" class="btn-send">Send Message</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="contact-bottom-strip">
+      <h3>Prefer to Reach Out Directly?</h3>
+      <p class="strip-subtitle">We're happy to chat by email or phone.</p>
+      <div class="contact-info-row">
+        <div class="contact-info-card">
+          <div class="info-icon">📧</div>
+          <strong>Email</strong>
+          <span>info@luarproperties.com</span>
+        </div>
+        <div class="contact-info-card">
+          <div class="info-icon">📞</div>
+          <strong>Phone</strong>
+          <span>(309) 555-0123</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-sent" id="contact-sent-section">
+    <div class="sent-check">✓</div>
+    <h2>Message Sent!</h2>
+    <p>Thanks for reaching out! We'll get back to you within 24 hours. In the meantime, feel free to browse our properties.</p>
+    <button class="btn-home" onclick="showScreen('screen-home')">Browse Properties</button>
+  </div>
+
+  <footer class="footer">
+    <div class="logo">Luar <span>Properties</span></div>
+    <p style="margin-top: 8px;">Peoria, IL · © 2026 Luar Properties. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- ==================== PHOTO MODAL ==================== -->
+<div class="photo-modal" id="photo-modal">
+  <button class="photo-modal-close" onclick="closeGallery()">✕</button>
+  <img id="modal-img" src="" alt="Property photo">
+  <div class="photo-modal-nav">
+    <button onclick="prevPhoto()">← Previous</button>
+    <button onclick="nextPhoto()">Next →</button>
+  </div>
+  <div class="photo-modal-counter" id="modal-counter"></div>
+</div>
+
+<script>
+  // ===== SCREEN NAVIGATION =====
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+    // Reset contact form when navigating to it
+    if (id === 'screen-contact') {
+      document.getElementById('contact-form-section').style.display = '';
+      document.getElementById('contact-sent-section').style.display = 'none';
+    }
+  }
+
+  // ===== PHOTO GALLERY =====
+  const galleryPhotos = [
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/f9f10657-6895-404c-be67-2f04a73a29b7.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/54e6db28-e3da-4d8d-8599-26c9a72c097a.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/96cac663-a918-4342-b979-64e4bd9ce67f.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/63104944-8987-4064-a324-19dc6cc8742d.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/b1528b06-f23d-40ef-9732-a30ee9f11048.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/03a9c8c3-e84c-4438-ab4b-8e122f5f8cab.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/9a480369-7e2a-41b0-a770-276602b9e797.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/df76455a-a62d-4527-8d31-c0daaf08ae95.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/eb554bb0-a7fc-48f1-a2ee-c251a986aeb3.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/aa75e479-2829-482e-9723-14b228b138d2.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/3990e207-285f-4f70-9ee2-863fa8ae6472.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/43f5339b-ccf4-4a1f-b64c-5e027b7534fb.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/f832015b-3aa4-4063-914a-1a4e48bbcdab.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/bcaa97dd-7ddb-4cd0-ae4d-02d9caa887f0.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/5f3f979a-2704-4f55-835d-40035004a62b.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/62e71cc1-d19c-4fbd-ad25-c586282d5c69.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/7da55eca-94b0-4f09-ba26-e604419c5c15.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/5d5e5327-6637-471a-b099-dea6cd44ad35.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/cecbc890-2ee0-4e8a-a5ff-c0ec8beee608.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/10b553c9-ecb9-4b0c-bd65-7c43eedc299d.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/887d791b-1531-4905-a5c5-17838bf7f80c.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/70fe9641-68d5-42fc-a762-fff05adcd1e3.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/a6d94654-8f90-4a35-8c15-beaef5d63303.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/d8330787-a302-424b-a114-f152c1d68f01.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/2b3c620a-1395-43e3-870a-99fdf3cbd84f.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/3ec44146-ba33-4a06-bc35-795df7e7c8ef.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/49803b26-64fd-482c-bcda-3b5350095659.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/03505229-b949-434c-9130-71a4e6975136.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/426c02d5-e6f3-48de-bf76-ab9080694299.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/f4260a45-b290-4264-a705-153a27b779f9.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/8b5c4413-ff5e-41e9-93e4-33d88f920b6f.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/dd0eae5b-608f-4040-84f9-10ced028e2df.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/c7b3f894-b1ec-4e42-b4ed-a6fe563e7237.jpeg',
+    'https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/00bb6ae8-0a8b-42c1-b1cc-b9e6072d8268.jpeg',
+  ];
+
+  let currentPhotoIndex = 0;
+
+  function openGallery(index) {
+    currentPhotoIndex = index;
+    updateModalPhoto();
+    document.getElementById('photo-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeGallery() {
+    document.getElementById('photo-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function nextPhoto() {
+    currentPhotoIndex = (currentPhotoIndex + 1) % galleryPhotos.length;
+    updateModalPhoto();
+  }
+  function prevPhoto() {
+    currentPhotoIndex = (currentPhotoIndex - 1 + galleryPhotos.length) % galleryPhotos.length;
+    updateModalPhoto();
+  }
+  function updateModalPhoto() {
+    document.getElementById('modal-img').src = galleryPhotos[currentPhotoIndex];
+    document.getElementById('modal-counter').textContent =
+      (currentPhotoIndex + 1) + ' / ' + galleryPhotos.length;
+  }
+
+  // Keyboard nav for gallery
+  document.addEventListener('keydown', (e) => {
+    if (!document.getElementById('photo-modal').classList.contains('open')) return;
+    if (e.key === 'ArrowRight') nextPhoto();
+    if (e.key === 'ArrowLeft') prevPhoto();
+    if (e.key === 'Escape') closeGallery();
+  });
+
+  // ===== CALENDAR =====
+  const NIGHTLY_RATE = 95;
+  const CLEANING_FEE = 150;
+  const TAX_RATE = 0.07;
+  const MIN_STAY = 7;
+  const DISCOUNT_RATE = 0.10;
+
+  let checkinDate = null;
+  let checkoutDate = null;
+
+  // Blocked dates (simulated existing bookings)
+  const blockedRanges = [
+    { start: new Date(2026, 2, 15), end: new Date(2026, 2, 22) },
+    { start: new Date(2026, 3, 10), end: new Date(2026, 3, 18) },
+    { start: new Date(2026, 4, 1), end: new Date(2026, 4, 8) },
+  ];
+
+  function isBlocked(date) {
+    return blockedRanges.some(r => date >= r.start && date <= r.end);
+  }
+
+  function renderCalendar() {
+    const cal = document.getElementById('calendar');
+    cal.innerHTML = '';
+
+    const months = [
+      { year: 2026, month: 2 }, // March
+      { year: 2026, month: 3 }, // April
+    ];
+
+    const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    const monthNames = ['January','February','March','April','May','June',
+                        'July','August','September','October','November','December'];
+
+    months.forEach(({ year, month }) => {
+      // Month label
+      const label = document.createElement('div');
+      label.className = 'cal-month-label';
+      label.textContent = monthNames[month] + ' ' + year;
+      cal.appendChild(label);
+
+      // Day headers
+      dayNames.forEach(d => {
+        const hdr = document.createElement('div');
+        hdr.className = 'cal-header';
+        hdr.textContent = d;
+        cal.appendChild(hdr);
+      });
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      // Empty cells
+      for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'cal-day empty';
+        cal.appendChild(empty);
+      }
+
+      // Day cells
+      for (let d = 1; d <= daysInMonth; d++) {
+        const cell = document.createElement('div');
+        cell.className = 'cal-day';
+        cell.textContent = d;
+
+        const date = new Date(year, month, d);
+        const isPast = date < today;
+
+        if (isPast || isBlocked(date)) {
+          cell.classList.add('blocked');
+        } else {
+          cell.addEventListener('click', () => selectDate(date));
+        }
+
+        // Highlight selection
+        if (checkinDate && date.getTime() === checkinDate.getTime()) {
+          cell.classList.add('selected');
+        }
+        if (checkoutDate && date.getTime() === checkoutDate.getTime()) {
+          cell.classList.add('selected');
+        }
+        if (checkinDate && checkoutDate && date > checkinDate && date < checkoutDate) {
+          cell.classList.add('in-range');
+        }
+
+        cal.appendChild(cell);
+      }
+    });
+  }
+
+  function selectDate(date) {
+    if (!checkinDate || (checkinDate && checkoutDate)) {
+      checkinDate = date;
+      checkoutDate = null;
+    } else {
+      if (date <= checkinDate) {
+        checkinDate = date;
+        checkoutDate = null;
+      } else {
+        checkoutDate = date;
+      }
+    }
+
+    renderCalendar();
+    updateBookingCard();
+  }
+
+  function formatDate(date) {
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+  }
+  function formatShort(date) {
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return months[date.getMonth()] + ' ' + date.getDate();
+  }
+
+  function updateBookingCard() {
+    const checkinEl = document.getElementById('checkin-display');
+    const checkoutEl = document.getElementById('checkout-display');
+    const btn = document.getElementById('btn-reserve');
+    const breakdown = document.getElementById('price-breakdown');
+
+    if (checkinDate) {
+      checkinEl.textContent = formatShort(checkinDate);
+      checkinEl.classList.add('filled');
+    } else {
+      checkinEl.textContent = 'Add date';
+      checkinEl.classList.remove('filled');
+    }
+
+    if (checkoutDate) {
+      checkoutEl.textContent = formatShort(checkoutDate);
+      checkoutEl.classList.add('filled');
+    } else {
+      checkoutEl.textContent = 'Add date';
+      checkoutEl.classList.remove('filled');
+    }
+
+    if (checkinDate && checkoutDate) {
+      const nights = Math.round((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+
+      if (nights < MIN_STAY) {
+        btn.textContent = `Minimum stay is ${MIN_STAY} nights`;
+        btn.disabled = true;
+        breakdown.style.display = 'none';
+        return;
+      }
+
+      const nightlyTotal = NIGHTLY_RATE * nights;
+      const discountAmount = Math.round(nightlyTotal * DISCOUNT_RATE);
+      const discountedNightly = nightlyTotal - discountAmount;
+      const taxAmount = Math.round((discountedNightly + CLEANING_FEE) * TAX_RATE);
+      const grandTotal = discountedNightly + CLEANING_FEE + taxAmount;
+
+      document.getElementById('nightly-calc').textContent = `$${NIGHTLY_RATE} × ${nights} nights`;
+      document.getElementById('nightly-total').textContent = `$${nightlyTotal}`;
+      document.getElementById('discount-amount').textContent = `-$${discountAmount}`;
+      document.getElementById('tax-amount').textContent = `$${taxAmount}`;
+      document.getElementById('grand-total').textContent = `$${grandTotal}`;
+
+      // Update checkout screen
+      document.getElementById('checkout-dates').textContent =
+        formatShort(checkinDate) + ' – ' + formatShort(checkoutDate) + ', 2026';
+      document.getElementById('checkout-nightly').textContent = `$${NIGHTLY_RATE} × ${nights} nights`;
+      document.getElementById('checkout-nightly-total').textContent = `$${nightlyTotal}`;
+      document.getElementById('checkout-discount').textContent = `-$${discountAmount}`;
+      document.getElementById('checkout-tax').textContent = `$${taxAmount}`;
+      document.getElementById('checkout-total').textContent = `$${grandTotal}`;
+      document.getElementById('pay-amount').textContent = `$${grandTotal}`;
+
+      // Update confirmation screen
+      document.getElementById('confirm-checkin').textContent = formatDate(checkinDate);
+      document.getElementById('confirm-checkout').textContent = formatDate(checkoutDate);
+      document.getElementById('confirm-nights').textContent = nights;
+      document.getElementById('confirm-nightly').textContent = `$${NIGHTLY_RATE} × ${nights} nights`;
+      document.getElementById('confirm-nightly-total').textContent = `$${nightlyTotal}`;
+      document.getElementById('confirm-discount').textContent = `-$${discountAmount}`;
+      document.getElementById('confirm-tax').textContent = `$${taxAmount}`;
+      document.getElementById('confirm-total').textContent = `$${grandTotal}`;
+
+      breakdown.style.display = 'block';
+      btn.textContent = 'Reserve';
+      btn.disabled = false;
+    } else {
+      breakdown.style.display = 'none';
+      btn.textContent = 'Check availability';
+      btn.disabled = true;
+    }
+  }
+
+  function scrollToCalendar() {
+    document.getElementById('calendar').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // ===== CONTACT FORM =====
+  function submitContactForm(e) {
+    e.preventDefault();
+    document.getElementById('contact-form-section').style.display = 'none';
+    document.getElementById('contact-sent-section').style.display = 'block';
+  }
+
+  // Initialize
+  renderCalendar();
+</script>
+</body>
+</html>

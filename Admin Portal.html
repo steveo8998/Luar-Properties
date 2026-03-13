@@ -1,0 +1,2608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Portal — Luar Properties</title>
+<style>
+  :root {
+    --dark-blue: #1B2A4A;
+    --dark-blue-light: #243656;
+    --terracotta: #C4613A;
+    --terracotta-hover: #D4714A;
+    --blush: #E8B4B8;
+    --blush-light: #F5DFE1;
+    --cream: #FBF7F4;
+    --white: #FFFFFF;
+    --gray-50: #FAFAFA;
+    --gray-100: #F5F5F5;
+    --gray-200: #E8E8E8;
+    --gray-300: #D4D4D4;
+    --gray-400: #A3A3A3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-700: #404040;
+    --gray-800: #262626;
+    --green: #16A34A;
+    --green-light: #DCFCE7;
+    --red: #DC2626;
+    --red-light: #FEE2E2;
+    --amber: #D97706;
+    --amber-light: #FEF3C7;
+    --blue: #2563EB;
+    --blue-light: #DBEAFE;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+    --transition: 0.2s ease;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: var(--gray-800);
+    background: var(--gray-100);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ========== LOGIN SCREEN ========== */
+  .login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--dark-blue) 0%, #2A4068 100%);
+    padding: 24px;
+  }
+
+  .login-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 400px;
+    padding: 40px 32px;
+    text-align: center;
+    animation: fadeUp 0.5s ease-out;
+  }
+
+  .login-logo {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--dark-blue);
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+  }
+
+  .login-logo span { color: var(--blush); }
+
+  .login-subtitle {
+    font-size: 14px;
+    color: var(--gray-500);
+    margin-bottom: 32px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+    text-align: left;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin-bottom: 6px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-xs);
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--gray-800);
+    background: var(--white);
+    transition: border-color var(--transition);
+    outline: none;
+  }
+
+  .form-input:focus {
+    border-color: var(--dark-blue);
+    box-shadow: 0 0 0 3px rgba(27,42,74,0.1);
+  }
+
+  .form-input::placeholder { color: var(--gray-400); }
+
+  .btn-primary {
+    width: 100%;
+    padding: 12px 24px;
+    background: var(--terracotta);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-xs);
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background var(--transition);
+    margin-top: 8px;
+  }
+
+  .btn-primary:hover { background: var(--terracotta-hover); }
+
+  .login-error {
+    display: none;
+    background: var(--red-light);
+    color: var(--red);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: var(--radius-xs);
+    margin-bottom: 16px;
+  }
+
+  /* ========== ADMIN LAYOUT ========== */
+  .admin-layout {
+    display: none;
+    min-height: 100vh;
+  }
+
+  .admin-layout.active {
+    display: flex;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 260px;
+    background: var(--dark-blue);
+    color: var(--white);
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar-header {
+    padding: 24px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .sidebar-logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+
+  .sidebar-logo span { color: var(--blush); }
+
+  .sidebar-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.12);
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-top: 6px;
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 16px 12px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.65);
+    transition: all var(--transition);
+    margin-bottom: 2px;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+  }
+
+  .nav-item:hover {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.9);
+  }
+
+  .nav-item.active {
+    background: rgba(255,255,255,0.14);
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .nav-item svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
+  .nav-item.active svg { opacity: 1; }
+
+  .sidebar-footer {
+    padding: 16px 12px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+  }
+
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .user-name {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .user-email {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    margin-left: 260px;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  .top-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .top-bar h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gray-800);
+  }
+
+  .top-bar-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: var(--radius-xs);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all var(--transition);
+    border: 1.5px solid transparent;
+    white-space: nowrap;
+  }
+
+  .btn svg { width: 16px; height: 16px; }
+
+  .btn-fill {
+    background: var(--terracotta);
+    color: var(--white);
+    border-color: var(--terracotta);
+  }
+
+  .btn-fill:hover {
+    background: var(--terracotta-hover);
+    border-color: var(--terracotta-hover);
+  }
+
+  .btn-outline {
+    background: var(--white);
+    color: var(--gray-700);
+    border-color: var(--gray-300);
+  }
+
+  .btn-outline:hover {
+    background: var(--gray-50);
+    border-color: var(--gray-400);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--gray-600);
+    border: none;
+    padding: 8px 10px;
+  }
+
+  .btn-ghost:hover { background: var(--gray-100); }
+
+  .btn-danger {
+    background: var(--white);
+    color: var(--red);
+    border-color: var(--red);
+  }
+
+  .btn-danger:hover {
+    background: var(--red);
+    color: var(--white);
+  }
+
+  .page-content {
+    padding: 28px 32px;
+  }
+
+  /* ========== PANELS ========== */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ========== DASHBOARD ========== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+  }
+
+  .stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray-500);
+    margin-bottom: 8px;
+  }
+
+  .stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--gray-800);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-change {
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+
+  .stat-change.up {
+    background: var(--green-light);
+    color: var(--green);
+  }
+
+  .stat-change.down {
+    background: var(--red-light);
+    color: var(--red);
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-header h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-800);
+  }
+
+  .card-body { padding: 0; }
+
+  /* ========== TABLES ========== */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .data-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--gray-500);
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-200);
+    white-space: nowrap;
+  }
+
+  .data-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--gray-700);
+    vertical-align: middle;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .data-table tr:hover td { background: var(--gray-50); }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-amber { background: var(--amber-light); color: var(--amber); }
+  .badge-red { background: var(--red-light); color: var(--red); }
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
+  .badge-gray { background: var(--gray-200); color: var(--gray-600); }
+  .badge-red { background: var(--red-light); color: var(--red); }
+
+  .btn-cancel-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--red);
+    background: var(--white);
+    border: 1.5px solid var(--red);
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    transition: all var(--transition);
+    white-space: nowrap;
+  }
+
+  .btn-cancel-sm:hover {
+    background: var(--red);
+    color: var(--white);
+  }
+
+  /* ========== PROPERTY CARDS ========== */
+  .property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .property-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+    transition: box-shadow var(--transition);
+    cursor: pointer;
+  }
+
+  .property-card:hover { box-shadow: var(--shadow-md); }
+
+  .property-card-img {
+    height: 180px;
+    background: var(--gray-200);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+
+  .property-card-status {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+  }
+
+  .property-card-body {
+    padding: 18px 20px;
+  }
+
+  .property-card-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--gray-800);
+  }
+
+  .property-card-address {
+    font-size: 13px;
+    color: var(--gray-500);
+    margin-bottom: 12px;
+  }
+
+  .property-card-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-bottom: 14px;
+  }
+
+  .property-card-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .property-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .property-card-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--terracotta);
+  }
+
+  .property-card-price span {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--gray-500);
+  }
+
+  /* ========== PROPERTY DETAIL / EDIT ========== */
+  .detail-panel {
+    display: none;
+  }
+
+  .detail-panel.active { display: block; }
+
+  .detail-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-600);
+    cursor: pointer;
+    margin-bottom: 20px;
+    padding: 6px 0;
+    border: none;
+    background: none;
+    font-family: inherit;
+  }
+
+  .detail-back:hover { color: var(--gray-800); }
+  .detail-back svg { width: 16px; height: 16px; }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-grid .full-width {
+    grid-column: 1 / -1;
+  }
+
+  .form-group-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .form-group-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--gray-800);
+  }
+
+  .form-group-card .form-desc {
+    font-size: 13px;
+    color: var(--gray-500);
+    margin-bottom: 20px;
+  }
+
+  .form-textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-xs);
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--gray-800);
+    resize: vertical;
+    min-height: 100px;
+    outline: none;
+    transition: border-color var(--transition);
+  }
+
+  .form-textarea:focus {
+    border-color: var(--dark-blue);
+    box-shadow: 0 0 0 3px rgba(27,42,74,0.1);
+  }
+
+  .form-select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-xs);
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--gray-800);
+    background: var(--white);
+    outline: none;
+    cursor: pointer;
+  }
+
+  .form-select:focus {
+    border-color: var(--dark-blue);
+    box-shadow: 0 0 0 3px rgba(27,42,74,0.1);
+  }
+
+  /* ========== PHOTO MANAGER ========== */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .photo-item {
+    position: relative;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    background: var(--gray-200);
+    cursor: grab;
+    border: 2px solid transparent;
+    transition: border-color var(--transition);
+  }
+
+  .photo-item:hover { border-color: var(--terracotta); }
+
+  .photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .photo-item-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.5) 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 8px;
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+
+  .photo-item:hover .photo-item-overlay { opacity: 1; }
+
+  .photo-order {
+    background: var(--white);
+    color: var(--gray-700);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .photo-remove {
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .photo-upload-zone {
+    border: 2px dashed var(--gray-300);
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition);
+    background: var(--gray-50);
+    aspect-ratio: auto;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .photo-upload-zone:hover {
+    border-color: var(--terracotta);
+    background: #FEF7F5;
+  }
+
+  .photo-upload-zone svg {
+    width: 32px;
+    height: 32px;
+    color: var(--gray-400);
+  }
+
+  .photo-upload-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-600);
+  }
+
+  .photo-upload-hint {
+    font-size: 12px;
+    color: var(--gray-400);
+  }
+
+  /* ========== PRICING TABLE ========== */
+  .pricing-day-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .pricing-day {
+    background: var(--gray-50);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    text-align: center;
+    transition: border-color var(--transition);
+  }
+
+  .pricing-day:focus-within {
+    border-color: var(--dark-blue);
+  }
+
+  .pricing-day-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-500);
+    margin-bottom: 6px;
+  }
+
+  .pricing-day-input {
+    width: 100%;
+    text-align: center;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray-800);
+    font-family: inherit;
+    outline: none;
+  }
+
+  .pricing-day-input::placeholder {
+    color: var(--gray-300);
+  }
+
+  .pricing-fees-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  .fee-card {
+    background: var(--gray-50);
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+  }
+
+  .fee-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-500);
+    margin-bottom: 8px;
+  }
+
+  .fee-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .fee-input-wrap .fee-prefix {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--gray-500);
+  }
+
+  .fee-input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gray-800);
+    font-family: inherit;
+    outline: none;
+  }
+
+  /* ========== BOOKINGS TABLE ========== */
+  .search-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .search-input-wrap {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+
+  .search-input-wrap svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: var(--gray-400);
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 10px 14px 10px 36px;
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-xs);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color var(--transition);
+  }
+
+  .search-input:focus {
+    border-color: var(--dark-blue);
+    box-shadow: 0 0 0 3px rgba(27,42,74,0.1);
+  }
+
+  /* ========== CSV EXPORT ========== */
+  .export-preview {
+    background: var(--gray-50);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    margin-top: 16px;
+  }
+
+  .export-month-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .export-month-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+
+  .export-month-card:hover {
+    border-color: var(--terracotta);
+  }
+
+  .export-month-card.selected {
+    border-color: var(--terracotta);
+    background: #FEF7F5;
+  }
+
+  .export-month-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 4px;
+  }
+
+  .export-month-amount {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--terracotta);
+  }
+
+  .export-month-bookings {
+    font-size: 12px;
+    color: var(--gray-500);
+    margin-top: 2px;
+  }
+
+  .export-breakdown {
+    margin-top: 16px;
+  }
+
+  .export-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .export-row:last-child { border-bottom: none; }
+
+  .export-row-label { color: var(--gray-600); }
+  .export-row-value { font-weight: 700; color: var(--gray-800); }
+
+  .export-row.total {
+    border-top: 2px solid var(--gray-800);
+    border-bottom: none;
+    padding-top: 14px;
+    margin-top: 4px;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .export-row.total .export-row-label { color: var(--gray-800); }
+
+  /* ========== MOBILE MENU ========== */
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: var(--gray-700);
+  }
+
+  .mobile-menu-btn svg { width: 24px; height: 24px; }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 199;
+  }
+
+  /* ========== MODAL ========== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  .modal {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 480px;
+    padding: 28px;
+    animation: fadeUp 0.2s ease-out;
+  }
+
+  .modal h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .modal p {
+    font-size: 14px;
+    color: var(--gray-600);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  /* ========== TOAST ========== */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--dark-blue);
+    color: var(--white);
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    z-index: 400;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .toast svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+  /* ========== AMENITY TAGS ========== */
+  .amenity-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .amenity-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background: var(--cream);
+    border: 1px solid var(--gray-200);
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--gray-700);
+  }
+
+  .amenity-tag-remove {
+    cursor: pointer;
+    color: var(--gray-400);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .amenity-tag-remove:hover { color: var(--red); }
+
+  /* ========== EMPTY STATE ========== */
+  .empty-state {
+    text-align: center;
+    padding: 60px 24px;
+  }
+
+  .empty-state svg {
+    width: 48px;
+    height: 48px;
+    color: var(--gray-300);
+    margin-bottom: 16px;
+  }
+
+  .empty-state h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gray-600);
+    margin-bottom: 6px;
+  }
+
+  .empty-state p {
+    font-size: 14px;
+    color: var(--gray-400);
+  }
+
+  /* ========== ANIMATIONS ========== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ========== RESPONSIVE ========== */
+  /* ========== MOBILE: BOOKING CARDS ========== */
+  .booking-cards {
+    display: none;
+  }
+
+  .booking-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .booking-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .booking-card-guest {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-800);
+  }
+
+  .booking-card-email {
+    font-size: 12px;
+    color: var(--gray-500);
+    margin-top: 2px;
+    word-break: break-all;
+  }
+
+  .booking-card-property {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--terracotta);
+    margin-bottom: 10px;
+  }
+
+  .booking-card-dates {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .booking-card-date {
+    flex: 1;
+  }
+
+  .booking-card-date-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-400);
+    margin-bottom: 2px;
+  }
+
+  .booking-card-date-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-700);
+  }
+
+  .booking-card-financials {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+
+  .booking-card-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .booking-card-row-label {
+    color: var(--gray-500);
+  }
+
+  .booking-card-row-value {
+    font-weight: 600;
+    color: var(--gray-700);
+  }
+
+  .booking-card-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid var(--gray-200);
+  }
+
+  .booking-card-total-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-600);
+  }
+
+  .booking-card-total-value {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--gray-800);
+  }
+
+  /* ========== MOBILE: DASHBOARD BOOKING CARDS ========== */
+  .dashboard-booking-cards {
+    display: none;
+    padding: 12px;
+  }
+
+  .dash-booking-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .dash-booking-card:last-child { border-bottom: none; }
+
+  .dash-booking-left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .dash-booking-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gray-800);
+  }
+
+  .dash-booking-prop {
+    font-size: 12px;
+    color: var(--gray-500);
+    margin-top: 1px;
+  }
+
+  .dash-booking-dates {
+    font-size: 11px;
+    color: var(--gray-400);
+    margin-top: 3px;
+  }
+
+  .dash-booking-right {
+    text-align: right;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+
+  .dash-booking-total {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-800);
+  }
+
+  @media (max-width: 768px) {
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+
+    .sidebar {
+      transform: translateX(-100%);
+    }
+
+    .sidebar.open { transform: translateX(0); }
+
+    .sidebar-overlay.open { display: block; }
+
+    .main-content { margin-left: 0; overflow-x: hidden; }
+
+    .mobile-menu-btn { display: block; }
+
+    .top-bar { padding: 12px 16px; }
+    .top-bar h1 { font-size: 17px; }
+
+    .page-content { padding: 16px; }
+
+    .stats-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .stat-card { padding: 16px; }
+    .stat-value { font-size: 24px; }
+    .stat-label { font-size: 11px; }
+
+    .property-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pricing-day-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .pricing-day { padding: 10px 6px; }
+    .pricing-day-input { font-size: 16px; }
+
+    .pricing-fees-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .export-month-grid {
+      grid-template-columns: 1fr;
+    }
+
+    /* Hide desktop table, show mobile cards for bookings */
+    .data-table-desktop { display: none; }
+    .booking-cards { display: block; }
+    .dashboard-booking-cards { display: block; }
+    .dashboard-table-desktop { display: none; }
+
+    .card-body { overflow-x: hidden; }
+
+    .form-group-card { padding: 18px 16px; }
+
+    .login-card { padding: 32px 24px; }
+
+    .search-bar { flex-direction: column; }
+
+    .search-input { font-size: 16px; } /* Prevents iOS zoom on focus */
+
+    .form-input, .form-select, .form-textarea {
+      font-size: 16px; /* Prevents iOS zoom */
+    }
+
+    .photo-grid {
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 8px;
+    }
+
+    .export-preview { padding: 14px; }
+
+    .btn { font-size: 14px; padding: 10px 16px; }
+
+    .modal { padding: 24px 20px; max-width: calc(100vw - 32px); }
+
+    .toast { left: 16px; right: 16px; bottom: 16px; }
+  }
+
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .stat-card { padding: 14px 12px; }
+    .stat-value { font-size: 22px; }
+    .stat-change { font-size: 11px; }
+
+    .pricing-day-grid { grid-template-columns: repeat(4, 1fr); }
+
+    .page-content { padding: 12px; }
+
+    .property-card-meta { gap: 10px; font-size: 12px; }
+
+    .top-bar-actions .btn { font-size: 12px; padding: 8px 12px; }
+  }
+
+  @media (max-width: 380px) {
+    .pricing-day-grid { grid-template-columns: repeat(3, 1fr); }
+    .stats-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- LOGIN SCREEN -->
+<!-- ============================================================ -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">Luar<span>.</span></div>
+    <div class="login-subtitle">Admin Portal</div>
+    <div class="login-error" id="loginError">Invalid email or password. Please try again.</div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-input" id="loginEmail" placeholder="nate@luarproperties.com" value="nate@luarproperties.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-input" id="loginPassword" placeholder="Enter your password" value="demo1234">
+    </div>
+    <button class="btn-primary" onclick="handleLogin()">Sign In</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ADMIN LAYOUT -->
+<!-- ============================================================ -->
+<div class="admin-layout" id="adminLayout">
+
+  <!-- Sidebar Overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">Luar<span>.</span></div>
+      <div class="sidebar-badge">Admin Portal</div>
+    </div>
+
+    <div class="sidebar-nav">
+      <button class="nav-item active" data-panel="dashboard" onclick="switchPanel('dashboard')">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" data-panel="properties" onclick="switchPanel('properties')">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m1.5.5l-1.5-.5M6.75 7.364V3h-3v18m3-13.636l10.5-3.819"/></svg>
+        Properties
+      </button>
+      <button class="nav-item" data-panel="bookings" onclick="switchPanel('bookings')">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+        Bookings
+      </button>
+      <button class="nav-item" data-panel="export" onclick="switchPanel('export')">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+        CSV Export
+      </button>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar">N</div>
+        <div>
+          <div class="user-name">Nate</div>
+          <div class="user-email">nate@luarproperties.com</div>
+        </div>
+      </div>
+      <button class="nav-item" onclick="handleLogout()" style="margin-top: 8px;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <div class="main-content">
+    <div class="top-bar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="mobile-menu-btn" onclick="toggleSidebar()">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+        </button>
+        <h1 id="pageTitle">Dashboard</h1>
+      </div>
+      <div class="top-bar-actions" id="topBarActions"></div>
+    </div>
+
+    <div class="page-content">
+
+      <!-- ══════════════ DASHBOARD PANEL ══════════════ -->
+      <div class="panel active" id="panel-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Active Properties</div>
+            <div class="stat-value">2</div>
+            <div class="stat-change up">+1 this month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Bookings</div>
+            <div class="stat-value">18</div>
+            <div class="stat-change up">+5 this month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Revenue (March)</div>
+            <div class="stat-value">$8,640</div>
+            <div class="stat-change up">+22% vs Feb</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Avg. Stay Length</div>
+            <div class="stat-value">12.4</div>
+            <div class="stat-change" style="background:var(--blue-light);color:var(--blue);">nights</div>
+          </div>
+        </div>
+
+        <!-- Recent Bookings -->
+        <div class="card" style="margin-bottom:20px;">
+          <div class="card-header">
+            <h3>Recent Bookings</h3>
+            <button class="btn btn-ghost" onclick="switchPanel('bookings')" style="font-size:13px;">View All &rarr;</button>
+          </div>
+          <!-- Desktop table -->
+          <div class="card-body dashboard-table-desktop">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Guest</th>
+                  <th>Property</th>
+                  <th>Check-in</th>
+                  <th>Check-out</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Sarah Mitchell</strong></td>
+                  <td>Moss Ave Property</td>
+                  <td>Mar 15, 2026</td>
+                  <td>Mar 22, 2026</td>
+                  <td><strong>$896.40</strong></td>
+                  <td><span class="badge badge-green">Confirmed</span></td>
+                </tr>
+                <tr>
+                  <td><strong>James Chen</strong></td>
+                  <td>Main Street Property</td>
+                  <td>Mar 10, 2026</td>
+                  <td>Apr 9, 2026</td>
+                  <td><strong>$3,412.80</strong></td>
+                  <td><span class="badge badge-green">Confirmed</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Emily Rodriguez</strong></td>
+                  <td>Moss Ave Property</td>
+                  <td>Mar 1, 2026</td>
+                  <td>Mar 8, 2026</td>
+                  <td><strong>$868.20</strong></td>
+                  <td><span class="badge badge-gray">Completed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- Mobile cards -->
+          <div class="dashboard-booking-cards">
+            <div class="dash-booking-card">
+              <div class="dash-booking-left">
+                <div class="dash-booking-name">Sarah Mitchell</div>
+                <div class="dash-booking-prop">Moss Ave Property</div>
+                <div class="dash-booking-dates">Mar 15 — Mar 22</div>
+              </div>
+              <div class="dash-booking-right">
+                <div class="dash-booking-total">$896.40</div>
+                <span class="badge badge-green" style="font-size:11px;margin-top:4px;">Confirmed</span>
+              </div>
+            </div>
+            <div class="dash-booking-card">
+              <div class="dash-booking-left">
+                <div class="dash-booking-name">James Chen</div>
+                <div class="dash-booking-prop">Main Street Property</div>
+                <div class="dash-booking-dates">Mar 10 — Apr 9</div>
+              </div>
+              <div class="dash-booking-right">
+                <div class="dash-booking-total">$3,412.80</div>
+                <span class="badge badge-green" style="font-size:11px;margin-top:4px;">Confirmed</span>
+              </div>
+            </div>
+            <div class="dash-booking-card">
+              <div class="dash-booking-left">
+                <div class="dash-booking-name">Emily Rodriguez</div>
+                <div class="dash-booking-prop">Moss Ave Property</div>
+                <div class="dash-booking-dates">Mar 1 — Mar 8</div>
+              </div>
+              <div class="dash-booking-right">
+                <div class="dash-booking-total">$868.20</div>
+                <span class="badge badge-gray" style="font-size:11px;margin-top:4px;">Completed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Quick Actions</h3>
+          </div>
+          <div class="card-body" style="padding: 20px; display: flex; flex-direction: column; gap: 10px;">
+            <button class="btn btn-outline" onclick="switchPanel('bookings')" style="width:100%; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+              Search Bookings
+            </button>
+            <button class="btn btn-fill" onclick="switchPanel('properties'); setTimeout(()=>showAddProperty(),100);" style="width:100%; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+              Add Property
+            </button>
+            <button class="btn btn-outline" onclick="switchPanel('export')" style="width:100%; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+              Export CSV
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ PROPERTIES PANEL ══════════════ -->
+      <div class="panel" id="panel-properties">
+        <!-- Properties List View -->
+        <div id="propertiesListView">
+          <div class="property-grid" id="propertyGrid"></div>
+        </div>
+
+        <!-- Property Detail/Edit View -->
+        <div class="detail-panel" id="propertyDetailView">
+          <button class="detail-back" onclick="backToProperties()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+            Back to Properties
+          </button>
+
+          <div id="propertyEditForm">
+            <!-- Basic Info -->
+            <div class="form-group-card">
+              <h3>Property Details</h3>
+              <p class="form-desc">Basic information about this listing.</p>
+              <div class="form-grid">
+                <div class="full-width form-group">
+                  <label class="form-label">Property Name</label>
+                  <input type="text" class="form-input" id="editName" placeholder="e.g., Main Street Property">
+                </div>
+                <div class="full-width form-group">
+                  <label class="form-label">Description</label>
+                  <textarea class="form-textarea" id="editDescription" placeholder="Describe the property..."></textarea>
+                </div>
+                <div class="full-width form-group">
+                  <label class="form-label">Address</label>
+                  <input type="text" class="form-input" id="editAddress" placeholder="Full street address, Peoria, IL">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Bedrooms</label>
+                  <input type="number" class="form-input" id="editBedrooms" placeholder="0" min="0">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Bathrooms</label>
+                  <input type="number" class="form-input" id="editBathrooms" placeholder="0" min="0" step="0.5">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Square Footage</label>
+                  <input type="number" class="form-input" id="editSqft" placeholder="0" min="0">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Max Guests</label>
+                  <input type="number" class="form-input" id="editMaxGuests" placeholder="0" min="1">
+                </div>
+                <div class="full-width form-group">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" id="editStatus">
+                    <option value="active">Active</option>
+                    <option value="draft">Draft</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Amenities -->
+            <div class="form-group-card">
+              <h3>Amenities</h3>
+              <p class="form-desc">Add the amenities available at this property.</p>
+              <div style="display:flex;gap:8px;">
+                <input type="text" class="form-input" id="amenityInput" placeholder="Type an amenity and press Enter" style="flex:1;" onkeydown="if(event.key==='Enter'){addAmenity(); event.preventDefault();}">
+                <button class="btn btn-outline" onclick="addAmenity()">Add</button>
+              </div>
+              <div class="amenity-tags" id="amenityTags"></div>
+            </div>
+
+            <!-- Photos -->
+            <div class="form-group-card">
+              <h3>Photos</h3>
+              <p class="form-desc">Drag and drop to reorder. Click the X to remove a photo.</p>
+              <div class="photo-upload-zone" onclick="simulatePhotoUpload()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v10.5a2.25 2.25 0 002.25 2.25zm10.5-11.25h.008v.008h-.008V9.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+                <div class="photo-upload-text">Click to upload photos</div>
+                <div class="photo-upload-hint">or drag and drop — JPG, PNG up to 10MB</div>
+              </div>
+              <div class="photo-grid" id="photoGrid"></div>
+            </div>
+
+            <!-- Pricing -->
+            <div class="form-group-card">
+              <h3>Nightly Rates</h3>
+              <p class="form-desc">Set a custom rate for each day of the week.</p>
+              <div class="pricing-day-grid" id="pricingDayGrid">
+                <div class="pricing-day">
+                  <div class="pricing-day-label">Mon</div>
+                  <input type="text" class="pricing-day-input" id="rate-mon" placeholder="$0">
+                </div>
+                <div class="pricing-day">
+                  <div class="pricing-day-label">Tue</div>
+                  <input type="text" class="pricing-day-input" id="rate-tue" placeholder="$0">
+                </div>
+                <div class="pricing-day">
+                  <div class="pricing-day-label">Wed</div>
+                  <input type="text" class="pricing-day-input" id="rate-wed" placeholder="$0">
+                </div>
+                <div class="pricing-day">
+                  <div class="pricing-day-label">Thu</div>
+                  <input type="text" class="pricing-day-input" id="rate-thu" placeholder="$0">
+                </div>
+                <div class="pricing-day">
+                  <div class="pricing-day-label">Fri</div>
+                  <input type="text" class="pricing-day-input" id="rate-fri" placeholder="$0">
+                </div>
+                <div class="pricing-day">
+                  <div class="pricing-day-label">Sat</div>
+                  <input type="text" class="pricing-day-input" id="rate-sat" placeholder="$0">
+                </div>
+                <div class="pricing-day">
+                  <div class="pricing-day-label">Sun</div>
+                  <input type="text" class="pricing-day-input" id="rate-sun" placeholder="$0">
+                </div>
+              </div>
+
+              <h3 style="margin-top:24px;">Fees &amp; Requirements</h3>
+              <p class="form-desc" style="margin-bottom:16px;">Set the cleaning fee, occupancy tax rate, and minimum stay.</p>
+              <div class="pricing-fees-grid">
+                <div class="fee-card">
+                  <div class="fee-label">Cleaning Fee</div>
+                  <div class="fee-input-wrap">
+                    <span class="fee-prefix">$</span>
+                    <input type="text" class="fee-input" id="editCleaningFee" placeholder="0">
+                  </div>
+                </div>
+                <div class="fee-card">
+                  <div class="fee-label">Occupancy Tax</div>
+                  <div class="fee-input-wrap">
+                    <input type="text" class="fee-input" id="editTaxRate" placeholder="0">
+                    <span class="fee-prefix">%</span>
+                  </div>
+                </div>
+                <div class="fee-card">
+                  <div class="fee-label">Min. Stay</div>
+                  <div class="fee-input-wrap">
+                    <input type="text" class="fee-input" id="editMinStay" placeholder="0">
+                    <span class="fee-prefix">nights</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Save Actions -->
+            <div style="display:flex;gap:12px;justify-content:flex-end;padding-bottom:40px;">
+              <button class="btn btn-outline" onclick="backToProperties()">Cancel</button>
+              <button class="btn btn-danger" id="deletePropertyBtn" onclick="showDeleteModal()" style="display:none;">Delete Property</button>
+              <button class="btn btn-fill" onclick="saveProperty()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                Save Property
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ BOOKINGS PANEL ══════════════ -->
+      <div class="panel" id="panel-bookings">
+        <div class="search-bar">
+          <div class="search-input-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+            <input type="text" class="search-input" id="bookingSearch" placeholder="Search by guest name, email, or property..." oninput="filterBookings()">
+          </div>
+          <select class="form-select" id="bookingFilter" style="width:auto;min-width:160px;" onchange="filterBookings()">
+            <option value="all">All Properties</option>
+            <option value="Main Street Property">Main Street Property</option>
+            <option value="Moss Ave Property">Moss Ave Property</option>
+          </select>
+        </div>
+
+        <!-- Desktop table -->
+        <div class="card data-table-desktop">
+          <div class="card-body" style="overflow-x:auto;">
+            <table class="data-table" id="bookingsTable">
+              <thead>
+                <tr>
+                  <th>Guest</th>
+                  <th>Email</th>
+                  <th>Property</th>
+                  <th>Check-in</th>
+                  <th>Check-out</th>
+                  <th>Nights</th>
+                  <th>Nightly</th>
+                  <th>Cleaning</th>
+                  <th>Tax</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="bookingsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Mobile cards -->
+        <div class="booking-cards" id="bookingCards"></div>
+      </div>
+
+      <!-- ══════════════ CSV EXPORT PANEL ══════════════ -->
+      <div class="panel" id="panel-export">
+        <div class="card" style="margin-bottom:20px;">
+          <div class="card-header">
+            <h3>Monthly Revenue Report</h3>
+          </div>
+          <div class="card-body" style="padding:24px;">
+            <p style="font-size:14px;color:var(--gray-600);margin-bottom:20px;">Select a month to view the revenue breakdown. Click "Download CSV" to export for tax filing.</p>
+
+            <div class="export-month-grid" id="exportMonthGrid"></div>
+
+            <div class="export-breakdown" id="exportBreakdown" style="display:none;">
+              <div class="export-preview">
+                <h4 style="font-size:15px;font-weight:700;margin-bottom:4px;" id="exportMonthTitle"></h4>
+                <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;" id="exportMonthSubtitle"></p>
+                <div id="exportRows"></div>
+              </div>
+              <div style="margin-top:16px;display:flex;gap:12px;">
+                <button class="btn btn-fill" onclick="simulateDownload()">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                  Download CSV
+                </button>
+                <button class="btn btn-outline" onclick="simulateDownload()">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18.75 12h.008v.008h-.008V12zm-8.25 0h.008v.008H10.5V12z"/></svg>
+                  Print Report
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- YTD Summary -->
+        <div class="card">
+          <div class="card-header"><h3>Year-to-Date Summary</h3></div>
+          <div class="card-body" style="padding:24px;">
+            <div class="stats-grid" style="margin-bottom:0;">
+              <div class="stat-card" style="border:1px solid var(--gray-200);">
+                <div class="stat-label">Total Revenue</div>
+                <div class="stat-value" style="font-size:24px;">$22,486.60</div>
+              </div>
+              <div class="stat-card" style="border:1px solid var(--gray-200);">
+                <div class="stat-label">Nightly Revenue</div>
+                <div class="stat-value" style="font-size:24px;">$18,900.00</div>
+              </div>
+              <div class="stat-card" style="border:1px solid var(--gray-200);">
+                <div class="stat-label">Cleaning Fees</div>
+                <div class="stat-value" style="font-size:24px;">$1,800.00</div>
+              </div>
+              <div class="stat-card" style="border:1px solid var(--gray-200);">
+                <div class="stat-label">Tax Collected</div>
+                <div class="stat-value" style="font-size:24px;">$1,786.60</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- DELETE CONFIRMATION MODAL -->
+<!-- ============================================================ -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal">
+    <h3>Delete Property</h3>
+    <p>Are you sure you want to delete this property? This action cannot be undone. All photos, pricing rules, and associated data will be permanently removed.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">Delete Property</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- CANCEL BOOKING MODAL -->
+<!-- ============================================================ -->
+<div class="modal-overlay" id="cancelBookingModal">
+  <div class="modal">
+    <h3>Cancel Booking</h3>
+    <div id="cancelBookingDetails" style="background:var(--gray-50);border-radius:8px;padding:14px 16px;margin-bottom:16px;">
+      <div style="font-size:15px;font-weight:700;color:var(--gray-800);" id="cancelGuestName"></div>
+      <div style="font-size:13px;color:var(--gray-500);margin-top:2px;" id="cancelProperty"></div>
+      <div style="font-size:13px;color:var(--gray-600);margin-top:6px;" id="cancelDates"></div>
+      <div style="font-size:15px;font-weight:700;color:var(--gray-800);margin-top:6px;" id="cancelTotal"></div>
+    </div>
+    <p>Are you sure you want to cancel this booking? This action cannot be undone.</p>
+    <div style="background:var(--amber-light);border-radius:8px;padding:12px 14px;margin-bottom:20px;display:flex;gap:10px;align-items:flex-start;">
+      <span style="font-size:18px;flex-shrink:0;line-height:1;">⚠️</span>
+      <div style="font-size:13px;color:var(--amber);line-height:1.5;">
+        <strong>Hostaway will be updated automatically.</strong> Cancelling this booking will sync with Hostaway and free up the calendar dates on all connected platforms including Airbnb and VRBO.
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeCancelBookingModal()">Keep Booking</button>
+      <button class="btn btn-danger" onclick="confirmCancelBooking()">Cancel Booking</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+  <span id="toastMessage">Saved successfully!</span>
+</div>
+
+
+<script>
+// ================================================================
+// DATA
+// ================================================================
+
+const samplePhotos = [
+  'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect fill="#E8B4B8" width="400" height="300"/><text x="200" y="150" text-anchor="middle" fill="#1B2A4A" font-family="sans-serif" font-size="14" dy=".3em">Living Room</text></svg>'),
+  'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect fill="#C4613A" opacity="0.3" width="400" height="300"/><text x="200" y="150" text-anchor="middle" fill="#1B2A4A" font-family="sans-serif" font-size="14" dy=".3em">Kitchen</text></svg>'),
+  'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect fill="#1B2A4A" opacity="0.15" width="400" height="300"/><text x="200" y="150" text-anchor="middle" fill="#1B2A4A" font-family="sans-serif" font-size="14" dy=".3em">Bedroom</text></svg>'),
+  'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect fill="#FBF7F4" width="400" height="300"/><rect fill="#E8B4B8" opacity="0.4" width="400" height="300"/><text x="200" y="150" text-anchor="middle" fill="#1B2A4A" font-family="sans-serif" font-size="14" dy=".3em">Bathroom</text></svg>'),
+  'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect fill="#D4CEC4" width="400" height="300"/><text x="200" y="150" text-anchor="middle" fill="#1B2A4A" font-family="sans-serif" font-size="14" dy=".3em">Exterior</text></svg>'),
+];
+
+let properties = [
+  {
+    id: 1,
+    name: 'Main Street Property',
+    description: 'Charming 4-bedroom home located directly across from Bradley University. Updated interior with a comfortable layout, modern kitchen, and plenty of room for groups or families. Close to hospitals, restaurants, and I-74. A great fit for traveling professionals, visiting families, or anyone looking for a convenient home base in Peoria.',
+    address: '412 Main St, Peoria, IL 61602',
+    bedrooms: 4,
+    bathrooms: 2,
+    sqft: 1800,
+    maxGuests: 8,
+    status: 'active',
+    amenities: ['WiFi', 'Kitchen', 'Washer/Dryer', 'Air Conditioning', 'Heating', 'TV', 'Free Parking', 'Coffee Maker', 'Iron', 'Hair Dryer'],
+    photos: ['https://photos.zillowstatic.com/fp/5123b2bb48507f66d6a99047afa3a65e-cc_ft_960.jpg', samplePhotos[0], samplePhotos[1], samplePhotos[2], samplePhotos[3]],
+    rates: { mon: 85, tue: 85, wed: 85, thu: 90, fri: 110, sat: 110, sun: 95 },
+    cleaningFee: 100,
+    taxRate: 12,
+    minStay: 7
+  },
+  {
+    id: 2,
+    name: 'Moss Ave Property',
+    description: 'Spacious, fully furnished 5-bedroom home near Bradley University, hospitals, and I-74. Features a refreshed kitchen, stylish dining area, large living space, and comfortable bedrooms designed for extended stays. In-unit laundry, abundant natural light, and a functional layout make this home ideal for traveling professionals, corporate stays, relocations, or families needing extra space.',
+    address: '1847 W Moss Ave, Peoria, IL 61606',
+    bedrooms: 5,
+    bathrooms: 1.5,
+    sqft: 2200,
+    maxGuests: 10,
+    status: 'active',
+    amenities: ['WiFi', 'Kitchen', 'Washer', 'Air Conditioning', 'Heating', 'TV', 'Free Parking', 'Coffee Maker', 'Iron', 'Hair Dryer', 'Self Check-in', 'Keypad'],
+    photos: ['https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/03a9c8c3-e84c-4438-ab4b-8e122f5f8cab.jpeg', samplePhotos[0], samplePhotos[2], samplePhotos[3], samplePhotos[1]],
+    rates: { mon: 95, tue: 95, wed: 95, thu: 100, fri: 125, sat: 125, sun: 105 },
+    cleaningFee: 125,
+    taxRate: 12,
+    minStay: 7
+  }
+];
+
+const bookings = [
+  { id: 1, guest: 'Sarah Mitchell', email: 'sarah.m@gmail.com', property: 'Moss Ave Property', checkIn: '2026-03-15', checkOut: '2026-03-22', nights: 7, nightly: 735, cleaning: 125, tax: 103.20, total: 963.20, status: 'confirmed' },
+  { id: 2, guest: 'James Chen', email: 'jchen@outlook.com', property: 'Main Street Property', checkIn: '2026-03-10', checkOut: '2026-04-09', nights: 30, nightly: 2790, cleaning: 100, tax: 347.28, total: 3237.28, status: 'confirmed' },
+  { id: 3, guest: 'Emily Rodriguez', email: 'emily.r@yahoo.com', property: 'Moss Ave Property', checkIn: '2026-03-01', checkOut: '2026-03-08', nights: 7, nightly: 735, cleaning: 125, tax: 103.20, total: 963.20, status: 'completed' },
+  { id: 4, guest: 'Michael Thompson', email: 'mthompson@gmail.com', property: 'Main Street Property', checkIn: '2026-02-15', checkOut: '2026-03-01', nights: 14, nightly: 1260, cleaning: 100, tax: 163.20, total: 1523.20, status: 'completed' },
+  { id: 5, guest: 'Lisa Park', email: 'lisa.park@icloud.com', property: 'Moss Ave Property', checkIn: '2026-02-10', checkOut: '2026-02-17', nights: 7, nightly: 735, cleaning: 125, tax: 103.20, total: 963.20, status: 'completed' },
+  { id: 6, guest: 'David Wilson', email: 'dwilson@proton.me', property: 'Main Street Property', checkIn: '2026-02-01', checkOut: '2026-02-08', nights: 7, nightly: 630, cleaning: 100, tax: 87.60, total: 817.60, status: 'completed' },
+  { id: 7, guest: 'Amanda Foster', email: 'amanda.f@gmail.com', property: 'Moss Ave Property', checkIn: '2026-01-20', checkOut: '2026-02-03', nights: 14, nightly: 1470, cleaning: 125, tax: 191.40, total: 1786.40, status: 'completed' },
+  { id: 8, guest: 'Robert Kim', email: 'rkim@gmail.com', property: 'Main Street Property', checkIn: '2026-01-10', checkOut: '2026-01-24', nights: 14, nightly: 1260, cleaning: 100, tax: 163.20, total: 1523.20, status: 'completed' },
+  { id: 9, guest: 'Jessica Brown', email: 'jess.brown@hotmail.com', property: 'Moss Ave Property', checkIn: '2026-01-05', checkOut: '2026-01-12', nights: 7, nightly: 735, cleaning: 125, tax: 103.20, total: 963.20, status: 'completed' },
+  { id: 10, guest: 'Kevin O\'Brien', email: 'kobrien@yahoo.com', property: 'Main Street Property', checkIn: '2026-03-25', checkOut: '2026-04-01', nights: 7, nightly: 630, cleaning: 100, tax: 87.60, total: 817.60, status: 'confirmed' },
+  { id: 11, guest: 'Rachel Green', email: 'rachel.g@gmail.com', property: 'Main Street Property', checkIn: '2026-01-01', checkOut: '2026-01-08', nights: 7, nightly: 630, cleaning: 100, tax: 87.60, total: 817.60, status: 'completed' },
+  { id: 12, guest: 'Tom Hughes', email: 'thughes@outlook.com', property: 'Moss Ave Property', checkIn: '2026-02-20', checkOut: '2026-02-27', nights: 7, nightly: 735, cleaning: 125, tax: 103.20, total: 963.20, status: 'completed' },
+];
+
+const monthlyData = [
+  { month: 'January 2026', nightly: 4095, cleaning: 450, tax: 545.40, bookings: 4 },
+  { month: 'February 2026', nightly: 3360, cleaning: 450, tax: 457.20, bookings: 4 },
+  { month: 'March 2026', nightly: 4890, cleaning: 325, tax: 625.68, bookings: 4 },
+];
+
+let currentPropertyId = null;
+let currentAmenities = [];
+let currentPhotos = [];
+
+// ================================================================
+// AUTH
+// ================================================================
+
+function handleLogin() {
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+
+  if (email && password) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminLayout').classList.add('active');
+    renderPropertyGrid();
+    renderBookingsTable();
+    renderExportMonths();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function handleLogout() {
+  document.getElementById('adminLayout').classList.remove('active');
+  document.getElementById('loginScreen').style.display = 'flex';
+}
+
+// ================================================================
+// NAVIGATION
+// ================================================================
+
+const panelTitles = {
+  dashboard: 'Dashboard',
+  properties: 'Properties',
+  bookings: 'Bookings',
+  export: 'CSV Export'
+};
+
+const panelActions = {
+  properties: '<button class="btn btn-fill" onclick="showAddProperty()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg> Add Property</button>',
+  bookings: '',
+  export: '',
+  dashboard: ''
+};
+
+function switchPanel(panel) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item[data-panel]').forEach(n => n.classList.remove('active'));
+
+  document.getElementById('panel-' + panel).classList.add('active');
+  document.querySelector('.nav-item[data-panel="' + panel + '"]').classList.add('active');
+  document.getElementById('pageTitle').textContent = panelTitles[panel];
+  document.getElementById('topBarActions').innerHTML = panelActions[panel] || '';
+
+  // Reset property view
+  if (panel === 'properties') {
+    backToProperties();
+  }
+
+  // Close sidebar on mobile
+  closeSidebar();
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+// ================================================================
+// PROPERTIES
+// ================================================================
+
+function renderPropertyGrid() {
+  const grid = document.getElementById('propertyGrid');
+  grid.innerHTML = properties.map(p => {
+    const statusClass = p.status === 'active' ? 'badge-green' : p.status === 'draft' ? 'badge-amber' : 'badge-gray';
+    const statusLabel = p.status.charAt(0).toUpperCase() + p.status.slice(1);
+    const avgRate = Math.round(Object.values(p.rates).reduce((a,b) => a+b, 0) / 7);
+
+    return `
+      <div class="property-card" onclick="editProperty(${p.id})">
+        <div class="property-card-img" style="background-image:url('${p.photos[0] || ''}');">
+          <div class="property-card-status">
+            <span class="badge ${statusClass}">${statusLabel}</span>
+          </div>
+        </div>
+        <div class="property-card-body">
+          <div class="property-card-title">${p.name}</div>
+          <div class="property-card-address">${p.address}</div>
+          <div class="property-card-meta">
+            <span>${p.bedrooms} bed</span>
+            <span>${p.bathrooms} bath</span>
+            <span>${p.sqft.toLocaleString()} sqft</span>
+            <span>${p.maxGuests} guests</span>
+          </div>
+          <div class="property-card-footer">
+            <div class="property-card-price">$${avgRate} <span>/ night avg</span></div>
+            <span style="font-size:12px;color:var(--gray-500);">${p.photos.length} photos</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function showAddProperty() {
+  currentPropertyId = null;
+  clearEditForm();
+  document.getElementById('deletePropertyBtn').style.display = 'none';
+  document.getElementById('propertiesListView').style.display = 'none';
+  document.getElementById('propertyDetailView').classList.add('active');
+  document.getElementById('pageTitle').textContent = 'Add Property';
+  document.getElementById('topBarActions').innerHTML = '';
+}
+
+function editProperty(id) {
+  const p = properties.find(prop => prop.id === id);
+  if (!p) return;
+
+  currentPropertyId = id;
+  document.getElementById('editName').value = p.name;
+  document.getElementById('editDescription').value = p.description;
+  document.getElementById('editAddress').value = p.address;
+  document.getElementById('editBedrooms').value = p.bedrooms;
+  document.getElementById('editBathrooms').value = p.bathrooms;
+  document.getElementById('editSqft').value = p.sqft;
+  document.getElementById('editMaxGuests').value = p.maxGuests;
+  document.getElementById('editStatus').value = p.status;
+
+  // Rates
+  document.getElementById('rate-mon').value = '$' + p.rates.mon;
+  document.getElementById('rate-tue').value = '$' + p.rates.tue;
+  document.getElementById('rate-wed').value = '$' + p.rates.wed;
+  document.getElementById('rate-thu').value = '$' + p.rates.thu;
+  document.getElementById('rate-fri').value = '$' + p.rates.fri;
+  document.getElementById('rate-sat').value = '$' + p.rates.sat;
+  document.getElementById('rate-sun').value = '$' + p.rates.sun;
+
+  // Fees
+  document.getElementById('editCleaningFee').value = p.cleaningFee;
+  document.getElementById('editTaxRate').value = p.taxRate;
+  document.getElementById('editMinStay').value = p.minStay;
+
+  // Amenities
+  currentAmenities = [...p.amenities];
+  renderAmenities();
+
+  // Photos
+  currentPhotos = [...p.photos];
+  renderPhotos();
+
+  document.getElementById('deletePropertyBtn').style.display = 'inline-flex';
+  document.getElementById('propertiesListView').style.display = 'none';
+  document.getElementById('propertyDetailView').classList.add('active');
+  document.getElementById('pageTitle').textContent = 'Edit: ' + p.name;
+  document.getElementById('topBarActions').innerHTML = '';
+}
+
+function clearEditForm() {
+  document.getElementById('editName').value = '';
+  document.getElementById('editDescription').value = '';
+  document.getElementById('editAddress').value = '';
+  document.getElementById('editBedrooms').value = '';
+  document.getElementById('editBathrooms').value = '';
+  document.getElementById('editSqft').value = '';
+  document.getElementById('editMaxGuests').value = '';
+  document.getElementById('editStatus').value = 'active';
+  document.getElementById('rate-mon').value = '';
+  document.getElementById('rate-tue').value = '';
+  document.getElementById('rate-wed').value = '';
+  document.getElementById('rate-thu').value = '';
+  document.getElementById('rate-fri').value = '';
+  document.getElementById('rate-sat').value = '';
+  document.getElementById('rate-sun').value = '';
+  document.getElementById('editCleaningFee').value = '';
+  document.getElementById('editTaxRate').value = '';
+  document.getElementById('editMinStay').value = '';
+  currentAmenities = [];
+  currentPhotos = [];
+  renderAmenities();
+  renderPhotos();
+}
+
+function backToProperties() {
+  document.getElementById('propertiesListView').style.display = 'block';
+  document.getElementById('propertyDetailView').classList.remove('active');
+  document.getElementById('pageTitle').textContent = 'Properties';
+  document.getElementById('topBarActions').innerHTML = panelActions.properties;
+  renderPropertyGrid();
+}
+
+function saveProperty() {
+  const name = document.getElementById('editName').value;
+  if (!name) {
+    showToast('Please enter a property name');
+    return;
+  }
+
+  const data = {
+    name: name,
+    description: document.getElementById('editDescription').value,
+    address: document.getElementById('editAddress').value,
+    bedrooms: parseInt(document.getElementById('editBedrooms').value) || 0,
+    bathrooms: parseFloat(document.getElementById('editBathrooms').value) || 0,
+    sqft: parseInt(document.getElementById('editSqft').value) || 0,
+    maxGuests: parseInt(document.getElementById('editMaxGuests').value) || 1,
+    status: document.getElementById('editStatus').value,
+    amenities: [...currentAmenities],
+    photos: [...currentPhotos],
+    rates: {
+      mon: parseRate('rate-mon'),
+      tue: parseRate('rate-tue'),
+      wed: parseRate('rate-wed'),
+      thu: parseRate('rate-thu'),
+      fri: parseRate('rate-fri'),
+      sat: parseRate('rate-sat'),
+      sun: parseRate('rate-sun'),
+    },
+    cleaningFee: parseInt(document.getElementById('editCleaningFee').value) || 0,
+    taxRate: parseFloat(document.getElementById('editTaxRate').value) || 0,
+    minStay: parseInt(document.getElementById('editMinStay').value) || 1
+  };
+
+  if (currentPropertyId) {
+    const idx = properties.findIndex(p => p.id === currentPropertyId);
+    if (idx !== -1) {
+      properties[idx] = { ...properties[idx], ...data };
+    }
+    showToast(name + ' updated successfully!');
+  } else {
+    data.id = Date.now();
+    if (data.photos.length === 0) {
+      data.photos = [samplePhotos[Math.floor(Math.random() * samplePhotos.length)]];
+    }
+    properties.push(data);
+    showToast(name + ' created successfully!');
+  }
+
+  backToProperties();
+}
+
+function parseRate(id) {
+  const val = document.getElementById(id).value.replace(/[^0-9.]/g, '');
+  return parseFloat(val) || 0;
+}
+
+// Amenities
+function addAmenity() {
+  const input = document.getElementById('amenityInput');
+  const val = input.value.trim();
+  if (val && !currentAmenities.includes(val)) {
+    currentAmenities.push(val);
+    renderAmenities();
+  }
+  input.value = '';
+}
+
+function removeAmenity(idx) {
+  currentAmenities.splice(idx, 1);
+  renderAmenities();
+}
+
+function renderAmenities() {
+  document.getElementById('amenityTags').innerHTML = currentAmenities.map((a, i) =>
+    `<div class="amenity-tag">${a}<span class="amenity-tag-remove" onclick="removeAmenity(${i})">&times;</span></div>`
+  ).join('');
+}
+
+// Photos
+function renderPhotos() {
+  document.getElementById('photoGrid').innerHTML = currentPhotos.map((url, i) =>
+    `<div class="photo-item">
+      <img src="${url}" alt="Photo ${i+1}">
+      <div class="photo-item-overlay">
+        <span class="photo-order">#${i+1}</span>
+        <button class="photo-remove" onclick="event.stopPropagation(); removePhoto(${i})">&times;</button>
+      </div>
+    </div>`
+  ).join('');
+}
+
+function removePhoto(idx) {
+  currentPhotos.splice(idx, 1);
+  renderPhotos();
+}
+
+function simulatePhotoUpload() {
+  const newPhoto = samplePhotos[Math.floor(Math.random() * samplePhotos.length)];
+  currentPhotos.push(newPhoto);
+  renderPhotos();
+  showToast('Photo uploaded!');
+}
+
+// Delete
+function showDeleteModal() {
+  document.getElementById('deleteModal').classList.add('active');
+}
+
+function closeDeleteModal() {
+  document.getElementById('deleteModal').classList.remove('active');
+}
+
+function confirmDelete() {
+  if (currentPropertyId) {
+    const p = properties.find(prop => prop.id === currentPropertyId);
+    properties = properties.filter(prop => prop.id !== currentPropertyId);
+    showToast((p ? p.name : 'Property') + ' deleted.');
+  }
+  closeDeleteModal();
+  backToProperties();
+}
+
+// ================================================================
+// CANCEL BOOKING
+// ================================================================
+
+let cancelBookingId = null;
+
+function showCancelBookingModal(id) {
+  const b = bookings.find(bk => bk.id === id);
+  if (!b) return;
+  cancelBookingId = id;
+  document.getElementById('cancelGuestName').textContent = b.guest;
+  document.getElementById('cancelProperty').textContent = b.property;
+  document.getElementById('cancelDates').textContent = formatDate(b.checkIn) + ' — ' + formatDate(b.checkOut) + ' (' + b.nights + ' nights)';
+  document.getElementById('cancelTotal').textContent = '$' + b.total.toLocaleString(undefined, {minimumFractionDigits:2});
+  document.getElementById('cancelBookingModal').classList.add('active');
+}
+
+function closeCancelBookingModal() {
+  document.getElementById('cancelBookingModal').classList.remove('active');
+  cancelBookingId = null;
+}
+
+function confirmCancelBooking() {
+  if (cancelBookingId !== null) {
+    const b = bookings.find(bk => bk.id === cancelBookingId);
+    if (b) {
+      b.status = 'cancelled';
+      showToast(b.guest + '\'s booking cancelled — Hostaway sync initiated');
+    }
+  }
+  closeCancelBookingModal();
+  filterBookings();
+}
+
+// ================================================================
+// BOOKINGS
+// ================================================================
+
+function renderBookingsTable() {
+  renderBookingsList(bookings);
+}
+
+function getStatusBadge(status) {
+  if (status === 'confirmed') return 'badge-green';
+  if (status === 'cancelled') return 'badge-red';
+  return 'badge-gray';
+}
+
+function renderBookingsList(list) {
+  // Desktop table
+  const tbody = document.getElementById('bookingsTableBody');
+  tbody.innerHTML = list.map(b => {
+    const statusClass = getStatusBadge(b.status);
+    const statusLabel = b.status.charAt(0).toUpperCase() + b.status.slice(1);
+    const cancelBtn = b.status === 'confirmed'
+      ? `<button class="btn-cancel-sm" onclick="showCancelBookingModal(${b.id})">Cancel</button>`
+      : '';
+    return `
+      <tr${b.status === 'cancelled' ? ' style="opacity:0.55;"' : ''}>
+        <td><strong>${b.guest}</strong></td>
+        <td style="color:var(--gray-500);font-size:13px;">${b.email}</td>
+        <td>${b.property}</td>
+        <td>${formatDate(b.checkIn)}</td>
+        <td>${formatDate(b.checkOut)}</td>
+        <td style="text-align:center;">${b.nights}</td>
+        <td>$${b.nightly.toLocaleString()}</td>
+        <td>$${b.cleaning}</td>
+        <td>$${b.tax.toFixed(2)}</td>
+        <td><strong>$${b.total.toLocaleString(undefined, {minimumFractionDigits:2})}</strong></td>
+        <td>
+          <span class="badge ${statusClass}">${statusLabel}</span>
+          ${cancelBtn ? '<div style="margin-top:6px;">' + cancelBtn + '</div>' : ''}
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  // Mobile cards
+  const cards = document.getElementById('bookingCards');
+  if (cards) {
+    if (list.length === 0) {
+      cards.innerHTML = '<div style="text-align:center;padding:40px;color:var(--gray-400);">No bookings found matching your search.</div>';
+      return;
+    }
+    cards.innerHTML = list.map(b => {
+      const statusClass = getStatusBadge(b.status);
+      const statusLabel = b.status.charAt(0).toUpperCase() + b.status.slice(1);
+      const cancelBtn = b.status === 'confirmed'
+        ? `<div style="padding-top:12px;border-top:1px solid var(--gray-100);margin-top:12px;"><button class="btn-cancel-sm" style="width:100%;justify-content:center;padding:10px;" onclick="showCancelBookingModal(${b.id})">Cancel Booking</button></div>`
+        : '';
+      return `
+        <div class="booking-card"${b.status === 'cancelled' ? ' style="opacity:0.55;"' : ''}>
+          <div class="booking-card-header">
+            <div>
+              <div class="booking-card-guest">${b.guest}</div>
+              <div class="booking-card-email">${b.email}</div>
+            </div>
+            <span class="badge ${statusClass}">${statusLabel}</span>
+          </div>
+          <div class="booking-card-property">${b.property}</div>
+          <div class="booking-card-dates">
+            <div class="booking-card-date">
+              <div class="booking-card-date-label">Check-in</div>
+              <div class="booking-card-date-value">${formatDate(b.checkIn)}</div>
+            </div>
+            <div class="booking-card-date">
+              <div class="booking-card-date-label">Check-out</div>
+              <div class="booking-card-date-value">${formatDate(b.checkOut)}</div>
+            </div>
+            <div class="booking-card-date">
+              <div class="booking-card-date-label">Nights</div>
+              <div class="booking-card-date-value">${b.nights}</div>
+            </div>
+          </div>
+          <div class="booking-card-financials">
+            <div class="booking-card-row">
+              <span class="booking-card-row-label">Nightly</span>
+              <span class="booking-card-row-value">$${b.nightly.toLocaleString()}</span>
+            </div>
+            <div class="booking-card-row">
+              <span class="booking-card-row-label">Cleaning</span>
+              <span class="booking-card-row-value">$${b.cleaning}</span>
+            </div>
+            <div class="booking-card-row">
+              <span class="booking-card-row-label">Tax</span>
+              <span class="booking-card-row-value">$${b.tax.toFixed(2)}</span>
+            </div>
+          </div>
+          <div class="booking-card-total">
+            <span class="booking-card-total-label">Total</span>
+            <span class="booking-card-total-value">$${b.total.toLocaleString(undefined, {minimumFractionDigits:2})}</span>
+          </div>
+          ${cancelBtn}
+        </div>
+      `;
+    }).join('');
+  }
+}
+
+function filterBookings() {
+  const search = document.getElementById('bookingSearch').value.toLowerCase();
+  const filter = document.getElementById('bookingFilter').value;
+
+  const filtered = bookings.filter(b => {
+    const matchSearch = !search || b.guest.toLowerCase().includes(search) || b.email.toLowerCase().includes(search) || b.property.toLowerCase().includes(search);
+    const matchFilter = filter === 'all' || b.property === filter;
+    return matchSearch && matchFilter;
+  });
+
+  renderBookingsList(filtered);
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+// ================================================================
+// CSV EXPORT
+// ================================================================
+
+let selectedExportMonth = null;
+
+function renderExportMonths() {
+  const grid = document.getElementById('exportMonthGrid');
+  grid.innerHTML = monthlyData.map((m, i) => {
+    const total = m.nightly + m.cleaning + m.tax;
+    return `
+      <div class="export-month-card" data-month="${i}" onclick="selectExportMonth(${i})">
+        <div class="export-month-name">${m.month}</div>
+        <div class="export-month-amount">$${total.toLocaleString(undefined, {minimumFractionDigits:2})}</div>
+        <div class="export-month-bookings">${m.bookings} bookings</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function selectExportMonth(idx) {
+  selectedExportMonth = idx;
+  const m = monthlyData[idx];
+  const total = m.nightly + m.cleaning + m.tax;
+
+  // Highlight selected
+  document.querySelectorAll('.export-month-card').forEach(c => c.classList.remove('selected'));
+  document.querySelector('.export-month-card[data-month="'+idx+'"]').classList.add('selected');
+
+  // Show breakdown
+  document.getElementById('exportBreakdown').style.display = 'block';
+  document.getElementById('exportMonthTitle').textContent = m.month + ' — Revenue Breakdown';
+  document.getElementById('exportMonthSubtitle').textContent = m.bookings + ' bookings across all properties';
+
+  document.getElementById('exportRows').innerHTML = `
+    <div class="export-row">
+      <span class="export-row-label">Nightly Revenue</span>
+      <span class="export-row-value">$${m.nightly.toLocaleString(undefined, {minimumFractionDigits:2})}</span>
+    </div>
+    <div class="export-row">
+      <span class="export-row-label">Cleaning Fees</span>
+      <span class="export-row-value">$${m.cleaning.toLocaleString(undefined, {minimumFractionDigits:2})}</span>
+    </div>
+    <div class="export-row">
+      <span class="export-row-label">Occupancy Tax Collected</span>
+      <span class="export-row-value">$${m.tax.toLocaleString(undefined, {minimumFractionDigits:2})}</span>
+    </div>
+    <div class="export-row total">
+      <span class="export-row-label">Total Revenue</span>
+      <span class="export-row-value">$${total.toLocaleString(undefined, {minimumFractionDigits:2})}</span>
+    </div>
+  `;
+}
+
+function simulateDownload() {
+  if (selectedExportMonth === null) {
+    showToast('Please select a month first');
+    return;
+  }
+  showToast('CSV downloaded — ' + monthlyData[selectedExportMonth].month);
+}
+
+// ================================================================
+// TOAST
+// ================================================================
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastMessage').textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ================================================================
+// KEYBOARD: Enter to login
+// ================================================================
+
+document.getElementById('loginPassword').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') handleLogin();
+});
+
+document.getElementById('loginEmail').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') handleLogin();
+});
+
+</script>
+</body>
+</html>

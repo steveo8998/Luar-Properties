@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luar Properties — Project Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark-blue: #1B2A4A;
+    --dark-blue-light: #243656;
+    --terracotta: #C4613A;
+    --terracotta-hover: #D4714A;
+    --blush: #E8B4B8;
+    --blush-light: #F5DFE1;
+    --cream: #FBF7F4;
+    --white: #FFFFFF;
+    --gray-100: #F5F5F5;
+    --gray-200: #E8E8E8;
+    --gray-400: #A3A3A3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-800: #262626;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--gray-800);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(165deg, #131E35 0%, var(--dark-blue) 50%, var(--dark-blue-light) 100%);
+    color: var(--white);
+    padding: 60px 24px 52px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: rgba(232, 180, 184, 0.06);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -15%;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: rgba(232, 180, 184, 0.04);
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(232, 180, 184, 0.2);
+    color: var(--blush);
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(8px);
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 8px;
+    position: relative;
+  }
+
+  .hero h1 span {
+    color: var(--blush);
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    opacity: 0.75;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── Content ── */
+  .content {
+    flex: 1;
+    padding: 0 20px;
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* ── Summary ── */
+  .summary {
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .summary-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 12px;
+  }
+
+  .summary h2 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--dark-blue);
+    margin-bottom: 14px;
+  }
+
+  .summary p {
+    font-size: 15px;
+    color: var(--gray-600);
+    line-height: 1.7;
+  }
+
+  /* ── File Cards ── */
+  .files-section {
+    padding: 36px 0 40px;
+  }
+
+  .files-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 20px;
+  }
+
+  .file-card {
+    display: block;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 24px 24px 24px 24px;
+    margin-bottom: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .file-card:hover {
+    border-color: var(--blush);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .file-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .file-card:nth-child(1)::before { background: var(--terracotta); }
+  .file-card:nth-child(2)::before { background: var(--dark-blue); }
+  .file-card:nth-child(3)::before { background: var(--blush); }
+
+  .file-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+
+  .file-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+
+  .file-card:nth-child(1) .file-icon { background: #FDF0EA; }
+  .file-card:nth-child(2) .file-icon { background: #E8EDF5; }
+  .file-card:nth-child(3) .file-icon { background: var(--blush-light); }
+
+  .file-card-title {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 400;
+    color: var(--dark-blue);
+  }
+
+  .file-card-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 100px;
+    margin-top: 2px;
+  }
+
+  .file-card:nth-child(1) .file-card-tag { background: #FDF0EA; color: var(--terracotta); }
+  .file-card:nth-child(2) .file-card-tag { background: #E8EDF5; color: var(--dark-blue); }
+  .file-card:nth-child(3) .file-card-tag { background: var(--blush-light); color: #8B5A5E; }
+
+  .file-card-desc {
+    font-size: 14px;
+    color: var(--gray-500);
+    line-height: 1.6;
+    padding-left: 58px;
+  }
+
+  .file-card-arrow {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-400);
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .file-card:hover .file-card-arrow {
+    color: var(--terracotta);
+    transform: translateY(-50%) translateX(3px);
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 28px 20px 36px;
+    border-top: 1px solid var(--gray-200);
+    margin-top: auto;
+  }
+
+  .footer-brand {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-blue);
+    margin-bottom: 2px;
+  }
+
+  .footer-title {
+    font-size: 13px;
+    color: var(--gray-500);
+    margin-bottom: 8px;
+  }
+
+  .footer-contact {
+    font-size: 13px;
+    color: var(--gray-500);
+  }
+
+  .footer-contact a {
+    color: var(--terracotta);
+    text-decoration: none;
+  }
+
+  .footer-contact a:hover {
+    text-decoration: underline;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero { animation: fadeUp 0.6s ease-out; }
+  .summary { animation: fadeUp 0.5s ease-out 0.1s both; }
+  .files-section { animation: fadeUp 0.5s ease-out 0.2s both; }
+  .file-card { animation: fadeUp 0.4s ease-out both; }
+  .file-card:nth-child(1) { animation-delay: 0.25s; }
+  .file-card:nth-child(2) { animation-delay: 0.35s; }
+  .file-card:nth-child(3) { animation-delay: 0.45s; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- HERO -->
+<!-- ══════════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-badge">Project Package</div>
+  <h1><span>Luar</span> Properties</h1>
+  <p class="hero-subtitle">Direct Booking Platform — Proposal & Interactive Mockups</p>
+</header>
+
+<div class="content">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SUMMARY -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="summary">
+    <div class="summary-label">Project Overview</div>
+    <h2>What's Inside</h2>
+    <p>This package contains the full project proposal and two interactive HTML mockups for the Luar Properties direct booking platform. The proposal outlines scope, pricing, and timeline. The mockups demonstrate exactly how the guest-facing booking experience and the owner's admin portal will look and feel — built as fully clickable prototypes you can explore on any device.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- FILE LINKS -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="files-section">
+    <div class="files-label">Documents</div>
+
+    <a href="Direct Booking Experience.html" class="file-card">
+      <div class="file-card-header">
+        <div class="file-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4613A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div>
+          <div class="file-card-title">Direct Booking Experience</div>
+          <span class="file-card-tag">Guest-Facing Mockup</span>
+        </div>
+      </div>
+      <p class="file-card-desc">Interactive demo of the public website — browse properties, view photo galleries, select dates, see dynamic pricing, and walk through the full checkout flow as a guest would.</p>
+      <div class="file-card-arrow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <a href="Admin Portal.html" class="file-card">
+      <div class="file-card-header">
+        <div class="file-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </div>
+        <div>
+          <div class="file-card-title">Admin Portal</div>
+          <span class="file-card-tag">Owner Dashboard Mockup</span>
+        </div>
+      </div>
+      <p class="file-card-desc">Interactive demo of the private management dashboard — manage properties, upload photos, configure day-of-week pricing, view bookings, and export CSV financial reports.</p>
+      <div class="file-card-arrow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <a href="proposal.html" class="file-card">
+      <div class="file-card-header">
+        <div class="file-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B07075" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div>
+          <div class="file-card-title">Project Proposal</div>
+          <span class="file-card-tag">Scope, Pricing &amp; Agreement</span>
+        </div>
+      </div>
+      <p class="file-card-desc">The full project proposal covering scope of work, technology stack, pricing with friends &amp; family discount, payment milestones, ongoing costs, and signature agreement.</p>
+      <div class="file-card-arrow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="footer-brand">Stephen Odanovich</div>
+  <div class="footer-title">AI Consulting & Digital Services — Aitheos LLC</div>
+  <div class="footer-contact">
+    <a href="mailto:stephen@aitheos.com">stephen@aitheos.com</a> &middot; <a href="tel:2108150059">210-815-0059</a>
+  </div>
+</footer>
+
+</body>
+</html>

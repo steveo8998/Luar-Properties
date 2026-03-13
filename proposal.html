@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Proposal — Luar Properties</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-bg: #FBF7F4;
+    --color-surface: #FFFFFF;
+    --color-surface-alt: #F5DFE1;
+    --color-text: #1B2A4A;
+    --color-text-secondary: #525252;
+    --color-accent: #1B2A4A;
+    --color-accent-light: #E8EDF5;
+    --color-accent-dark: #131E35;
+    --color-gold: #C4613A;
+    --color-gold-light: #FDF0EA;
+    --color-border: #E8E8E8;
+    --color-success: #1B2A4A;
+    --color-divider: #D4D4D4;
+    --color-blush: #E8B4B8;
+    --color-blush-light: #F5DFE1;
+    --color-terracotta: #C4613A;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', -apple-system, sans-serif;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── Cover Section ── */
+  .cover {
+    background: linear-gradient(165deg, var(--color-accent-dark) 0%, var(--color-accent) 60%, #243656 100%);
+    color: white;
+    padding: 60px 24px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    left: -20%;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .cover-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.15);
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(8px);
+  }
+
+  .cover h1 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+
+  .cover-subtitle {
+    font-size: 16px;
+    opacity: 0.85;
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+
+  .cover-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+    opacity: 0.7;
+  }
+
+  .cover-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cover-meta svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  /* ── Main Content ── */
+  .content {
+    padding: 0 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ── Section Styles ── */
+  .section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .section:last-child {
+    border-bottom: none;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 12px;
+  }
+
+  .section h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--color-text);
+  }
+
+  .section p {
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .section p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── Deliverable Cards ── */
+  .deliverable {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .deliverable-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .deliverable h3 {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: var(--color-text);
+  }
+
+  .deliverable p {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+
+  .deliverable p:last-child {
+    margin-bottom: 0;
+  }
+
+  .feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .feature-list li {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    padding: 7px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .feature-list li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 14px;
+    width: 12px;
+    height: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%231B2A4A'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  /* ── Tech Stack ── */
+  .tech-item {
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .tech-item:last-child {
+    border-bottom: none;
+  }
+
+  .tech-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .tech-info h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  .tech-info p {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+
+  /* ── Pricing ── */
+  .pricing-card {
+    background: var(--color-surface);
+    border: 2px solid var(--color-accent);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 8px;
+  }
+
+  .pricing-header {
+    background: var(--color-accent);
+    color: white;
+    padding: 20px 24px;
+    text-align: center;
+  }
+
+  .pricing-header h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .pricing-header p {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 0;
+    color: white;
+  }
+
+  .pricing-body {
+    padding: 24px;
+  }
+
+  .price-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    font-size: 15px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .price-line:last-child {
+    border-bottom: none;
+  }
+
+  .price-line.original {
+    color: var(--color-text-secondary);
+  }
+
+  .price-line.original .price-amount {
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+
+  .price-line.discount {
+    color: var(--color-terracotta);
+    font-weight: 600;
+  }
+
+  .price-line.total {
+    border-top: 2px solid var(--color-text);
+    border-bottom: none;
+    padding-top: 16px;
+    margin-top: 4px;
+    font-weight: 700;
+    font-size: 17px;
+  }
+
+  .discount-badge {
+    display: inline-block;
+    background: var(--color-blush-light);
+    color: var(--color-terracotta);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 100px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Milestones ── */
+  .milestone {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .milestone:last-child {
+    margin-bottom: 0;
+  }
+
+  .milestone-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .milestone-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: 3px solid var(--color-accent-light);
+    flex-shrink: 0;
+  }
+
+  .milestone-line {
+    width: 2px;
+    flex: 1;
+    background: var(--color-border);
+    margin-top: 4px;
+  }
+
+  .milestone:last-child .milestone-line {
+    display: none;
+  }
+
+  .milestone-content {
+    padding-bottom: 4px;
+  }
+
+  .milestone-content h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .milestone-content .milestone-payment {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-terracotta);
+    margin-bottom: 6px;
+  }
+
+  .milestone-content p {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  /* ── Hosting Costs ── */
+  .cost-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 14px;
+  }
+
+  .cost-row:last-child {
+    border-bottom: none;
+  }
+
+  .cost-row .cost-label {
+    color: var(--color-text-secondary);
+  }
+
+  .cost-row .cost-value {
+    font-weight: 600;
+    color: var(--color-terracotta);
+  }
+
+  .cost-box {
+    background: var(--color-accent-light);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .cost-box .cost-total-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    color: var(--color-terracotta);
+    margin-bottom: 4px;
+  }
+
+  .cost-box .cost-total-value {
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: var(--color-accent-dark);
+  }
+
+  /* ── Exclusions ── */
+  .exclusion-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .exclusion-list li {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    padding: 7px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .exclusion-list li::before {
+    content: '—';
+    position: absolute;
+    left: 2px;
+    top: 7px;
+    color: var(--color-divider);
+    font-weight: 700;
+  }
+
+  /* ── Callout Box ── */
+  .callout {
+    background: var(--color-blush-light);
+    border-left: 3px solid var(--color-blush);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 18px 20px;
+    margin: 20px 0;
+  }
+
+  .callout p {
+    font-size: 14px;
+    color: var(--color-text);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  .callout strong {
+    color: var(--color-text);
+  }
+
+  /* ── Signature Area ── */
+  .signature-area {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    margin-top: 8px;
+  }
+
+  .sig-block {
+    margin-bottom: 32px;
+  }
+
+  .sig-block:last-child {
+    margin-bottom: 0;
+  }
+
+  .sig-block label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+  }
+
+  .sig-line {
+    border-bottom: 1px solid var(--color-text);
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+
+  .sig-sub {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 32px 20px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+  }
+
+  .footer a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .cover { animation: fadeUp 0.6s ease-out; }
+  .section { animation: fadeUp 0.5s ease-out both; }
+
+  /* ── Revision Note ── */
+  .revision-note {
+    background: var(--color-surface-alt);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .revision-note strong {
+    color: var(--color-text);
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- COVER -->
+<!-- ══════════════════════════════════════════ -->
+<header class="cover">
+  <div class="cover-badge">Project Proposal</div>
+  <h1>Luar Properties<br>Direct Booking Platform</h1>
+  <p class="cover-subtitle">A custom website for listing rental properties and accepting direct bookings — saving on third-party platform fees while giving guests a seamless experience.</p>
+  <div class="cover-meta">
+    <span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      Prepared for Nate — Luar Properties
+    </span>
+    <span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+      March 2026
+    </span>
+    <span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      Peoria, Illinois
+    </span>
+    <span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+      Prepared by Stephen Odanovich — Aitheos LLC
+    </span>
+  </div>
+</header>
+
+<div class="content">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- THE OPPORTUNITY -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Overview</div>
+    <h2>The Opportunity</h2>
+    <p>Luar Properties currently lists two rental properties in Peoria, IL through Airbnb. When existing guests want to extend their stay, they're forced to rebook through Airbnb — costing both the guest and Luar Properties unnecessary platform fees.</p>
+    <p>This project delivers a custom direct-booking website where guests can browse available properties, select dates, and pay securely — all without a middleman. The site will sync in real-time with Airbnb, VRBO, and other platforms via Hostaway, so availability is always up to date across every channel.</p>
+    <p>The platform is designed to grow. While launching with two properties, the system will make it easy to add new listings as the business expands.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SCOPE OF WORK -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Scope of Work</div>
+    <h2>What We're Building</h2>
+    <p>This MVP delivers everything needed to accept direct bookings from day one. Every feature below is included in the project price.</p>
+
+    <!-- 1. Public Website -->
+    <div class="deliverable">
+      <div class="deliverable-number">1</div>
+      <h3>Public-Facing Website</h3>
+      <p>A clean, mobile-first website designed to feel familiar to anyone who has used Airbnb — simple, professional, and easy to navigate.</p>
+      <ul class="feature-list">
+        <li>Home page introducing Luar Properties with featured property cards and links to book</li>
+        <li>Individual property pages with full photo galleries, descriptions, amenities, bed/bath counts, square footage, and all details a guest needs to make a decision</li>
+        <li>Contact page with an email form for guest questions and support inquiries</li>
+        <li>Legal and terms page (content provided by Luar Properties)</li>
+        <li>Fully responsive — optimized for phones, tablets, and desktops</li>
+      </ul>
+    </div>
+
+    <!-- 2. Booking & Payment -->
+    <div class="deliverable">
+      <div class="deliverable-number">2</div>
+      <h3>Booking &amp; Payment System</h3>
+      <p>The core of the platform. Guests select their dates, see a transparent price breakdown, and pay securely — with instant confirmation.</p>
+      <ul class="feature-list">
+        <li>Interactive availability calendar showing open and blocked dates in real time</li>
+        <li>Custom day-of-week pricing (different rates for Mon–Sun) calculated automatically</li>
+        <li>Minimum stay enforcement (e.g., 7-night or 30-night minimums per property)</li>
+        <li>Dynamic price breakdown: nightly rates × number of nights + cleaning fee + occupancy tax = total</li>
+        <li>Secure checkout via Stripe — PCI compliant, no card data touches our servers</li>
+        <li>Full payment collected at time of booking — no partial payments or deposits</li>
+        <li>Clear no-refund policy displayed before checkout</li>
+      </ul>
+    </div>
+
+    <!-- 3. Calendar Sync -->
+    <div class="deliverable">
+      <div class="deliverable-number">3</div>
+      <h3>Hostaway Calendar Integration</h3>
+      <p>Two-way sync between the Luar Properties website and all connected booking platforms — Airbnb, VRBO, and any others managed through Hostaway.</p>
+      <ul class="feature-list">
+        <li>Bookings made on Airbnb or VRBO automatically block those dates on the Luar Properties website</li>
+        <li>Bookings made on the Luar Properties website automatically push to Hostaway, blocking those dates on all connected platforms</li>
+        <li>Automated sync runs on a regular schedule to keep availability current</li>
+      </ul>
+    </div>
+
+    <!-- 4. Confirmation Emails -->
+    <div class="deliverable">
+      <div class="deliverable-number">4</div>
+      <h3>Booking Confirmation Email</h3>
+      <p>Guests receive an immediate confirmation email after successful payment with everything they need for their stay.</p>
+      <ul class="feature-list">
+        <li>Property photo, name, and full address</li>
+        <li>Check-in and check-out dates with number of nights</li>
+        <li>Line-item receipt: nightly rates, cleaning fee, occupancy tax, and total charged</li>
+        <li>No-refund policy reminder</li>
+        <li>Sent from a branded email address (e.g., bookings@luarproperties.com)</li>
+      </ul>
+    </div>
+
+    <!-- 5. Admin Dashboard -->
+    <div class="deliverable">
+      <div class="deliverable-number">5</div>
+      <h3>Admin Dashboard</h3>
+      <p>A private management panel for you to control every aspect of the business — properties, pricing, and financials — without needing a developer.</p>
+      <ul class="feature-list">
+        <li>Secure login (password protected, single admin account)</li>
+        <li>Add, edit, and remove properties with photos, descriptions, bed/bath counts, square footage, and amenities</li>
+        <li>Drag-and-drop photo upload and management for each property</li>
+        <li>Set custom nightly rates for each day of the week (Monday through Sunday) per property</li>
+        <li>Set cleaning fee and occupancy tax rate per property</li>
+        <li>Set minimum stay requirement per property</li>
+        <li>View all bookings with guest name, email, property, dates, and payment amounts</li>
+        <li>CSV export of booking data with monthly totals broken down by nightly revenue, cleaning fees, and occupancy taxes collected — making tax filing straightforward</li>
+      </ul>
+    </div>
+
+    <!-- 6. Testing & Launch -->
+    <div class="deliverable">
+      <div class="deliverable-number">6</div>
+      <h3>Testing, Deployment &amp; Handoff</h3>
+      <p>Thorough quality assurance across the entire booking flow, plus a guided walkthrough so you're confident managing the site independently.</p>
+      <ul class="feature-list">
+        <li>End-to-end testing of the booking and payment flow with real Stripe test transactions</li>
+        <li>Mobile and tablet responsiveness testing</li>
+        <li>Hostaway sync verification across platforms</li>
+        <li>Production deployment and custom domain setup</li>
+        <li>Guided walkthrough of the admin dashboard with you</li>
+        <li>Written documentation for adding properties, updating pricing, and exporting reports</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- TECH STACK -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Technology</div>
+    <h2>How It's Built</h2>
+    <p>The platform is built on modern, industry-standard tools chosen specifically for reliability, low cost, and ease of long-term maintenance.</p>
+
+    <div class="tech-item">
+      <div class="tech-icon">⚡</div>
+      <div class="tech-info">
+        <h4>Next.js</h4>
+        <p>React framework for the full website and admin dashboard. Fast, SEO-friendly, and used by thousands of production sites.</p>
+      </div>
+    </div>
+
+    <div class="tech-item">
+      <div class="tech-icon">🗄️</div>
+      <div class="tech-info">
+        <h4>Supabase</h4>
+        <p>Database and image storage. Stores property listings, photos, pricing rules, and booking records securely.</p>
+      </div>
+    </div>
+
+    <div class="tech-item">
+      <div class="tech-icon">💳</div>
+      <div class="tech-info">
+        <h4>Stripe</h4>
+        <p>Industry-leading payment processor. Handles credit card payments securely with automatic receipt generation.</p>
+      </div>
+    </div>
+
+    <div class="tech-item">
+      <div class="tech-icon">🔄</div>
+      <div class="tech-info">
+        <h4>Hostaway</h4>
+        <p>Channel manager integration for two-way calendar sync with Airbnb, VRBO, and other booking platforms.</p>
+      </div>
+    </div>
+
+    <div class="tech-item">
+      <div class="tech-icon">📧</div>
+      <div class="tech-info">
+        <h4>Resend</h4>
+        <p>Transactional email service for sending professional booking confirmations from a branded email address.</p>
+      </div>
+    </div>
+
+    <div class="tech-item">
+      <div class="tech-icon">🌐</div>
+      <div class="tech-info">
+        <h4>Vercel</h4>
+        <p>Website hosting with automatic SSL, global CDN, and zero-configuration deployments. Built for Next.js.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- ONGOING HOSTING COSTS -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Ongoing Costs</div>
+    <h2>Monthly Operating Costs</h2>
+    <p>One of the biggest advantages of this tech stack is extremely low ongoing costs. Here's what you can expect after the site is live.</p>
+
+    <div class="cost-row">
+      <span class="cost-label">Website Hosting (Vercel)</span>
+      <span class="cost-value">Free</span>
+    </div>
+    <div class="cost-row">
+      <span class="cost-label">Database &amp; Storage (Supabase)</span>
+      <span class="cost-value">Free</span>
+    </div>
+    <div class="cost-row">
+      <span class="cost-label">Email Service (Resend)</span>
+      <span class="cost-value">Free</span>
+    </div>
+    <div class="cost-row">
+      <span class="cost-label">Payment Processing (Stripe)</span>
+      <span class="cost-value">2.9% + $0.30 / transaction</span>
+    </div>
+    <div class="cost-row">
+      <span class="cost-label">Domain Name</span>
+      <span class="cost-value">~$12 / year</span>
+    </div>
+    <div class="cost-row">
+      <span class="cost-label">Hostaway Subscription</span>
+      <span class="cost-value">Existing plan*</span>
+    </div>
+
+    <div class="cost-box">
+      <div class="cost-total-label">Estimated Monthly Cost</div>
+      <div class="cost-total-value">Under $5/mo + Stripe fees</div>
+    </div>
+
+    <div class="revision-note">
+      * Hostaway is a separate service with its own subscription. This project integrates with an existing Hostaway account — the Hostaway plan must include API access.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- PRICING -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Investment</div>
+    <h2>Project Pricing</h2>
+    <p>This is a fixed-price project covering everything outlined in the scope of work above — design, development, testing, deployment, and handoff.</p>
+
+    <div class="pricing-card">
+      <div class="pricing-header">
+        <h3>MVP Direct Booking Platform</h3>
+        <p>Complete build — design through launch</p>
+      </div>
+      <div class="pricing-body">
+        <div class="price-line original">
+          <span>Project Rate</span>
+          <span class="price-amount">$8,000</span>
+        </div>
+        <div class="price-line discount">
+          <span>
+            Friends &amp; Family Discount
+            <br><span class="discount-badge">35% — Referred by Amy Odanovich</span>
+          </span>
+          <span>− $2,800</span>
+        </div>
+        <div class="price-line total">
+          <span>Total Investment</span>
+          <span>$5,200</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p><strong>How this pays for itself:</strong> Airbnb charges guests a 14–16% service fee on every booking. For a 30-night stay at $80/night ($2,400 total), the guest saves $336–$384 by booking directly — and Luar Properties keeps 100% of the booking revenue minus only the small Stripe processing fee (~$70). Just two or three direct bookings and the platform has already paid for itself.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- PAYMENT MILESTONES -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Payment Schedule</div>
+    <h2>Two-Milestone Payments</h2>
+    <p>The project is split into two phases. Payment is due at the completion of each milestone.</p>
+
+    <div style="margin-top: 24px;">
+      <div class="milestone">
+        <div class="milestone-marker">
+          <div class="milestone-dot"></div>
+          <div class="milestone-line"></div>
+        </div>
+        <div class="milestone-content">
+          <h4>Milestone 1 — Foundation</h4>
+          <div class="milestone-payment">$2,600 due on completion</div>
+          <p>Admin dashboard with property management, photo uploads, and pricing configuration. Public-facing website with home page, property detail pages, contact form, and legal page. All design and layout work complete.</p>
+        </div>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-marker">
+          <div class="milestone-dot"></div>
+          <div class="milestone-line"></div>
+        </div>
+        <div class="milestone-content">
+          <h4>Milestone 2 — Booking &amp; Launch</h4>
+          <div class="milestone-payment">$2,600 due on completion</div>
+          <p>Booking flow with date selection, pricing calculation, and Stripe payment integration. Hostaway two-way calendar sync. Booking confirmation emails. CSV export for financial reporting. Full testing, production deployment, domain setup, and admin walkthrough.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- WHAT'S NOT INCLUDED -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Boundaries</div>
+    <h2>What's Not Included</h2>
+    <p>The following items are outside the scope of this MVP. Any of these can be quoted separately as future enhancements once the platform is live and performing well.</p>
+    <ul class="exclusion-list">
+      <li>Automated post-booking email sequences (check-in instructions, WiFi details, house rules)</li>
+      <li>Guest user accounts or guest portal</li>
+      <li>Refund or cancellation processing</li>
+      <li>Security deposit collection</li>
+      <li>Cleaning crew scheduling or notifications</li>
+      <li>Multi-language or multi-currency support</li>
+      <li>Blog or content management</li>
+      <li>SEO strategy or marketing campaigns</li>
+      <li>Legal page content (provided by Luar Properties)</li>
+      <li>Hostaway account setup or subscription fees</li>
+      <li>Stripe account setup or transaction fees</li>
+    </ul>
+
+    <div class="revision-note">
+      <strong>Design revisions:</strong> This proposal includes two rounds of design revisions per page. Additional revision rounds can be accommodated at an agreed-upon hourly rate.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- FUTURE GROWTH -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Looking Ahead</div>
+    <h2>Future Enhancements</h2>
+    <p>This MVP is built on a foundation designed to grow. Once the platform is live and generating direct bookings, here are some features that could be added down the road to further streamline operations.</p>
+    <ul class="feature-list">
+      <li>Automated check-in email sequences with house rules, WiFi passwords, and local recommendations</li>
+      <li>Guest portal for viewing upcoming and past bookings</li>
+      <li>Dynamic seasonal pricing rules and promotional discount codes</li>
+      <li>Cleaning crew notifications triggered by checkout dates</li>
+      <li>Review and testimonial system to build trust with new guests</li>
+      <li>Analytics dashboard showing occupancy rates, revenue trends, and booking sources</li>
+    </ul>
+    <p style="margin-top: 16px;">These features would be scoped and quoted individually based on your priorities as the business grows.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- AGREEMENT -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Agreement</div>
+    <h2>Let's Get Started</h2>
+    <p>By signing below, both parties agree to the scope of work, pricing, and payment schedule outlined in this proposal. Work begins upon signed agreement and receipt of the first milestone payment.</p>
+
+    <div class="signature-area">
+      <div class="sig-block">
+        <label>Client — Luar Properties</label>
+        <div class="sig-line"></div>
+        <div class="sig-sub">
+          <span>Nate — Owner</span>
+          <span>Date: _______________</span>
+        </div>
+      </div>
+      <div class="sig-block">
+        <label>Developer — Aitheos LLC</label>
+        <div class="sig-line"></div>
+        <div class="sig-sub">
+          <span>Stephen Odanovich — Digital Service Provider</span>
+          <span>Date: _______________</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <p>Luar Properties — Direct Booking Platform Proposal<br>Prepared by <strong>Stephen Odanovich</strong> — Aitheos LLC<br><a href="mailto:stephen@aitheos.com">stephen@aitheos.com</a> · <a href="tel:2108150059">210-815-0059</a></p>
+</footer>
+
+</body>
+</html>
