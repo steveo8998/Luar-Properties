@@ -1747,6 +1747,24 @@
               <div class="photo-grid" id="photoGrid"></div>
             </div>
 
+            <!-- Calendar Sync -->
+            <div class="form-group-card">
+              <h3>Calendar Sync</h3>
+              <p class="form-desc">Connect this property to Hostaway for two-way calendar sync across Airbnb, VRBO, and other platforms.</p>
+              <div class="form-grid">
+                <div class="full-width form-group">
+                  <label class="form-label">Hostaway Listing ID <span style="color:var(--red);font-weight:700;">*</span></label>
+                  <input type="text" class="form-input" id="editHostawayId" placeholder="e.g., 123456">
+                  <p class="form-desc" style="margin-top:6px;font-size:12px;">Required. Found in your Hostaway dashboard under Listings. This powers the two-way sync — bookings made here automatically block dates on Airbnb and VRBO, and vice versa.</p>
+                </div>
+                <div class="full-width form-group">
+                  <label class="form-label">iCal Feed URL <span style="color:var(--gray-400);font-size:11px;font-weight:400;">(optional)</span></label>
+                  <input type="text" class="form-input" id="editIcalUrl" placeholder="https://app.hostaway.com/calendar/ical/...">
+                  <p class="form-desc" style="margin-top:6px;font-size:12px;">Optional fallback. Paste an iCal URL from Hostaway, Airbnb, or any other platform to pull in blocked dates from an additional source.</p>
+                </div>
+              </div>
+            </div>
+
             <!-- Pricing -->
             <div class="form-group-card">
               <h3>Nightly Rates</h3>
@@ -2001,7 +2019,9 @@ let properties = [
     rates: { mon: 85, tue: 85, wed: 85, thu: 90, fri: 110, sat: 110, sun: 95 },
     cleaningFee: 100,
     taxRate: 12,
-    minStay: 7
+    minStay: 7,
+    hostawayId: '284917',
+    icalUrl: ''
   },
   {
     id: 2,
@@ -2018,7 +2038,9 @@ let properties = [
     rates: { mon: 95, tue: 95, wed: 95, thu: 100, fri: 125, sat: 125, sun: 105 },
     cleaningFee: 125,
     taxRate: 12,
-    minStay: 7
+    minStay: 7,
+    hostawayId: '301482',
+    icalUrl: ''
   }
 ];
 
@@ -2191,6 +2213,8 @@ function editProperty(id) {
   document.getElementById('editCleaningFee').value = p.cleaningFee;
   document.getElementById('editTaxRate').value = p.taxRate;
   document.getElementById('editMinStay').value = p.minStay;
+  document.getElementById('editHostawayId').value = p.hostawayId || '';
+  document.getElementById('editIcalUrl').value = p.icalUrl || '';
 
   // Amenities
   currentAmenities = [...p.amenities];
@@ -2226,6 +2250,8 @@ function clearEditForm() {
   document.getElementById('editCleaningFee').value = '';
   document.getElementById('editTaxRate').value = '';
   document.getElementById('editMinStay').value = '';
+  document.getElementById('editHostawayId').value = '';
+  document.getElementById('editIcalUrl').value = '';
   currentAmenities = [];
   currentPhotos = [];
   renderAmenities();
@@ -2269,7 +2295,9 @@ function saveProperty() {
     },
     cleaningFee: parseInt(document.getElementById('editCleaningFee').value) || 0,
     taxRate: parseFloat(document.getElementById('editTaxRate').value) || 0,
-    minStay: parseInt(document.getElementById('editMinStay').value) || 1
+    minStay: parseInt(document.getElementById('editMinStay').value) || 1,
+    hostawayId: document.getElementById('editHostawayId').value.trim(),
+    icalUrl: document.getElementById('editIcalUrl').value.trim()
   };
 
   if (currentPropertyId) {
