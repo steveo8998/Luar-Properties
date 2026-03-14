@@ -937,6 +937,89 @@
   }
 
   /* ========== CSV EXPORT ========== */
+  /* ── Bookings ── */
+  .bk-controls {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+  }
+
+  .bk-filter-group {
+    min-width: 220px;
+  }
+
+  .bk-search-group {
+    flex: 1;
+  }
+
+  .bk-status-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .bk-status-tabs::-webkit-scrollbar { display: none; }
+
+  .bk-tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 100px;
+    background: var(--white);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all var(--transition);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .bk-tab:hover {
+    border-color: var(--gray-300);
+    background: var(--gray-50);
+  }
+
+  .bk-tab.active {
+    border-color: var(--dark-blue);
+    background: var(--dark-blue);
+    color: var(--white);
+  }
+
+  .bk-tab-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--gray-100);
+    color: var(--gray-600);
+  }
+
+  .bk-tab.active .bk-tab-count {
+    background: rgba(255,255,255,0.2);
+    color: var(--white);
+  }
+
+  .bk-empty {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    margin-bottom: 20px;
+  }
+
   /* ── Calendar ── */
   .cal-header {
     display: flex;
@@ -1714,6 +1797,29 @@
       grid-template-columns: 1fr;
     }
 
+    .bk-controls {
+      flex-direction: column;
+    }
+
+    .bk-filter-group {
+      min-width: unset;
+      width: 100%;
+    }
+
+    .bk-filter-group select {
+      font-size: 16px; /* Prevents iOS zoom */
+    }
+
+    .bk-status-tabs {
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .bk-tab {
+      padding: 7px 12px;
+      font-size: 12px;
+    }
+
     .rpt-period-grid {
       grid-template-columns: repeat(3, 1fr);
     }
@@ -2289,16 +2395,39 @@
 
       <!-- ══════════════ BOOKINGS PANEL ══════════════ -->
       <div class="panel" id="panel-bookings">
-        <div class="search-bar">
-          <div class="search-input-wrap">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
-            <input type="text" class="search-input" id="bookingSearch" placeholder="Search by guest name, email, or property..." oninput="filterBookings()">
+        <!-- Controls card -->
+        <div class="card" style="margin-bottom:20px;">
+          <div class="card-body" style="padding:24px;">
+            <p style="font-size:14px;color:var(--gray-600);margin-bottom:16px;">View and manage all bookings across your properties. Use the filters to find specific guests or see upcoming check-ins.</p>
+
+            <!-- Property filter + search -->
+            <div class="bk-controls">
+              <div class="bk-filter-group">
+                <label style="font-size:13px;font-weight:600;color:var(--gray-600);margin-bottom:6px;display:block;">Filter by Property</label>
+                <select class="form-select" id="bookingFilter" onchange="filterBookings()">
+                  <option value="all">All Properties</option>
+                  <option value="Main Street Property">Main Street Property</option>
+                  <option value="Moss Ave Property">Moss Ave Property</option>
+                </select>
+              </div>
+              <div class="bk-search-group">
+                <label style="font-size:13px;font-weight:600;color:var(--gray-600);margin-bottom:6px;display:block;">Search</label>
+                <div class="search-input-wrap">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+                  <input type="text" class="search-input" id="bookingSearch" placeholder="Guest name, email, or property..." oninput="filterBookings()">
+                </div>
+              </div>
+            </div>
           </div>
-          <select class="form-select" id="bookingFilter" style="width:auto;min-width:160px;" onchange="filterBookings()">
-            <option value="all">All Properties</option>
-            <option value="Main Street Property">Main Street Property</option>
-            <option value="Moss Ave Property">Moss Ave Property</option>
-          </select>
+        </div>
+
+        <!-- Status tabs -->
+        <div class="bk-status-tabs" id="bkStatusTabs">
+          <button class="bk-tab active" data-status="all" onclick="setBookingStatusTab('all')">All <span class="bk-tab-count" id="bkCountAll">0</span></button>
+          <button class="bk-tab" data-status="upcoming" onclick="setBookingStatusTab('upcoming')">Upcoming <span class="bk-tab-count" id="bkCountUpcoming">0</span></button>
+          <button class="bk-tab" data-status="current" onclick="setBookingStatusTab('current')">Current <span class="bk-tab-count" id="bkCountCurrent">0</span></button>
+          <button class="bk-tab" data-status="completed" onclick="setBookingStatusTab('completed')">Completed <span class="bk-tab-count" id="bkCountCompleted">0</span></button>
+          <button class="bk-tab" data-status="cancelled" onclick="setBookingStatusTab('cancelled')">Cancelled <span class="bk-tab-count" id="bkCountCancelled">0</span></button>
         </div>
 
         <!-- Desktop table -->
@@ -2327,6 +2456,13 @@
 
         <!-- Mobile cards -->
         <div class="booking-cards" id="bookingCards"></div>
+
+        <!-- Empty state -->
+        <div class="bk-empty" id="bkEmpty" style="display:none;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:48px;height:48px;color:var(--gray-300);margin-bottom:12px;"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+          <p style="font-size:15px;font-weight:600;color:var(--gray-500);">No bookings match your filters</p>
+          <p style="font-size:13px;color:var(--gray-400);margin-top:4px;">Try a different search term, property, or status.</p>
+        </div>
       </div>
 
       <!-- ══════════════ CSV EXPORT PANEL ══════════════ -->
@@ -3002,8 +3138,11 @@ function confirmCancelBooking() {
 // BOOKINGS
 // ================================================================
 
+let currentBookingStatusTab = 'all';
+
 function renderBookingsTable() {
-  renderBookingsList(bookings);
+  updateBookingCounts();
+  filterBookings();
 }
 
 function getStatusBadge(status) {
@@ -3012,12 +3151,83 @@ function getStatusBadge(status) {
   return 'badge-gray';
 }
 
+function getBookingStatusCategory(b) {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const checkIn = new Date(b.checkIn + 'T00:00:00');
+  const checkOut = new Date(b.checkOut + 'T00:00:00');
+  if (b.status === 'cancelled') return 'cancelled';
+  if (b.status === 'completed') return 'completed';
+  if (checkIn <= today && checkOut > today) return 'current';
+  if (checkIn > today) return 'upcoming';
+  return 'completed';
+}
+
+function updateBookingCounts() {
+  const propFilter = document.getElementById('bookingFilter').value;
+  const filtered = bookings.filter(b => propFilter === 'all' || b.property === propFilter);
+
+  let counts = { all: filtered.length, upcoming: 0, current: 0, completed: 0, cancelled: 0 };
+  filtered.forEach(b => {
+    const cat = getBookingStatusCategory(b);
+    counts[cat]++;
+  });
+
+  document.getElementById('bkCountAll').textContent = counts.all;
+  document.getElementById('bkCountUpcoming').textContent = counts.upcoming;
+  document.getElementById('bkCountCurrent').textContent = counts.current;
+  document.getElementById('bkCountCompleted').textContent = counts.completed;
+  document.getElementById('bkCountCancelled').textContent = counts.cancelled;
+}
+
+function setBookingStatusTab(status) {
+  currentBookingStatusTab = status;
+  document.querySelectorAll('.bk-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('.bk-tab[data-status="' + status + '"]').classList.add('active');
+  filterBookings();
+}
+
+function filterBookings() {
+  const search = document.getElementById('bookingSearch').value.toLowerCase();
+  const propFilter = document.getElementById('bookingFilter').value;
+  const statusTab = currentBookingStatusTab;
+
+  const filtered = bookings.filter(b => {
+    const matchSearch = !search || b.guest.toLowerCase().includes(search) || b.email.toLowerCase().includes(search) || b.property.toLowerCase().includes(search);
+    const matchProp = propFilter === 'all' || b.property === propFilter;
+    const matchStatus = statusTab === 'all' || getBookingStatusCategory(b) === statusTab;
+    return matchSearch && matchProp && matchStatus;
+  });
+
+  // Sort: upcoming first (by check-in asc), then current, then completed (by check-in desc)
+  filtered.sort((a, b) => {
+    const catA = getBookingStatusCategory(a);
+    const catB = getBookingStatusCategory(b);
+    const order = { upcoming: 0, current: 1, completed: 2, cancelled: 3 };
+    if (order[catA] !== order[catB]) return order[catA] - order[catB];
+    if (catA === 'upcoming' || catA === 'current') return a.checkIn.localeCompare(b.checkIn);
+    return b.checkIn.localeCompare(a.checkIn); // completed/cancelled: newest first
+  });
+
+  updateBookingCounts();
+  renderBookingsList(filtered);
+}
+
 function renderBookingsList(list) {
+  const hasData = list.length > 0;
+
+  // Show/hide empty state
+  document.getElementById('bkEmpty').style.display = hasData ? 'none' : 'block';
+  document.querySelector('.data-table-desktop').style.display = hasData ? '' : 'none';
+
   // Desktop table
   const tbody = document.getElementById('bookingsTableBody');
   tbody.innerHTML = list.map(b => {
     const statusClass = getStatusBadge(b.status);
     const statusLabel = b.status.charAt(0).toUpperCase() + b.status.slice(1);
+    const cat = getBookingStatusCategory(b);
+    const displayStatus = cat === 'current' ? 'Current' : statusLabel;
+    const displayBadge = cat === 'current' ? 'badge-blue' : statusClass;
     const cancelBtn = b.status === 'confirmed'
       ? `<button class="btn-cancel-sm" onclick="showCancelBookingModal(${b.id})">Cancel</button>`
       : '';
@@ -3034,7 +3244,7 @@ function renderBookingsList(list) {
         <td>$${b.tax.toFixed(2)}</td>
         <td><strong>$${b.total.toLocaleString(undefined, {minimumFractionDigits:2})}</strong></td>
         <td>
-          <span class="badge ${statusClass}">${statusLabel}</span>
+          <span class="badge ${displayBadge}">${displayStatus}</span>
           ${cancelBtn ? '<div style="margin-top:6px;">' + cancelBtn + '</div>' : ''}
         </td>
       </tr>
@@ -3044,13 +3254,12 @@ function renderBookingsList(list) {
   // Mobile cards
   const cards = document.getElementById('bookingCards');
   if (cards) {
-    if (list.length === 0) {
-      cards.innerHTML = '<div style="text-align:center;padding:40px;color:var(--gray-400);">No bookings found matching your search.</div>';
-      return;
-    }
     cards.innerHTML = list.map(b => {
       const statusClass = getStatusBadge(b.status);
       const statusLabel = b.status.charAt(0).toUpperCase() + b.status.slice(1);
+      const cat = getBookingStatusCategory(b);
+      const displayStatus = cat === 'current' ? 'Current' : statusLabel;
+      const displayBadge = cat === 'current' ? 'badge-blue' : statusClass;
       const cancelBtn = b.status === 'confirmed'
         ? `<div style="padding-top:12px;border-top:1px solid var(--gray-100);margin-top:12px;"><button class="btn-cancel-sm" style="width:100%;justify-content:center;padding:10px;" onclick="showCancelBookingModal(${b.id})">Cancel Booking</button></div>`
         : '';
@@ -3061,7 +3270,7 @@ function renderBookingsList(list) {
               <div class="booking-card-guest">${b.guest}</div>
               <div class="booking-card-email">${b.email}</div>
             </div>
-            <span class="badge ${statusClass}">${statusLabel}</span>
+            <span class="badge ${displayBadge}">${displayStatus}</span>
           </div>
           <div class="booking-card-property">${b.property}</div>
           <div class="booking-card-dates">
@@ -3103,27 +3312,10 @@ function renderBookingsList(list) {
   }
 }
 
-function filterBookings() {
-  const search = document.getElementById('bookingSearch').value.toLowerCase();
-  const filter = document.getElementById('bookingFilter').value;
-
-  const filtered = bookings.filter(b => {
-    const matchSearch = !search || b.guest.toLowerCase().includes(search) || b.email.toLowerCase().includes(search) || b.property.toLowerCase().includes(search);
-    const matchFilter = filter === 'all' || b.property === filter;
-    return matchSearch && matchFilter;
-  });
-
-  renderBookingsList(filtered);
-}
-
 function formatDate(dateStr) {
   const d = new Date(dateStr + 'T00:00:00');
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
-
-// ================================================================
-// CSV EXPORT
-// ================================================================
 
 // ================================================================
 // REPORTS
