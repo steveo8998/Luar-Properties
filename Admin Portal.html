@@ -1105,84 +1105,241 @@
     border-bottom-right-radius: 4px;
   }
 
-  .export-preview {
-    background: var(--gray-50);
-    border-radius: var(--radius-sm);
-    padding: 20px;
-    margin-top: 16px;
-  }
-
-  .export-month-grid {
+  /* ── Reports ── */
+  .rpt-period-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin-bottom: 0;
   }
 
-  .export-month-card {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
+  .rpt-period-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 12px 8px;
+    border: 1.5px solid var(--gray-200);
     border-radius: var(--radius-sm);
-    padding: 16px;
+    background: var(--white);
     cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-700);
     transition: all var(--transition);
   }
 
-  .export-month-card:hover {
-    border-color: var(--terracotta);
+  .rpt-period-btn span {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gray-400);
   }
 
-  .export-month-card.selected {
+  .rpt-period-btn:hover {
     border-color: var(--terracotta);
     background: #FEF7F5;
   }
 
-  .export-month-name {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--gray-800);
+  .rpt-period-btn.active {
+    border-color: var(--terracotta);
+    background: var(--terracotta);
+    color: var(--white);
+  }
+
+  .rpt-period-btn.active span {
+    color: rgba(255,255,255,0.8);
+  }
+
+  .rpt-custom-range {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .rpt-date-field {
+    flex: 1;
+  }
+
+  .rpt-date-field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-500);
     margin-bottom: 4px;
   }
 
-  .export-month-amount {
-    font-size: 20px;
+  .rpt-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .rpt-stat-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .rpt-stat-card.tax-highlight {
+    border-left: 4px solid var(--terracotta);
+  }
+
+  .rpt-stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .rpt-stat-value {
+    font-size: 24px;
     font-weight: 800;
+    color: var(--dark-blue);
+    line-height: 1.2;
+  }
+
+  .rpt-stat-card.tax-highlight .rpt-stat-value {
     color: var(--terracotta);
   }
 
-  .export-month-bookings {
+  .rpt-stat-sub {
     font-size: 12px;
-    color: var(--gray-500);
+    color: var(--gray-400);
     margin-top: 2px;
   }
 
-  .export-breakdown {
-    margin-top: 16px;
+  .rpt-table-desktop tfoot td {
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--dark-blue);
+    border-top: 2px solid var(--gray-300);
+    background: var(--gray-50);
   }
 
-  .export-row {
+  .rpt-cards-mobile {
+    display: none;
+  }
+
+  .rpt-mobile-totals {
+    display: none;
+  }
+
+  .rpt-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    margin-bottom: 10px;
+  }
+
+  .rpt-card.cancelled {
+    opacity: 0.5;
+  }
+
+  .rpt-card-header {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
-    font-size: 14px;
-    border-bottom: 1px solid var(--gray-200);
+    align-items: center;
+    margin-bottom: 8px;
   }
 
-  .export-row:last-child { border-bottom: none; }
-
-  .export-row-label { color: var(--gray-600); }
-  .export-row-value { font-weight: 700; color: var(--gray-800); }
-
-  .export-row.total {
-    border-top: 2px solid var(--gray-800);
-    border-bottom: none;
-    padding-top: 14px;
-    margin-top: 4px;
+  .rpt-card-guest {
+    font-size: 15px;
     font-weight: 700;
-    font-size: 16px;
+    color: var(--gray-800);
   }
 
-  .export-row.total .export-row-label { color: var(--gray-800); }
+  .rpt-card-property {
+    font-size: 13px;
+    color: var(--gray-500);
+    margin-bottom: 8px;
+  }
+
+  .rpt-card-dates {
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .rpt-card-financials {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+
+  .rpt-card-fin-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+
+  .rpt-card-fin-row .label { color: var(--gray-500); }
+  .rpt-card-fin-row .value { font-weight: 600; color: var(--gray-700); }
+
+  .rpt-card-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 800;
+    padding-top: 8px;
+    border-top: 1px solid var(--gray-200);
+    color: var(--dark-blue);
+  }
+
+  .rpt-totals-card {
+    background: var(--dark-blue);
+    border-radius: var(--radius-sm);
+    padding: 18px;
+    margin-bottom: 20px;
+    color: var(--white);
+  }
+
+  .rpt-totals-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.7;
+    margin-bottom: 12px;
+  }
+
+  .rpt-totals-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .rpt-totals-row:last-child {
+    border-bottom: none;
+    font-size: 16px;
+    font-weight: 800;
+    padding-top: 10px;
+    margin-top: 4px;
+    border-top: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .rpt-actions {
+    display: flex;
+    gap: 12px;
+    padding-bottom: 40px;
+  }
+
+  .rpt-empty {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    margin-bottom: 20px;
+  }
 
   /* ========== MOBILE MENU ========== */
   .mobile-menu-btn {
@@ -1557,8 +1714,36 @@
       grid-template-columns: 1fr;
     }
 
-    .export-month-grid {
-      grid-template-columns: 1fr;
+    .rpt-period-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .rpt-summary {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .rpt-stat-value { font-size: 20px; }
+
+    .rpt-custom-range {
+      flex-direction: column;
+    }
+
+    .rpt-table-desktop { display: none; }
+    .rpt-cards-mobile { display: block; }
+    .rpt-mobile-totals { display: block; }
+
+    .rpt-actions {
+      flex-direction: column;
+    }
+
+    .rpt-actions .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .form-select, .form-input[type="date"] {
+      font-size: 16px; /* Prevents iOS zoom */
     }
 
     .cal-year-grid {
@@ -1610,8 +1795,6 @@
       gap: 8px;
     }
 
-    .export-preview { padding: 14px; }
-
     .btn { font-size: 14px; padding: 10px 16px; }
 
     .modal { padding: 24px 20px; max-width: calc(100vw - 32px); }
@@ -1639,6 +1822,8 @@
     .stats-grid { grid-template-columns: 1fr; }
     .cal-year-grid { grid-template-columns: 1fr; }
     .cal-stats { grid-template-columns: 1fr; }
+    .rpt-period-grid { grid-template-columns: repeat(2, 1fr); }
+    .rpt-summary { grid-template-columns: 1fr; }
   }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -1697,9 +1882,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"/></svg>
         Calendar
       </button>
-      <button class="nav-item" data-panel="export" onclick="switchPanel('export')">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-        CSV Export
+      <button class="nav-item" data-panel="reports" onclick="switchPanel('reports')">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+        Reports
       </button>
     </div>
 
@@ -1742,17 +1927,17 @@
           </div>
           <div class="stat-card">
             <div class="stat-label">Total Bookings</div>
-            <div class="stat-value">18</div>
-            <div class="stat-change up">+5 this month</div>
+            <div class="stat-value">39</div>
+            <div class="stat-change up">+3 this month</div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Revenue (March)</div>
-            <div class="stat-value">$8,640</div>
-            <div class="stat-change up">+22% vs Feb</div>
+            <div class="stat-value">$5,365</div>
+            <div class="stat-change up">+82% vs Feb</div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Avg. Stay Length</div>
-            <div class="stat-value">12.4</div>
+            <div class="stat-value">13.6</div>
             <div class="stat-change" style="background:var(--blue-light);color:var(--blue);">nights</div>
           </div>
         </div>
@@ -1856,9 +2041,9 @@
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
               Add Property
             </button>
-            <button class="btn btn-outline" onclick="switchPanel('export')" style="width:100%; justify-content: center;">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-              Export CSV
+            <button class="btn btn-outline" onclick="switchPanel('reports')" style="width:100%; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+              Run Reports
             </button>
           </div>
         </div>
@@ -2171,60 +2356,97 @@
         </div>
       </div>
 
-      <!-- ══════════════ EXPORT PANEL ══════════════ -->
-      <div class="panel" id="panel-export">
+      <!-- ══════════════ REPORTS PANEL ══════════════ -->
+      <div class="panel" id="panel-reports">
+        <!-- Controls -->
         <div class="card" style="margin-bottom:20px;">
-          <div class="card-header">
-            <h3>Monthly Revenue Report</h3>
-          </div>
           <div class="card-body" style="padding:24px;">
-            <p style="font-size:14px;color:var(--gray-600);margin-bottom:20px;">Select a month to view the revenue breakdown. Click "Download CSV" to export for tax filing.</p>
+            <p style="font-size:14px;color:var(--gray-600);margin-bottom:16px;">Select a period and property to generate a financial report for tax filing.</p>
 
-            <div class="export-month-grid" id="exportMonthGrid"></div>
+            <!-- Period buttons -->
+            <div class="rpt-period-grid">
+              <button class="rpt-period-btn active" data-period="q1" onclick="selectReportPeriod('q1')">Q1<span>Jan – Mar</span></button>
+              <button class="rpt-period-btn" data-period="q2" onclick="selectReportPeriod('q2')">Q2<span>Apr – Jun</span></button>
+              <button class="rpt-period-btn" data-period="q3" onclick="selectReportPeriod('q3')">Q3<span>Jul – Sep</span></button>
+              <button class="rpt-period-btn" data-period="q4" onclick="selectReportPeriod('q4')">Q4<span>Oct – Dec</span></button>
+              <button class="rpt-period-btn" data-period="ytd" onclick="selectReportPeriod('ytd')">YTD<span>Jan – Now</span></button>
+              <button class="rpt-period-btn" data-period="custom" onclick="selectReportPeriod('custom')">Custom<span>Pick dates</span></button>
+            </div>
 
-            <div class="export-breakdown" id="exportBreakdown" style="display:none;">
-              <div class="export-preview">
-                <h4 style="font-size:15px;font-weight:700;margin-bottom:4px;" id="exportMonthTitle"></h4>
-                <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;" id="exportMonthSubtitle"></p>
-                <div id="exportRows"></div>
+            <!-- Custom date range (hidden by default) -->
+            <div class="rpt-custom-range" id="rptCustomRange" style="display:none;">
+              <div class="rpt-date-field">
+                <label>From</label>
+                <input type="date" class="form-input" id="rptDateFrom" onchange="renderReport()">
               </div>
-              <div style="margin-top:16px;display:flex;gap:12px;">
-                <button class="btn btn-fill" onclick="simulateDownload()">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-                  Download CSV
-                </button>
-                <button class="btn btn-outline" onclick="simulateDownload()">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18.75 12h.008v.008h-.008V12zm-8.25 0h.008v.008H10.5V12z"/></svg>
-                  Print Report
-                </button>
+              <div class="rpt-date-field">
+                <label>To</label>
+                <input type="date" class="form-input" id="rptDateTo" onchange="renderReport()">
               </div>
+            </div>
+
+            <!-- Property filter -->
+            <div style="margin-top:16px;">
+              <label style="font-size:13px;font-weight:600;color:var(--gray-600);margin-bottom:6px;display:block;">Property</label>
+              <select class="form-select" id="rptPropertyFilter" onchange="renderReport()" style="max-width:280px;">
+                <option value="all">All Properties</option>
+              </select>
             </div>
           </div>
         </div>
 
-        <!-- YTD Summary -->
-        <div class="card">
-          <div class="card-header"><h3>Year-to-Date Summary</h3></div>
-          <div class="card-body" style="padding:24px;">
-            <div class="stats-grid" style="margin-bottom:0;">
-              <div class="stat-card" style="border:1px solid var(--gray-200);">
-                <div class="stat-label">Total Revenue</div>
-                <div class="stat-value" style="font-size:24px;">$22,486.60</div>
-              </div>
-              <div class="stat-card" style="border:1px solid var(--gray-200);">
-                <div class="stat-label">Nightly Revenue</div>
-                <div class="stat-value" style="font-size:24px;">$18,900.00</div>
-              </div>
-              <div class="stat-card" style="border:1px solid var(--gray-200);">
-                <div class="stat-label">Cleaning Fees</div>
-                <div class="stat-value" style="font-size:24px;">$1,800.00</div>
-              </div>
-              <div class="stat-card" style="border:1px solid var(--gray-200);">
-                <div class="stat-label">Tax Collected</div>
-                <div class="stat-value" style="font-size:24px;">$1,786.60</div>
-              </div>
-            </div>
+        <!-- Summary Cards -->
+        <div class="rpt-summary" id="rptSummary"></div>
+
+        <!-- Report Table (Desktop) -->
+        <div class="card rpt-table-desktop" style="margin-bottom:20px;">
+          <div class="card-body" style="padding:0;overflow-x:auto;">
+            <table class="data-table" id="rptTable">
+              <thead>
+                <tr>
+                  <th>Guest</th>
+                  <th>Property</th>
+                  <th>Check-in</th>
+                  <th>Check-out</th>
+                  <th>Nights</th>
+                  <th>Nightly</th>
+                  <th>Cleaning</th>
+                  <th>Tax</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="rptTableBody"></tbody>
+              <tfoot id="rptTableFoot"></tfoot>
+            </table>
           </div>
+        </div>
+
+        <!-- Report Cards (Mobile) -->
+        <div class="rpt-cards-mobile" id="rptCardsMobile"></div>
+
+        <!-- Mobile Totals Card -->
+        <div class="rpt-mobile-totals" id="rptMobileTotals"></div>
+
+        <!-- Empty State -->
+        <div class="rpt-empty" id="rptEmpty" style="display:none;">
+          <div style="text-align:center;padding:60px 20px;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:48px;height:48px;color:var(--gray-300);margin-bottom:12px;"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+            <p style="font-size:15px;font-weight:600;color:var(--gray-500);">No bookings found for this period</p>
+            <p style="font-size:13px;color:var(--gray-400);margin-top:4px;">Try selecting a different date range or property.</p>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="rpt-actions" id="rptActions">
+          <button class="btn btn-fill" onclick="downloadReportCSV()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+            Download CSV
+          </button>
+          <button class="btn btn-outline" onclick="printReport()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18.75 12h.008v.008h-.008V12zm-8.25 0h.008v.008H10.5V12z"/></svg>
+            Print Report
+          </button>
         </div>
       </div>
 
@@ -2340,24 +2562,64 @@ let properties = [
 ];
 
 const bookings = [
-  { id: 1, guest: 'Sarah Mitchell', email: 'sarah.m@gmail.com', property: 'Moss Ave Property', checkIn: '2026-03-15', checkOut: '2026-03-22', nights: 7, nightly: 735, cleaning: 125, tax: 103.20, total: 963.20, status: 'confirmed' },
-  { id: 2, guest: 'James Chen', email: 'jchen@outlook.com', property: 'Main Street Property', checkIn: '2026-03-10', checkOut: '2026-04-09', nights: 30, nightly: 2790, cleaning: 100, tax: 347.28, total: 3237.28, status: 'confirmed' },
-  { id: 3, guest: 'Emily Rodriguez', email: 'emily.r@yahoo.com', property: 'Moss Ave Property', checkIn: '2026-03-01', checkOut: '2026-03-08', nights: 7, nightly: 735, cleaning: 125, tax: 103.20, total: 963.20, status: 'completed' },
-  { id: 4, guest: 'Michael Thompson', email: 'mthompson@gmail.com', property: 'Main Street Property', checkIn: '2026-02-15', checkOut: '2026-03-01', nights: 14, nightly: 1260, cleaning: 100, tax: 163.20, total: 1523.20, status: 'completed' },
-  { id: 5, guest: 'Lisa Park', email: 'lisa.park@icloud.com', property: 'Moss Ave Property', checkIn: '2026-02-10', checkOut: '2026-02-17', nights: 7, nightly: 735, cleaning: 125, tax: 103.20, total: 963.20, status: 'completed' },
-  { id: 6, guest: 'David Wilson', email: 'dwilson@proton.me', property: 'Main Street Property', checkIn: '2026-02-01', checkOut: '2026-02-08', nights: 7, nightly: 630, cleaning: 100, tax: 87.60, total: 817.60, status: 'completed' },
-  { id: 7, guest: 'Amanda Foster', email: 'amanda.f@gmail.com', property: 'Moss Ave Property', checkIn: '2026-01-20', checkOut: '2026-02-03', nights: 14, nightly: 1470, cleaning: 125, tax: 191.40, total: 1786.40, status: 'completed' },
-  { id: 8, guest: 'Robert Kim', email: 'rkim@gmail.com', property: 'Main Street Property', checkIn: '2026-01-10', checkOut: '2026-01-24', nights: 14, nightly: 1260, cleaning: 100, tax: 163.20, total: 1523.20, status: 'completed' },
-  { id: 9, guest: 'Jessica Brown', email: 'jess.brown@hotmail.com', property: 'Moss Ave Property', checkIn: '2026-01-05', checkOut: '2026-01-12', nights: 7, nightly: 735, cleaning: 125, tax: 103.20, total: 963.20, status: 'completed' },
-  { id: 10, guest: 'Kevin O\'Brien', email: 'kobrien@yahoo.com', property: 'Main Street Property', checkIn: '2026-03-25', checkOut: '2026-04-01', nights: 7, nightly: 630, cleaning: 100, tax: 87.60, total: 817.60, status: 'confirmed' },
-  { id: 11, guest: 'Rachel Green', email: 'rachel.g@gmail.com', property: 'Main Street Property', checkIn: '2026-01-01', checkOut: '2026-01-08', nights: 7, nightly: 630, cleaning: 100, tax: 87.60, total: 817.60, status: 'completed' },
-  { id: 12, guest: 'Tom Hughes', email: 'thughes@outlook.com', property: 'Moss Ave Property', checkIn: '2026-02-20', checkOut: '2026-02-27', nights: 7, nightly: 735, cleaning: 125, tax: 103.20, total: 963.20, status: 'completed' },
+  { id: 1, guest: 'Daniel Morgan', email: 'dmorgan@outlook.com', property: 'Main Street Property', checkIn: '2026-01-08', checkOut: '2026-01-18', nights: 10, nightly: 970, cleaning: 100, tax: 128.4, total: 1198.4, status: 'completed' },
+  { id: 2, guest: 'Rebecca Kelly', email: 'rkelly@outlook.com', property: 'Moss Ave Property', checkIn: '2026-01-15', checkOut: '2026-02-05', nights: 21, nightly: 2220, cleaning: 125, tax: 281.4, total: 2626.4, status: 'completed' },
+  { id: 3, guest: 'Jessica Sanders', email: 'jsanders@gmail.com', property: 'Main Street Property', checkIn: '2026-01-22', checkOut: '2026-01-29', nights: 7, nightly: 660, cleaning: 100, tax: 91.2, total: 851.2, status: 'cancelled' },
+  { id: 4, guest: 'Heather Rogers', email: 'hrogers@hotmail.com', property: 'Main Street Property', checkIn: '2026-02-03', checkOut: '2026-02-13', nights: 10, nightly: 920, cleaning: 100, tax: 122.4, total: 1142.4, status: 'completed' },
+  { id: 5, guest: 'Robert Foster', email: 'rfoster@gmail.com', property: 'Moss Ave Property', checkIn: '2026-02-15', checkOut: '2026-03-01', nights: 14, nightly: 1480, cleaning: 125, tax: 192.6, total: 1797.6, status: 'completed' },
+  { id: 6, guest: 'Vanessa Carter', email: 'vcarter@outlook.com', property: 'Main Street Property', checkIn: '2026-02-20', checkOut: '2026-02-27', nights: 7, nightly: 660, cleaning: 100, tax: 91.2, total: 851.2, status: 'cancelled' },
+  { id: 7, guest: 'Tom Hughes', email: 'thughes@icloud.com', property: 'Moss Ave Property', checkIn: '2026-03-04', checkOut: '2026-03-14', nights: 10, nightly: 1060, cleaning: 125, tax: 142.2, total: 1327.2, status: 'completed' },
+  { id: 8, guest: 'Allison Martinez', email: 'amartinez@yahoo.com', property: 'Main Street Property', checkIn: '2026-03-06', checkOut: '2026-04-03', nights: 28, nightly: 2640, cleaning: 100, tax: 328.8, total: 3068.8, status: 'confirmed' },
+  { id: 9, guest: 'Monica Clark', email: 'mclark@icloud.com', property: 'Moss Ave Property', checkIn: '2026-03-17', checkOut: '2026-03-24', nights: 7, nightly: 740, cleaning: 125, tax: 103.8, total: 968.8, status: 'confirmed' },
+  { id: 10, guest: 'Brian Kim', email: 'bkim@yahoo.com', property: 'Moss Ave Property', checkIn: '2026-04-07', checkOut: '2026-04-14', nights: 7, nightly: 740, cleaning: 125, tax: 103.8, total: 968.8, status: 'confirmed' },
+  { id: 11, guest: 'Lisa Nelson', email: 'lnelson@yahoo.com', property: 'Moss Ave Property', checkIn: '2026-04-17', checkOut: '2026-06-01', nights: 45, nightly: 4795, cleaning: 125, tax: 590.4, total: 5510.4, status: 'confirmed' },
+  { id: 12, guest: 'Tiffany Martinez', email: 'tmartinez@outlook.com', property: 'Main Street Property', checkIn: '2026-04-24', checkOut: '2026-05-04', nights: 10, nightly: 975, cleaning: 100, tax: 129.0, total: 1204.0, status: 'confirmed' },
+  { id: 13, guest: 'Tom Reed', email: 'treed@yahoo.com', property: 'Main Street Property', checkIn: '2026-05-11', checkOut: '2026-06-10', nights: 30, nightly: 2810, cleaning: 100, tax: 349.2, total: 3259.2, status: 'confirmed' },
+  { id: 14, guest: 'Michael Lewis', email: 'mlewis@outlook.com', property: 'Moss Ave Property', checkIn: '2026-06-03', checkOut: '2026-06-24', nights: 21, nightly: 2220, cleaning: 125, tax: 281.4, total: 2626.4, status: 'confirmed' },
+  { id: 15, guest: 'Tiffany Price', email: 'tprice@gmail.com', property: 'Main Street Property', checkIn: '2026-06-13', checkOut: '2026-06-27', nights: 14, nightly: 1320, cleaning: 100, tax: 170.4, total: 1590.4, status: 'confirmed' },
+  { id: 16, guest: 'Nicole Allen', email: 'nallen@icloud.com', property: 'Moss Ave Property', checkIn: '2026-07-01', checkOut: '2026-07-15', nights: 14, nightly: 1480, cleaning: 125, tax: 192.6, total: 1797.6, status: 'confirmed' },
+  { id: 17, guest: 'Stephanie Rodriguez', email: 'srodriguez@yahoo.com', property: 'Main Street Property', checkIn: '2026-07-04', checkOut: '2026-07-14', nights: 10, nightly: 950, cleaning: 100, tax: 126.0, total: 1176.0, status: 'confirmed' },
+  { id: 18, guest: 'Jennifer Martinez', email: 'jmartinez@yahoo.com', property: 'Main Street Property', checkIn: '2026-07-21', checkOut: '2026-07-28', nights: 7, nightly: 660, cleaning: 100, tax: 91.2, total: 851.2, status: 'confirmed' },
+  { id: 19, guest: 'Trevor Wilson', email: 'twilson@outlook.com', property: 'Moss Ave Property', checkIn: '2026-07-22', checkOut: '2026-08-01', nights: 10, nightly: 1060, cleaning: 125, tax: 142.2, total: 1327.2, status: 'confirmed' },
+  { id: 20, guest: 'Ian Allen', email: 'iallen@icloud.com', property: 'Moss Ave Property', checkIn: '2026-08-03', checkOut: '2026-08-13', nights: 10, nightly: 1025, cleaning: 125, tax: 138.0, total: 1288.0, status: 'confirmed' },
+  { id: 21, guest: 'Samantha Turner', email: 'sturner@outlook.com', property: 'Main Street Property', checkIn: '2026-08-04', checkOut: '2026-08-11', nights: 7, nightly: 660, cleaning: 100, tax: 91.2, total: 851.2, status: 'confirmed' },
+  { id: 22, guest: 'Brianna Anderson', email: 'banderson@hotmail.com', property: 'Moss Ave Property', checkIn: '2026-08-17', checkOut: '2026-08-27', nights: 10, nightly: 1025, cleaning: 125, tax: 138.0, total: 1288.0, status: 'confirmed' },
+  { id: 23, guest: 'Michael Young', email: 'myoung@outlook.com', property: 'Main Street Property', checkIn: '2026-08-21', checkOut: '2026-09-04', nights: 14, nightly: 1320, cleaning: 100, tax: 170.4, total: 1590.4, status: 'confirmed' },
+  { id: 24, guest: 'Natalie Scott', email: 'nscott@proton.me', property: 'Main Street Property', checkIn: '2026-09-08', checkOut: '2026-09-15', nights: 7, nightly: 660, cleaning: 100, tax: 91.2, total: 851.2, status: 'confirmed' },
+  { id: 25, guest: 'Amanda Gray', email: 'agray@hotmail.com', property: 'Moss Ave Property', checkIn: '2026-09-10', checkOut: '2026-09-20', nights: 10, nightly: 1090, cleaning: 125, tax: 145.8, total: 1360.8, status: 'confirmed' },
+  { id: 26, guest: 'Chad Hughes', email: 'chughes@gmail.com', property: 'Main Street Property', checkIn: '2026-09-18', checkOut: '2026-10-02', nights: 14, nightly: 1320, cleaning: 100, tax: 170.4, total: 1590.4, status: 'confirmed' },
+  { id: 27, guest: 'Alex Watson', email: 'awatson@hotmail.com', property: 'Moss Ave Property', checkIn: '2026-09-25', checkOut: '2026-10-02', nights: 7, nightly: 740, cleaning: 125, tax: 103.8, total: 968.8, status: 'confirmed' },
+  { id: 28, guest: 'Rachel Baker', email: 'rbaker@hotmail.com', property: 'Main Street Property', checkIn: '2026-10-05', checkOut: '2026-10-12', nights: 7, nightly: 660, cleaning: 100, tax: 91.2, total: 851.2, status: 'confirmed' },
+  { id: 29, guest: 'Marcus White', email: 'mwhite@icloud.com', property: 'Moss Ave Property', checkIn: '2026-10-16', checkOut: '2026-10-23', nights: 7, nightly: 740, cleaning: 125, tax: 103.8, total: 968.8, status: 'confirmed' },
+  { id: 30, guest: 'David King', email: 'dking@hotmail.com', property: 'Main Street Property', checkIn: '2026-11-02', checkOut: '2026-11-16', nights: 14, nightly: 1320, cleaning: 100, tax: 170.4, total: 1590.4, status: 'confirmed' },
+  { id: 31, guest: 'Nathan Wright', email: 'nwright@yahoo.com', property: 'Moss Ave Property', checkIn: '2026-11-06', checkOut: '2026-11-13', nights: 7, nightly: 740, cleaning: 125, tax: 103.8, total: 968.8, status: 'confirmed' },
+  { id: 32, guest: 'Scott Rogers', email: 'srogers@yahoo.com', property: 'Moss Ave Property', checkIn: '2026-11-16', checkOut: '2026-11-30', nights: 14, nightly: 1480, cleaning: 125, tax: 192.6, total: 1797.6, status: 'confirmed' },
+  { id: 33, guest: 'Ashley Bell', email: 'abell@gmail.com', property: 'Main Street Property', checkIn: '2026-11-19', checkOut: '2026-11-26', nights: 7, nightly: 660, cleaning: 100, tax: 91.2, total: 851.2, status: 'confirmed' },
+  { id: 34, guest: 'Jessica Turner', email: 'jturner@icloud.com', property: 'Main Street Property', checkIn: '2026-12-03', checkOut: '2026-12-13', nights: 10, nightly: 970, cleaning: 100, tax: 128.4, total: 1198.4, status: 'confirmed' },
+  { id: 35, guest: 'Trevor Brown', email: 'tbrown@yahoo.com', property: 'Moss Ave Property', checkIn: '2026-12-14', checkOut: '2026-12-28', nights: 14, nightly: 1480, cleaning: 125, tax: 192.6, total: 1797.6, status: 'confirmed' },
+  { id: 36, guest: 'Greg Martinez', email: 'gmartinez@icloud.com', property: 'Main Street Property', checkIn: '2026-12-17', checkOut: '2026-12-24', nights: 7, nightly: 660, cleaning: 100, tax: 91.2, total: 851.2, status: 'confirmed' },
+  { id: 37, guest: 'Stephanie Sanders', email: 'ssanders@outlook.com', property: 'Main Street Property', checkIn: '2026-12-29', checkOut: '2027-01-12', nights: 14, nightly: 1320, cleaning: 100, tax: 170.4, total: 1590.4, status: 'confirmed' },
+  { id: 38, guest: 'Tyler Cook', email: 'tcook@proton.me', property: 'Moss Ave Property', checkIn: '2027-01-04', checkOut: '2027-01-14', nights: 10, nightly: 1025, cleaning: 125, tax: 138.0, total: 1288.0, status: 'confirmed' },
+  { id: 39, guest: 'Derek Thompson', email: 'dthompson@outlook.com', property: 'Main Street Property', checkIn: '2027-01-17', checkOut: '2027-02-28', nights: 42, nightly: 3960, cleaning: 100, tax: 487.2, total: 4547.2, status: 'confirmed' },
+  { id: 40, guest: 'Marcus Rogers', email: 'mrogers@hotmail.com', property: 'Moss Ave Property', checkIn: '2027-01-17', checkOut: '2027-01-27', nights: 10, nightly: 1035, cleaning: 125, tax: 139.2, total: 1299.2, status: 'confirmed' },
+  { id: 41, guest: 'Chad Watson', email: 'cwatson@icloud.com', property: 'Moss Ave Property', checkIn: '2027-02-06', checkOut: '2027-02-28', nights: 22, nightly: 2345, cleaning: 125, tax: 296.4, total: 2766.4, status: 'confirmed' },
 ];
 
 const monthlyData = [
-  { month: 'January 2026', nightly: 4095, cleaning: 450, tax: 545.40, bookings: 4 },
-  { month: 'February 2026', nightly: 3360, cleaning: 450, tax: 457.20, bookings: 4 },
-  { month: 'March 2026', nightly: 4890, cleaning: 325, tax: 625.68, bookings: 4 },
+  { month: 'January 2026', nightly: 3190, cleaning: 225, tax: 409.8, bookings: 2 },
+  { month: 'February 2026', nightly: 2400, cleaning: 225, tax: 315.0, bookings: 2 },
+  { month: 'March 2026', nightly: 4440, cleaning: 350, tax: 574.8, bookings: 3 },
+  { month: 'April 2026', nightly: 6510, cleaning: 350, tax: 823.2, bookings: 3 },
+  { month: 'May 2026', nightly: 2810, cleaning: 100, tax: 349.2, bookings: 1 },
+  { month: 'June 2026', nightly: 3540, cleaning: 225, tax: 451.8, bookings: 2 },
+  { month: 'July 2026', nightly: 4150, cleaning: 450, tax: 552.0, bookings: 4 },
+  { month: 'August 2026', nightly: 4030, cleaning: 450, tax: 537.6, bookings: 4 },
+  { month: 'September 2026', nightly: 3810, cleaning: 450, tax: 511.2, bookings: 4 },
+  { month: 'October 2026', nightly: 1400, cleaning: 225, tax: 195.0, bookings: 2 },
+  { month: 'November 2026', nightly: 4200, cleaning: 450, tax: 558.0, bookings: 4 },
+  { month: 'December 2026', nightly: 4430, cleaning: 425, tax: 582.6, bookings: 4 },
+  { month: 'January 2027', nightly: 6020, cleaning: 350, tax: 764.4, bookings: 3 },
+  { month: 'February 2027', nightly: 2345, cleaning: 125, tax: 296.4, bookings: 1 },
 ];
 
 let currentPropertyId = null;
@@ -2377,7 +2639,8 @@ function handleLogin() {
     document.getElementById('adminLayout').classList.add('active');
     renderPropertyGrid();
     renderBookingsTable();
-    renderExportMonths();
+    initReportPropertyFilter();
+    renderReport();
     initCalendarSelect();
     renderCalendar();
   } else {
@@ -2399,14 +2662,14 @@ const panelTitles = {
   properties: 'Properties',
   bookings: 'Bookings',
   calendar: 'Availability Calendar',
-  export: 'CSV Export'
+  reports: 'Reports'
 };
 
 const panelActions = {
   properties: '<button class="btn btn-fill" onclick="showAddProperty()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg> Add Property</button>',
   bookings: '',
   calendar: '',
-  export: '',
+  reports: '',
   dashboard: ''
 };
 
@@ -2862,62 +3125,213 @@ function formatDate(dateStr) {
 // CSV EXPORT
 // ================================================================
 
-let selectedExportMonth = null;
+// ================================================================
+// REPORTS
+// ================================================================
 
-function renderExportMonths() {
-  const grid = document.getElementById('exportMonthGrid');
-  grid.innerHTML = monthlyData.map((m, i) => {
-    const total = m.nightly + m.cleaning + m.tax;
-    return `
-      <div class="export-month-card" data-month="${i}" onclick="selectExportMonth(${i})">
-        <div class="export-month-name">${m.month}</div>
-        <div class="export-month-amount">$${total.toLocaleString(undefined, {minimumFractionDigits:2})}</div>
-        <div class="export-month-bookings">${m.bookings} bookings</div>
-      </div>
-    `;
-  }).join('');
+let currentReportPeriod = 'q1';
+let reportFilteredBookings = [];
+
+const reportPeriods = {
+  q1: { from: '-01-01', to: '-03-31', label: 'Q1' },
+  q2: { from: '-04-01', to: '-06-30', label: 'Q2' },
+  q3: { from: '-07-01', to: '-09-30', label: 'Q3' },
+  q4: { from: '-10-01', to: '-12-31', label: 'Q4' },
+};
+
+function getReportDateRange() {
+  if (currentReportPeriod === 'custom') {
+    return {
+      from: document.getElementById('rptDateFrom').value || '2026-01-01',
+      to: document.getElementById('rptDateTo').value || '2026-12-31'
+    };
+  }
+  if (currentReportPeriod === 'ytd') {
+    const today = new Date();
+    const yr = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    return { from: yr + '-01-01', to: yr + '-' + mm + '-' + dd };
+  }
+  const p = reportPeriods[currentReportPeriod];
+  return { from: '2026' + p.from, to: '2026' + p.to };
 }
 
-function selectExportMonth(idx) {
-  selectedExportMonth = idx;
-  const m = monthlyData[idx];
-  const total = m.nightly + m.cleaning + m.tax;
-
-  // Highlight selected
-  document.querySelectorAll('.export-month-card').forEach(c => c.classList.remove('selected'));
-  document.querySelector('.export-month-card[data-month="'+idx+'"]').classList.add('selected');
-
-  // Show breakdown
-  document.getElementById('exportBreakdown').style.display = 'block';
-  document.getElementById('exportMonthTitle').textContent = m.month + ' — Revenue Breakdown';
-  document.getElementById('exportMonthSubtitle').textContent = m.bookings + ' bookings across all properties';
-
-  document.getElementById('exportRows').innerHTML = `
-    <div class="export-row">
-      <span class="export-row-label">Nightly Revenue</span>
-      <span class="export-row-value">$${m.nightly.toLocaleString(undefined, {minimumFractionDigits:2})}</span>
-    </div>
-    <div class="export-row">
-      <span class="export-row-label">Cleaning Fees</span>
-      <span class="export-row-value">$${m.cleaning.toLocaleString(undefined, {minimumFractionDigits:2})}</span>
-    </div>
-    <div class="export-row">
-      <span class="export-row-label">Occupancy Tax Collected</span>
-      <span class="export-row-value">$${m.tax.toLocaleString(undefined, {minimumFractionDigits:2})}</span>
-    </div>
-    <div class="export-row total">
-      <span class="export-row-label">Total Revenue</span>
-      <span class="export-row-value">$${total.toLocaleString(undefined, {minimumFractionDigits:2})}</span>
-    </div>
-  `;
+function initReportPropertyFilter() {
+  const sel = document.getElementById('rptPropertyFilter');
+  sel.innerHTML = '<option value="all">All Properties</option>';
+  properties.forEach(p => {
+    sel.innerHTML += '<option value="' + p.name + '">' + p.name + '</option>';
+  });
 }
 
-function simulateDownload() {
-  if (selectedExportMonth === null) {
-    showToast('Please select a month first');
+function selectReportPeriod(period) {
+  currentReportPeriod = period;
+  document.querySelectorAll('.rpt-period-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.rpt-period-btn[data-period="' + period + '"]').classList.add('active');
+
+  const customRange = document.getElementById('rptCustomRange');
+  if (period === 'custom') {
+    customRange.style.display = 'flex';
+    // Set defaults if empty
+    if (!document.getElementById('rptDateFrom').value) {
+      document.getElementById('rptDateFrom').value = '2026-01-01';
+    }
+    if (!document.getElementById('rptDateTo').value) {
+      document.getElementById('rptDateTo').value = '2026-03-31';
+    }
+  } else {
+    customRange.style.display = 'none';
+  }
+  renderReport();
+}
+
+function renderReport() {
+  const range = getReportDateRange();
+  const propFilter = document.getElementById('rptPropertyFilter').value;
+
+  // Filter bookings by date range (check-in within range) and property
+  reportFilteredBookings = bookings.filter(b => {
+    const inRange = b.checkIn >= range.from && b.checkIn <= range.to;
+    const inProp = propFilter === 'all' || b.property === propFilter;
+    return inRange && inProp;
+  });
+
+  // Sort by check-in
+  reportFilteredBookings.sort((a, b) => a.checkIn.localeCompare(b.checkIn));
+
+  // Active bookings (non-cancelled) for totals
+  const active = reportFilteredBookings.filter(b => b.status !== 'cancelled');
+  const totNightly = active.reduce((s, b) => s + b.nightly, 0);
+  const totCleaning = active.reduce((s, b) => s + b.cleaning, 0);
+  const totTax = active.reduce((s, b) => s + b.tax, 0);
+  const totTotal = active.reduce((s, b) => s + b.total, 0);
+
+  // Format helpers
+  const fmt = (n) => '$' + n.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  const fmtDate = (d) => {
+    const dt = new Date(d + 'T00:00:00');
+    return dt.toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'});
+  };
+  const fmtDateShort = (d) => {
+    const dt = new Date(d + 'T00:00:00');
+    return dt.toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
+  };
+
+  // Summary cards
+  document.getElementById('rptSummary').innerHTML =
+    '<div class="rpt-stat-card"><div class="rpt-stat-label">Gross Revenue</div><div class="rpt-stat-value">' + fmt(totTotal) + '</div><div class="rpt-stat-sub">' + active.length + ' bookings</div></div>' +
+    '<div class="rpt-stat-card"><div class="rpt-stat-label">Nightly Revenue</div><div class="rpt-stat-value">' + fmt(totNightly) + '</div></div>' +
+    '<div class="rpt-stat-card"><div class="rpt-stat-label">Cleaning Fees</div><div class="rpt-stat-value">' + fmt(totCleaning) + '</div></div>' +
+    '<div class="rpt-stat-card tax-highlight"><div class="rpt-stat-label">Occupancy Tax Collected</div><div class="rpt-stat-value">' + fmt(totTax) + '</div><div class="rpt-stat-sub">For quarterly filing</div></div>';
+
+  // Show/hide empty state vs table
+  const hasData = reportFilteredBookings.length > 0;
+  document.getElementById('rptEmpty').style.display = hasData ? 'none' : 'block';
+  document.querySelector('.rpt-table-desktop').style.display = hasData ? '' : 'none';
+  document.getElementById('rptActions').style.display = hasData ? 'flex' : 'none';
+
+  if (!hasData) {
+    document.getElementById('rptCardsMobile').innerHTML = '';
+    document.getElementById('rptMobileTotals').innerHTML = '';
     return;
   }
-  showToast('CSV downloaded — ' + monthlyData[selectedExportMonth].month);
+
+  // Desktop table body
+  let tbody = '';
+  reportFilteredBookings.forEach(b => {
+    const isCancelled = b.status === 'cancelled';
+    const rowStyle = isCancelled ? 'opacity:0.45;text-decoration:line-through;' : '';
+    const statusBadge = b.status === 'confirmed' ? '<span class="badge badge-green">Confirmed</span>' :
+                        b.status === 'completed' ? '<span class="badge badge-gray">Completed</span>' :
+                        '<span class="badge badge-red">Cancelled</span>';
+    tbody += '<tr style="' + rowStyle + '">' +
+      '<td>' + b.guest + '</td>' +
+      '<td>' + b.property + '</td>' +
+      '<td>' + fmtDate(b.checkIn) + '</td>' +
+      '<td>' + fmtDate(b.checkOut) + '</td>' +
+      '<td>' + b.nights + '</td>' +
+      '<td>' + fmt(b.nightly) + '</td>' +
+      '<td>' + fmt(b.cleaning) + '</td>' +
+      '<td>' + fmt(b.tax) + '</td>' +
+      '<td>' + fmt(b.total) + '</td>' +
+      '<td>' + statusBadge + '</td></tr>';
+  });
+  document.getElementById('rptTableBody').innerHTML = tbody;
+
+  // Desktop table footer (totals)
+  document.getElementById('rptTableFoot').innerHTML =
+    '<tr><td colspan="5" style="text-align:right;">Totals (excl. cancelled)</td>' +
+    '<td>' + fmt(totNightly) + '</td>' +
+    '<td>' + fmt(totCleaning) + '</td>' +
+    '<td>' + fmt(totTax) + '</td>' +
+    '<td>' + fmt(totTotal) + '</td>' +
+    '<td></td></tr>';
+
+  // Mobile cards
+  let cards = '';
+  reportFilteredBookings.forEach(b => {
+    const isCancelled = b.status === 'cancelled';
+    const statusBadge = b.status === 'confirmed' ? '<span class="badge badge-green">Confirmed</span>' :
+                        b.status === 'completed' ? '<span class="badge badge-gray">Completed</span>' :
+                        '<span class="badge badge-red">Cancelled</span>';
+    cards += '<div class="rpt-card' + (isCancelled ? ' cancelled' : '') + '">' +
+      '<div class="rpt-card-header"><span class="rpt-card-guest">' + b.guest + '</span>' + statusBadge + '</div>' +
+      '<div class="rpt-card-property">' + b.property + '</div>' +
+      '<div class="rpt-card-dates">' + fmtDateShort(b.checkIn) + ' &rarr; ' + fmtDateShort(b.checkOut) + ' &middot; ' + b.nights + ' nights</div>' +
+      '<div class="rpt-card-financials">' +
+        '<div class="rpt-card-fin-row"><span class="label">Nightly</span><span class="value">' + fmt(b.nightly) + '</span></div>' +
+        '<div class="rpt-card-fin-row"><span class="label">Cleaning</span><span class="value">' + fmt(b.cleaning) + '</span></div>' +
+        '<div class="rpt-card-fin-row"><span class="label">Tax</span><span class="value">' + fmt(b.tax) + '</span></div>' +
+      '</div>' +
+      '<div class="rpt-card-total"><span>Total</span><span>' + fmt(b.total) + '</span></div>' +
+    '</div>';
+  });
+  document.getElementById('rptCardsMobile').innerHTML = cards;
+
+  // Mobile totals card
+  document.getElementById('rptMobileTotals').innerHTML =
+    '<div class="rpt-totals-card">' +
+      '<h4>Period Totals</h4>' +
+      '<div class="rpt-totals-row"><span>Nightly Revenue</span><span>' + fmt(totNightly) + '</span></div>' +
+      '<div class="rpt-totals-row"><span>Cleaning Fees</span><span>' + fmt(totCleaning) + '</span></div>' +
+      '<div class="rpt-totals-row"><span>Occupancy Tax</span><span>' + fmt(totTax) + '</span></div>' +
+      '<div class="rpt-totals-row"><span>Gross Revenue</span><span>' + fmt(totTotal) + '</span></div>' +
+    '</div>';
+}
+
+function downloadReportCSV() {
+  if (reportFilteredBookings.length === 0) {
+    showToast('No data to export');
+    return;
+  }
+  const active = reportFilteredBookings.filter(b => b.status !== 'cancelled');
+  let csv = 'Guest,Email,Property,Check-in,Check-out,Nights,Nightly Revenue,Cleaning Fee,Tax,Total,Status\n';
+  reportFilteredBookings.forEach(b => {
+    csv += '"' + b.guest + '","' + b.email + '","' + b.property + '",' + b.checkIn + ',' + b.checkOut + ',' + b.nights + ',' + b.nightly.toFixed(2) + ',' + b.cleaning.toFixed(2) + ',' + b.tax.toFixed(2) + ',' + b.total.toFixed(2) + ',' + b.status + '\n';
+  });
+
+  // Totals row
+  const totN = active.reduce((s,b) => s + b.nightly, 0);
+  const totC = active.reduce((s,b) => s + b.cleaning, 0);
+  const totT = active.reduce((s,b) => s + b.tax, 0);
+  const totA = active.reduce((s,b) => s + b.total, 0);
+  csv += '\nTOTALS (excl. cancelled),,,,,' + active.reduce((s,b) => s + b.nights, 0) + ',' + totN.toFixed(2) + ',' + totC.toFixed(2) + ',' + totT.toFixed(2) + ',' + totA.toFixed(2) + ',\n';
+
+  const range = getReportDateRange();
+  const blob = new Blob([csv], {type: 'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'luar-properties-report-' + range.from + '-to-' + range.to + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('CSV report downloaded!');
+}
+
+function printReport() {
+  showToast('Opening print dialog...');
+  window.print();
 }
 
 // ================================================================
