@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>12-Month Content Roadmap — Luar Properties</title>
+<style>
+  :root {
+    --color-bg: #FBF7F4;
+    --color-surface: #FFFFFF;
+    --color-text: #1B2A4A;
+    --color-text-secondary: #5A6580;
+    --color-accent: #C4613A;
+    --color-accent-light: #F5EBE7;
+    --color-border: #E5DDD8;
+    --color-gold: #E8B4B8;
+    --color-gold-light: #F5DFE1;
+    --color-blue: #1B2A4A;
+    --color-blue-light: #E8EDF5;
+    --color-red: #C4613A;
+    --color-red-light: #F5EBE7;
+    --font-display: Georgia, 'Times New Roman', serif;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .header {
+    background: linear-gradient(165deg, #0F1A30 0%, #1B2A4A 60%, #2A3D6A 100%);
+    color: white;
+    padding: 48px 24px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -25%;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .header-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.15);
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 18px;
+    backdrop-filter: blur(8px);
+  }
+
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    line-height: 1.2;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+
+  .header p {
+    font-size: 14px;
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+
+  .content {
+    padding: 0 20px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .section {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 10px;
+  }
+
+  .section h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+
+  .section p, .section li {
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+
+  .section ul { padding-left: 20px; margin-bottom: 16px; }
+  .section li { margin-bottom: 6px; }
+
+  /* Summary stats */
+  .stat-row {
+    display: flex;
+    gap: 12px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+
+  .stat-card {
+    flex: 1;
+    min-width: 100px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    text-align: center;
+  }
+
+  .stat-card .stat-num {
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: var(--color-accent);
+    line-height: 1.2;
+  }
+
+  .stat-card .stat-label {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-top: 2px;
+  }
+
+  /* Month blocks */
+  .month-block {
+    margin-bottom: 32px;
+  }
+
+  .month-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-accent);
+  }
+
+  .month-name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--color-text);
+  }
+
+  .month-date {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+  }
+
+  .month-theme {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+
+  /* Post cards */
+  .post-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .post-card.new::before {
+    content: 'NEW';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: white;
+    background: var(--color-accent);
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+
+  .post-card.update::before {
+    content: 'UPDATE';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--color-blue);
+    background: var(--color-blue-light);
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+
+  .post-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+
+  .post-tier {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+
+  .tier-1 { background: var(--color-accent-light); color: var(--color-accent); }
+  .tier-2 { background: var(--color-blue-light); color: var(--color-blue); }
+  .tier-3 { background: var(--color-gold-light); color: #9B6B70; }
+
+  .post-audience {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--color-text-secondary);
+    background: #F2F0ED;
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+
+  .post-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    padding-right: 70px;
+  }
+
+  .post-card p {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    margin-bottom: 0;
+  }
+
+  .post-keywords {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--color-border);
+    font-size: 12px;
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+
+  .post-distribution {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--color-blue);
+    font-weight: 500;
+  }
+
+  /* Callouts */
+  .callout {
+    background: var(--color-gold-light);
+    border-left: 3px solid var(--color-gold);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 16px 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .callout p { font-size: 14px; color: var(--color-text); line-height: 1.6; margin-bottom: 0; }
+  .callout-blue { background: var(--color-blue-light); border-left-color: var(--color-blue); }
+  .callout-green { background: var(--color-accent-light); border-left-color: var(--color-accent); }
+
+  /* Quarter dividers */
+  .quarter-divider {
+    text-align: center;
+    padding: 20px 0 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .quarter-divider span {
+    background: var(--color-bg);
+    padding: 0 16px;
+    position: relative;
+  }
+
+  .quarter-divider::before {
+    content: '';
+    display: block;
+    height: 1px;
+    background: var(--color-accent);
+    opacity: 0.3;
+    position: relative;
+    top: 26px;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 28px 20px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 600px) {
+    .month-header { flex-direction: column; gap: 2px; }
+    .post-card h4 { padding-right: 0; }
+    .post-card.new::before, .post-card.update::before { position: static; display: inline-block; margin-bottom: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-badge">Content Roadmap · v1</div>
+  <h1>12-Month Blog Roadmap<br>Luar Properties</h1>
+  <p>Month-by-month publishing plan targeting mid-term professional renters in the Peoria–Bloomington-Normal corridor. April 2026 through March 2027.</p>
+</header>
+
+<div class="content">
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- OVERVIEW -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Overview</div>
+    <h2>The Plan at a Glance</h2>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-num">24</div>
+        <div class="stat-label">New posts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Content refreshes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2/mo</div>
+        <div class="stat-label">Publishing cadence</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">30+</div>
+        <div class="stat-label">Keywords targeted</div>
+      </div>
+    </div>
+
+    <p>The first two months are the heaviest — we front-load the five employer-specific anchor posts that will drive the most direct bookings. After that, we shift to a steady 2 posts/month cadence mixing lifestyle content and seasonal pieces, with quarterly refreshes on the anchor posts to keep them ranking.</p>
+
+    <div class="callout">
+      <p><strong>How the tiers work:</strong> <strong style="color: var(--color-accent);">Tier 1</strong> posts target employer-specific housing keywords — these drive bookings directly. <strong style="color: var(--color-blue);">Tier 2</strong> posts answer "what's it like to live here?" and support Tier 1 with internal links. <strong style="color: #9B6B70;">Tier 3</strong> posts are seasonal or timely content that captures search spikes and keeps the blog fresh.</p>
+    </div>
+
+    <div class="callout callout-blue">
+      <p><strong>Distribution matters as much as publishing.</strong> Every new post should be shared in relevant Facebook groups (travel nurse housing, Rivian workers, Peoria community), Reddit communities (r/TravelNursing, r/Rivian, r/PeoriaIL), and linked from Nate's Furnished Finder profile. Hospital bulletin boards at OSF and UnityPoint are also fair game for the travel nurse content.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- MONTH-BY-MONTH ROADMAP -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Publishing Schedule</div>
+    <h2>Month-by-Month Roadmap</h2>
+
+    <!-- ════════ Q2 2026 ════════ -->
+    <div class="quarter-divider"><span>Q2 2026 — Launch & Foundation</span></div>
+
+    <!-- APRIL -->
+    <div class="month-block">
+      <div class="month-header">
+        <span class="month-name">Month 1</span>
+        <span class="month-date">April 2026</span>
+      </div>
+      <div class="month-theme">Launch month. Publish the three highest-value employer pages to establish the site as a housing resource for working professionals in Central IL.</div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-1">Tier 1</span>
+          <span class="post-audience">Travel Nurses</span>
+        </div>
+        <h4>The Travel Nurse's Guide to Housing in Peoria, IL</h4>
+        <p>The anchor post for Nate's highest-volume audience. Cover OSF Saint Francis and UnityPoint Methodist — which units post travel positions, shift parking, badge office locations, neighborhoods by commute time, grocery stores, gyms, pharmacies. Position Luar Properties as the local alternative to Furnished Finder's 151 identical listings.</p>
+        <div class="post-keywords">Target: travel nurse housing Peoria IL, furnished rental near OSF Peoria, travel nurse apartment Peoria</div>
+        <div class="post-distribution">Share → Travel nurse Facebook groups, r/TravelNursing, OSF/UnityPoint bulletin boards, Furnished Finder profile link</div>
+      </div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-1">Tier 1</span>
+          <span class="post-audience">Caterpillar</span>
+        </div>
+        <h4>Relocating to Peoria for Caterpillar? Here's Your Housing Guide</h4>
+        <p>Everything a new CAT contractor, intern, or relocating employee needs. Which campus they'll report to, drive times from neighborhoods, parking tips, where interns hang out. Cover the summer intern influx (May–Aug) and year-round contractor cycle. Mention the Caterpillar Visitor Center as a weekend activity.</p>
+        <div class="post-keywords">Target: housing near Caterpillar Peoria, Caterpillar contractor housing Peoria IL, Caterpillar intern housing</div>
+        <div class="post-distribution">Share → LinkedIn (tag Caterpillar/Peoria), r/PeoriaIL</div>
+      </div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-1">Tier 1</span>
+          <span class="post-audience">Rivian</span>
+        </div>
+        <h4>Working at Rivian? Why Peoria Is Your Best Housing Option</h4>
+        <p>The pitch: Peoria is 40 min from the Normal plant, but rent is significantly cheaper and you get a full house. Cover the I-74 commute, cost comparison vs. Bloomington-Normal, shift worker advantages (drive against traffic). Reference R2 expansion and supplier park — timely, shareable content. This post needs to be live before the R2 production ramp creates a housing surge.</p>
+        <div class="post-keywords">Target: Rivian housing Normal IL, housing near Rivian plant, Rivian worker housing central Illinois, Peoria to Normal commute</div>
+        <div class="post-distribution">Share → Rivian worker Facebook groups, r/Rivian, Bloomington-Normal community forums</div>
+      </div>
+    </div>
+
+    <!-- MAY -->
+    <div class="month-block">
+      <div class="month-header">
+        <span class="month-name">Month 2</span>
+        <span class="month-date">May 2026</span>
+      </div>
+      <div class="month-theme">Complete the Tier 1 foundation. CAT summer interns are arriving — timely content opportunity.</div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-1">Tier 1</span>
+          <span class="post-audience">General Relocators</span>
+        </div>
+        <h4>The Ultimate Guide to Relocating to Peoria, IL</h4>
+        <p>The definitive "moving to Peoria" page. Neighborhoods ranked by safety, commute, vibe. Cost of living breakdown — Peoria just ranked #1 nationally for first-time homebuyers. Grocery stores, gyms, healthcare, schools, weather. Position Luar as the landing pad: "Stay with us for a month while you find your permanent home."</p>
+        <div class="post-keywords">Target: relocating to Peoria IL, moving to Peoria IL, cost of living Peoria IL, best neighborhoods Peoria IL</div>
+      </div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-1">Tier 1</span>
+          <span class="post-audience">Medical Residents</span>
+        </div>
+        <h4>Medical Resident Housing in Peoria: What You Need to Know</h4>
+        <p>Target residents and students rotating through OSF, UI College of Medicine Peoria, and the Jump Trading Simulation Center. Affordable neighborhoods near the medical district, what to expect from the city, how to make the most of a 3–12 month rotation. New residents typically start in June/July — publish now so it ranks in time.</p>
+        <div class="post-keywords">Target: medical resident housing Peoria IL, student housing near OSF, UI College of Medicine Peoria housing</div>
+      </div>
+    </div>
+
+    <!-- JUNE -->
+    <div class="month-block">
+      <div class="month-header">
+        <span class="month-name">Month 3</span>
+        <span class="month-date">June 2026</span>
+      </div>
+      <div class="month-theme">Begin Tier 2 lifestyle content. Answer the question every relocator asks after the employer posts: "But what's it actually like to live there?"</div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-2">Tier 2</span>
+          <span class="post-audience">All Segments</span>
+        </div>
+        <h4>Best Neighborhoods in Peoria for Working Professionals</h4>
+        <p>Neighborhoods broken down by who they're best for: North Peoria (quiet, Forest Park, Dunlap schools), Peoria Heights (walkable, boutiques, nightlife), West Peoria (affordable, close to Bradley), East Peoria (closer to Rivian commute). Include drive times to OSF, CAT campus, and I-74 for Rivian. This post gets linked from every Tier 1 employer page.</p>
+        <div class="post-keywords">Target: best neighborhoods Peoria IL, safe areas Peoria IL, where to live Peoria IL</div>
+      </div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-2">Tier 2</span>
+          <span class="post-audience">All Segments</span>
+        </div>
+        <h4>What It's Actually Like Living in Peoria — A Local's Honest Take</h4>
+        <p>Resident's perspective, not a tourist guide. The good (affordable, friendly, great food), the honest (cold winters, limited nightlife, you need a car), and the practical (cost of living, commute times, what to expect). Captures "living in Peoria IL pros and cons" searches.</p>
+        <div class="post-keywords">Target: living in Peoria IL, is Peoria IL a good place to live, Peoria IL pros and cons</div>
+      </div>
+    </div>
+
+    <!-- ════════ Q3 2026 ════════ -->
+    <div class="quarter-divider"><span>Q3 2026 — Lifestyle Content & Rivian Timing</span></div>
+
+    <!-- JULY -->
+    <div class="month-block">
+      <div class="month-header">
+        <span class="month-name">Month 4</span>
+        <span class="month-date">July 2026</span>
+      </div>
+      <div class="month-theme">Food and weekend guides — the content that makes someone think "okay, I could actually live here." Peak summer activity in Peoria.</div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-2">Tier 2</span>
+          <span class="post-audience">All Segments</span>
+        </div>
+        <h4>The Peoria Food & Drink Guide: Where Locals Actually Eat</h4>
+        <p>Black Band Distillery (James Beard winner), Donnelly's Irish Pub (best wings), Obed & Isaac's (beer cheese soup), The Blue Duck (breakfast sandwich), Emo's Dairy Mart (iconic ice cream), Bartonville Diner (Greek skillet), Ardor Breads, The Fish House, Peoria Heights strip. Write it like texting a friend who just moved here.</p>
+        <div class="post-keywords">Target: best restaurants Peoria IL, where to eat Peoria IL, Peoria IL food guide</div>
+      </div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-2">Tier 2</span>
+          <span class="post-audience">All Segments</span>
+        </div>
+        <h4>Weekend in Peoria: What to Do When You're Not Working</h4>
+        <p>Tailored for someone here for work with free weekends. Riverfront Museum, Wildlife Prairie Park, Grandview Drive, Peoria Zoo, Chiefs baseball, Mackinaw Valley Vineyard, Northmoor Observatory stargazing, Forest Park trails. Curated itineraries by season, not a generic "top 10" dump.</p>
+        <div class="post-keywords">Target: things to do Peoria IL, Peoria IL weekend activities, what to do in Peoria</div>
+      </div>
+    </div>
+
+    <!-- AUGUST -->
+    <div class="month-block">
+      <div class="month-header">
+        <span class="month-name">Month 5</span>
+        <span class="month-date">August 2026</span>
+      </div>
+      <div class="month-theme">Rivian R2 is ramping production. Publish timely content to capture the housing surge. Also: commute content for the Rivian audience.</div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-3">Tier 3</span>
+          <span class="post-audience">Rivian</span>
+        </div>
+        <h4>Rivian R2 Production Ramp: What the Expansion Means for Housing</h4>
+        <p>Timely content tied to R2 launch and supplier park completion. Position Peoria as the smart housing play for the hundreds of new workers. Include specific numbers ($1.5B investment, 215K vehicles/year, 550+ new jobs). Highly shareable in Rivian forums and local news.</p>
+        <div class="post-keywords">Target: Rivian Normal IL expansion, Rivian R2 production, housing near Rivian 2026</div>
+        <div class="post-distribution">Share → Rivian Facebook groups, r/Rivian, Bloomington-Normal local news comment sections, LinkedIn</div>
+      </div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-2">Tier 2</span>
+          <span class="post-audience">Rivian / Relocators</span>
+        </div>
+        <h4>The Peoria to Bloomington-Normal Commute: A Practical Guide</h4>
+        <p>Detailed commute guide for Rivian workers and anyone working in Bloomington-Normal. Routes (I-74 to US-150), drive times by shift, gas costs, road conditions in winter, towns along the way (Morton, Goodfield). Compare the commute cost vs. Bloomington-Normal rent — Peoria still wins.</p>
+        <div class="post-keywords">Target: Peoria IL commute to Normal Bloomington, Peoria to Normal drive time, commute Peoria to Rivian</div>
+      </div>
+    </div>
+
+    <!-- SEPTEMBER -->
+    <div class="month-block">
+      <div class="month-header">
+        <span class="month-name">Month 6</span>
+        <span class="month-date">September 2026</span>
+      </div>
+      <div class="month-theme">Fall is Peoria's best season for convincing newcomers they made the right call. Also: first round of Q4 travel nurse contracts are being assigned.</div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-3">Tier 3</span>
+          <span class="post-audience">All Segments</span>
+        </div>
+        <h4>Fall in Central Illinois: The Best Part of Living in Peoria</h4>
+        <p>Morton Pumpkin Festival, Oktoberfest on the Riverfront, fall foliage on Grandview Drive, Peoria Art Guild Fine Art Fair, apple orchards, football Saturdays. Counter the "flat boring midwest" narrative. Position fall as the payoff season for anyone who just moved here.</p>
+        <div class="post-keywords">Target: Peoria IL fall activities, Morton Pumpkin Festival, things to do Peoria autumn</div>
+      </div>
+
+      <div class="post-card update">
+        <div class="post-meta">
+          <span class="post-tier tier-1">Tier 1</span>
+          <span class="post-audience">Travel Nurses</span>
+        </div>
+        <h4>Update: Travel Nurse Housing Guide</h4>
+        <p>Refresh with Q4 contract cycle info. Add any new details about OSF or UnityPoint (new units, facility changes). Update availability, seasonal pricing if Nate adjusts rates. Re-share in travel nurse groups to catch the fall assignment wave.</p>
+      </div>
+    </div>
+
+    <!-- ════════ Q4 2026 ════════ -->
+    <div class="quarter-divider"><span>Q4 2026 — Winter Prep & Holiday Content</span></div>
+
+    <!-- OCTOBER -->
+    <div class="month-block">
+      <div class="month-header">
+        <span class="month-name">Month 7</span>
+        <span class="month-date">October 2026</span>
+      </div>
+      <div class="month-theme">Publish winter survival content before cold weather hits. Reduce the "I don't want to move to Illinois" anxiety for Q1 2027 assignees.</div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-3">Tier 3</span>
+          <span class="post-audience">All Segments</span>
+        </div>
+        <h4>Surviving (and Enjoying) Winter in Peoria — A Newcomer's Guide</h4>
+        <p>For someone from a warmer climate arriving in fall. What to expect (average temps, snowfall), what to buy (boots, ice scraper, layers), winter driving tips, comfort food recommendations, indoor activities (Rivermen hockey, Jukebox Comedy Club, Civic Center shows, brewery hopping). Warm and practical in tone.</p>
+        <div class="post-keywords">Target: Peoria IL winter, moving to Peoria IL weather, what to do Peoria IL winter</div>
+      </div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-2">Tier 2</span>
+          <span class="post-audience">All Segments</span>
+        </div>
+        <h4>Cost of Living in Peoria: A Real Numbers Breakdown</h4>
+        <p>Detailed cost comparison — rent, groceries, gas, utilities, dining out. Compare to Chicago, Bloomington-Normal, Springfield, and national averages. Reference the #1 first-time homebuyer ranking. For someone evaluating whether to accept a Peoria assignment or job offer, this is the deciding-factor post.</p>
+        <div class="post-keywords">Target: cost of living Peoria IL, Peoria IL rent prices, is Peoria IL affordable</div>
+      </div>
+    </div>
+
+    <!-- NOVEMBER -->
+    <div class="month-block">
+      <div class="month-header">
+        <span class="month-name">Month 8</span>
+        <span class="month-date">November 2026</span>
+      </div>
+      <div class="month-theme">Festival of Lights is Peoria's biggest winter tourism event. Capture search traffic from people planning visits. Also: refresh Rivian content with supplier park updates.</div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-3">Tier 3</span>
+          <span class="post-audience">All Segments</span>
+        </div>
+        <h4>Holiday Season in Peoria: Festival of Lights, Parades & Local Traditions</h4>
+        <p>America's longest-running Santa Claus Parade (day after Thanksgiving), East Peoria Festival of Lights (3M+ lights, won ABC's "Great Christmas Light Fight"), Christmas on Court in Pekin, Peoria Heights boutique shopping, Yule Like Peoria walk-about. Aimed at current tenants sharing with friends/family visiting, and newcomers discovering the community.</p>
+        <div class="post-keywords">Target: Festival of Lights East Peoria, Peoria IL Christmas events, Santa Claus Parade Peoria</div>
+      </div>
+
+      <div class="post-card update">
+        <div class="post-meta">
+          <span class="post-tier tier-1">Tier 1</span>
+          <span class="post-audience">Rivian</span>
+        </div>
+        <h4>Update: Rivian Housing Guide</h4>
+        <p>Refresh with supplier park completion status, any new Rivian hiring announcements, updated Bloomington-Normal rent data. R2 deliveries should be underway — reference production milestones for credibility.</p>
+      </div>
+    </div>
+
+    <!-- DECEMBER -->
+    <div class="month-block">
+      <div class="month-header">
+        <span class="month-name">Month 9</span>
+        <span class="month-date">December 2026</span>
+      </div>
+      <div class="month-theme">Lighter publishing month (holidays). One new post targeting families + a refresh. Focus on planning content for Q1 2027.</div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-2">Tier 2</span>
+          <span class="post-audience">Relocators / Families</span>
+        </div>
+        <h4>Moving to Peoria with Kids: Schools, Daycare & Family-Friendly Living</h4>
+        <p>For the relocating professional with a family. Dunlap schools (top-rated), Peoria-area daycare options, family-friendly neighborhoods, kid activities (Peoria Zoo, PlayHouse, Fon du Lac Farm Park, Wildlife Prairie Park). Critical for CAT/Rivian workers relocating with families for 6-12 month assignments.</p>
+        <div class="post-keywords">Target: Peoria IL schools, moving to Peoria with family, family friendly Peoria IL, Dunlap schools Peoria</div>
+      </div>
+
+      <div class="post-card update">
+        <div class="post-meta">
+          <span class="post-tier tier-1">Tier 1</span>
+          <span class="post-audience">General Relocators</span>
+        </div>
+        <h4>Update: Ultimate Guide to Relocating to Peoria</h4>
+        <p>End-of-year refresh. Update any cost of living changes, new restaurant openings, neighborhood developments. Link to the new schools/family post. Refresh internal links to any new Tier 2 or Tier 3 content.</p>
+      </div>
+    </div>
+
+    <!-- ════════ Q1 2027 ════════ -->
+    <div class="quarter-divider"><span>Q1 2027 — New Year Contracts & Hiring Cycles</span></div>
+
+    <!-- JANUARY -->
+    <div class="month-block">
+      <div class="month-header">
+        <span class="month-name">Month 10</span>
+        <span class="month-date">January 2027</span>
+      </div>
+      <div class="month-theme">New year = new contracts, new assignments, new job offers. Travel nurses are accepting Q1 contracts. CAT contractors cycle in for new fiscal year projects.</div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-3">Tier 3</span>
+          <span class="post-audience">Travel Nurses</span>
+        </div>
+        <h4>New Assignment in Peoria? Your Move-In Checklist for Travel Healthcare Pros</h4>
+        <p>Practical, actionable checklist: what to bring, what's already in a furnished rental, where to set up utilities, DMV info for long stays, best cell service in Peoria, where to get your Illinois nursing license validated. Position Luar as the hassle-free option — "everything's furnished, just bring your scrubs."</p>
+        <div class="post-keywords">Target: travel nurse checklist new assignment, moving to Peoria IL for work, furnished rental Peoria IL what's included</div>
+        <div class="post-distribution">Share → Travel nurse Facebook groups, r/TravelNursing, Furnished Finder profile</div>
+      </div>
+
+      <div class="post-card update">
+        <div class="post-meta">
+          <span class="post-tier tier-1">Tier 1</span>
+          <span class="post-audience">Caterpillar</span>
+        </div>
+        <h4>Update: Caterpillar Housing Guide</h4>
+        <p>Refresh for new fiscal year contractor cycle. Update any campus changes, new construction, facility news. Add internal links to new content published since launch (neighborhoods, food guide, winter guide).</p>
+      </div>
+    </div>
+
+    <!-- FEBRUARY -->
+    <div class="month-block">
+      <div class="month-header">
+        <span class="month-name">Month 11</span>
+        <span class="month-date">February 2027</span>
+      </div>
+      <div class="month-theme">Spring semester visitors at Bradley and UI College of Medicine. Also: Peoria social scene content for the professional who's been here a few months and wants a life outside work.</div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-3">Tier 3</span>
+          <span class="post-audience">Faculty / Students</span>
+        </div>
+        <h4>Visiting Faculty & Grad Student Housing Guide: Bradley, UICOMP & OSF</h4>
+        <p>Target visiting professors, adjuncts, and grad students at Bradley University, UI College of Medicine Peoria, and Saint Francis College of Nursing. Cover affordable neighborhoods near each campus, what to expect, semester-length lease flexibility. Smaller audience, but very consistent and predictable demand.</p>
+        <div class="post-keywords">Target: Bradley University visiting faculty housing, UICOMP housing Peoria, student housing near OSF</div>
+      </div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-2">Tier 2</span>
+          <span class="post-audience">All Segments</span>
+        </div>
+        <h4>Making Friends & Building a Social Life in Peoria</h4>
+        <p>For the professional who's been here 2-3 months and wants more than work-eat-sleep. Peoria Heights bar scene (Pour Bros, Clink, Twelve Bar), First Friday Art Walks, RiverFront Market, Bradley sports, Jukebox Comedy Club, gym/CrossFit communities, Rivermen game nights. Practical advice for adults making friends in a new city.</p>
+        <div class="post-keywords">Target: Peoria IL nightlife, things to do Peoria IL adults, social scene Peoria IL, Peoria IL date night</div>
+      </div>
+    </div>
+
+    <!-- MARCH -->
+    <div class="month-block">
+      <div class="month-header">
+        <span class="month-name">Month 12</span>
+        <span class="month-date">March 2027</span>
+      </div>
+      <div class="month-theme">Close the loop. Summer intern season starts in 8 weeks. Refresh the intern post and publish a "one year later" content performance recap.</div>
+
+      <div class="post-card new">
+        <div class="post-meta">
+          <span class="post-tier tier-3">Tier 3</span>
+          <span class="post-audience">Caterpillar / OSF</span>
+        </div>
+        <h4>Summer 2027 Internship Housing in Peoria: Where CAT & OSF Interns Live</h4>
+        <p>Publish in March so it's indexed and ranking before intern housing decisions are made in April. Cover the intern experience, social scene, why a furnished rental beats a sketchy Craigslist sublet. CAT summer interns are the most predictable, recurring demand segment — this post should be annual.</p>
+        <div class="post-keywords">Target: Caterpillar summer intern Peoria, OSF intern housing, summer internship Peoria IL housing</div>
+        <div class="post-distribution">Share → Bradley University job boards, CAT intern onboarding materials if accessible, LinkedIn</div>
+      </div>
+
+      <div class="post-card update">
+        <div class="post-meta">
+          <span class="post-tier tier-1">Tier 1</span>
+          <span class="post-audience">Travel Nurses</span>
+        </div>
+        <h4>Update: Travel Nurse Housing Guide (Annual Refresh)</h4>
+        <p>Full annual refresh. Update OSF/UnityPoint staffing info, add any new hospitals or clinics, refresh pricing data, add testimonials from any travel nurse tenants Nate has hosted. Re-share across all distribution channels for the spring/summer contract cycle.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- POST-ROADMAP NOTES -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Execution Notes</div>
+    <h2>How to Make This Work</h2>
+
+    <p><strong>Post length:</strong> Tier 1 posts should be 1,500–2,500 words — comprehensive enough to rank for multiple keywords and be genuinely useful. Tier 2 posts can be 1,000–1,500 words. Tier 3 posts can be 800–1,200 words.</p>
+
+    <p><strong>Every post needs:</strong> A clear H1 with the primary keyword, 2-3 internal links to property pages and other blog posts, at least one CTA to book directly with Luar Properties (naturally integrated, not a pop-up), and original photos from Nate when possible.</p>
+
+    <p><strong>Update cadence:</strong> The 7 content refreshes aren't rewrites — they're 30-minute updates. Add new info, refresh any outdated data, add internal links to new content, and re-share on social. Google rewards freshness, especially for local content.</p>
+
+    <p><strong>Measurement:</strong> Track Google Search Console for impressions and clicks on target keywords. The leading indicator is impressions (Google is showing the content) → then clicks → then bookings. Tier 1 posts should start showing impressions within 4-8 weeks of publishing.</p>
+
+    <div class="callout callout-green">
+      <p><strong>The Year 2 plan (in brief):</strong> After 12 months, Nate will have a library of 24 posts covering every major employer and lifestyle question. Year 2 shifts to maintenance mode: update Tier 1 posts quarterly, publish 1 new post per month (seasonal/timely), and start building backlinks through local partnerships (OSF marketing, Peoria tourism board, Rivian community pages). The compounding effect of SEO means Year 2 traffic should be 3-5x Year 1 with less effort.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <p>Internal Document — Aitheos LLC<br>Compiled March 2026 · For project planning only<br>Luar Properties — 12-Month Content Roadmap v1</p>
+</footer>
+
+</body>
+</html>

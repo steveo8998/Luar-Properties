@@ -194,11 +194,13 @@
     bottom: 0;
     width: 4px;
     border-radius: 4px 0 0 4px;
+    background: var(--card-accent, var(--terracotta));
   }
 
-  .file-card:nth-child(1)::before { background: var(--terracotta); }
-  .file-card:nth-child(2)::before { background: var(--dark-blue); }
-  .file-card:nth-child(3)::before { background: var(--blush); }
+  .file-card.accent-terracotta { --card-accent: var(--terracotta); }
+  .file-card.accent-navy { --card-accent: var(--dark-blue); }
+  .file-card.accent-blush { --card-accent: var(--blush); }
+  .file-card.accent-green { --card-accent: #3A7A60; }
 
   .file-card-header {
     display: flex;
@@ -218,9 +220,10 @@
     font-size: 20px;
   }
 
-  .file-card:nth-child(1) .file-icon { background: #FDF0EA; }
-  .file-card:nth-child(2) .file-icon { background: #E8EDF5; }
-  .file-card:nth-child(3) .file-icon { background: var(--blush-light); }
+  .file-card.accent-terracotta .file-icon { background: #FDF0EA; }
+  .file-card.accent-navy .file-icon { background: #E8EDF5; }
+  .file-card.accent-blush .file-icon { background: var(--blush-light); }
+  .file-card.accent-green .file-icon { background: #E8F0EC; }
 
   .file-card-title {
     font-family: var(--font-display);
@@ -240,9 +243,16 @@
     margin-top: 2px;
   }
 
-  .file-card:nth-child(1) .file-card-tag { background: #FDF0EA; color: var(--terracotta); }
-  .file-card:nth-child(2) .file-card-tag { background: #E8EDF5; color: var(--dark-blue); }
-  .file-card:nth-child(3) .file-card-tag { background: var(--blush-light); color: #8B5A5E; }
+  .file-card.accent-terracotta .file-card-tag { background: #FDF0EA; color: var(--terracotta); }
+  .file-card.accent-navy .file-card-tag { background: #E8EDF5; color: var(--dark-blue); }
+  .file-card.accent-blush .file-card-tag { background: var(--blush-light); color: #8B5A5E; }
+  .file-card.accent-green .file-card-tag { background: #E8F0EC; color: #2C5F4B; }
+
+  /* ── Section Dividers ── */
+  .section-divider {
+    padding: 36px 0 0;
+    border-bottom: 1px solid var(--gray-200);
+  }
 
   .file-card-desc {
     font-size: 14px;
@@ -309,10 +319,7 @@
   .hero { animation: fadeUp 0.6s ease-out; }
   .summary { animation: fadeUp 0.5s ease-out 0.1s both; }
   .files-section { animation: fadeUp 0.5s ease-out 0.2s both; }
-  .file-card { animation: fadeUp 0.4s ease-out both; }
-  .file-card:nth-child(1) { animation-delay: 0.25s; }
-  .file-card:nth-child(2) { animation-delay: 0.35s; }
-  .file-card:nth-child(3) { animation-delay: 0.45s; }
+  .file-card { animation: fadeUp 0.4s ease-out 0.25s both; }
 </style>
 </head>
 <body>
@@ -334,16 +341,16 @@
   <section class="summary">
     <div class="summary-label">Project Overview</div>
     <h2>What's Inside</h2>
-    <p>This package contains the full project proposal and two interactive HTML mockups for the Luar Properties direct booking platform. The proposal outlines scope, pricing, and timeline. The mockups demonstrate exactly how the guest-facing booking experience and the owner's admin portal will look and feel — built as fully clickable prototypes you can explore on any device.</p>
+    <p>This package contains interactive product demos for the Luar Properties direct booking platform, an SEO content strategy to drive organic traffic from working professionals in Central Illinois, and the full project proposal with scope, pricing, and timeline.</p>
   </section>
 
   <!-- ══════════════════════════════════════ -->
-  <!-- FILE LINKS -->
+  <!-- SECTION 1: PRODUCT DEMOS -->
   <!-- ══════════════════════════════════════ -->
   <section class="files-section">
-    <div class="files-label">Documents</div>
+    <div class="files-label">Product Demos</div>
 
-    <a href="Direct Booking Experience.html" class="file-card">
+    <a href="Direct Booking Experience.html" class="file-card accent-terracotta">
       <div class="file-card-header">
         <div class="file-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4613A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -353,13 +360,13 @@
           <span class="file-card-tag">Guest-Facing Mockup</span>
         </div>
       </div>
-      <p class="file-card-desc">Interactive demo of the public website — browse properties, view photo galleries, select dates, see dynamic pricing, and walk through the full checkout flow as a guest would.</p>
+      <p class="file-card-desc">Interactive demo of the public website — browse properties, read the blog, view photo galleries, select dates, see dynamic pricing, and walk through the full checkout flow as a guest would.</p>
       <div class="file-card-arrow">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
       </div>
     </a>
 
-    <a href="Admin Portal.html" class="file-card">
+    <a href="Admin Portal.html" class="file-card accent-navy">
       <div class="file-card-header">
         <div class="file-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
@@ -374,8 +381,58 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
       </div>
     </a>
+  </section>
 
-    <a href="proposal.html" class="file-card">
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 2: SEO PACKAGE -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="files-section">
+    <div class="files-label">SEO &amp; Content Strategy</div>
+
+    <a href="SEO Research Mid Term Rentals.html" class="file-card accent-green">
+      <div class="file-card-header">
+        <div class="file-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3A7A60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div>
+          <div class="file-card-title">SEO &amp; Keyword Research</div>
+          <span class="file-card-tag">Market Research · v2</span>
+        </div>
+      </div>
+      <p class="file-card-desc">Comprehensive keyword and audience research for mid-term professional rentals in Central Illinois. Covers target audiences (travel nurses, Caterpillar contractors, Rivian workers), employer-specific keywords, competitive landscape, and a blog content plan with 24 post ideas across three tiers — all designed to drive direct bookings through organic search.</p>
+      <div class="file-card-arrow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <a href="Blog Roadmap.html" class="file-card accent-terracotta">
+      <div class="file-card-header">
+        <div class="file-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4613A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div>
+          <div class="file-card-title">12-Month Blog Roadmap</div>
+          <span class="file-card-tag">Content Calendar</span>
+        </div>
+      </div>
+      <p class="file-card-desc">Month-by-month publishing schedule from April 2026 through March 2027. Maps out 24 new posts and 7 content refreshes at a 2-per-month cadence — starting with employer-specific anchor posts that drive bookings, then layering in lifestyle guides and seasonal content to build long-term organic traffic.</p>
+      <div class="file-card-arrow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECTION 3: PROPOSAL -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="files-section">
+    <div class="files-label">Proposals</div>
+
+    <a href="proposal.html" class="file-card accent-blush">
       <div class="file-card-header">
         <div class="file-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B07075" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -391,6 +448,21 @@
       </div>
     </a>
 
+    <a href="seo-proposal.html" class="file-card accent-green">
+      <div class="file-card-header">
+        <div class="file-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3A7A60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div>
+          <div class="file-card-title">SEO Start-Up Bundle</div>
+          <span class="file-card-tag">Strategy, SOPs &amp; Training — $2,500</span>
+        </div>
+      </div>
+      <p class="file-card-desc">One-time turnkey package: SEO strategy, 12-month content roadmap, published sample article, 6 standard operating procedures, and a training session to hand off execution to your team.</p>
+      <div class="file-card-arrow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
   </section>
 </div>
 

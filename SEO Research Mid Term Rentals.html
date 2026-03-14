@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO & Content Research v2 — Luar Properties (Mid-Term Rentals)</title>
+<style>
+  :root {
+    --color-bg: #FBF7F4;
+    --color-surface: #FFFFFF;
+    --color-text: #1B2A4A;
+    --color-text-secondary: #5A6580;
+    --color-accent: #C4613A;
+    --color-accent-light: #F5EBE7;
+    --color-border: #E5DDD8;
+    --color-gold: #E8B4B8;
+    --color-gold-light: #F5DFE1;
+    --color-blue: #1B2A4A;
+    --color-blue-light: #E8EDF5;
+    --color-red: #C4613A;
+    --color-red-light: #F5EBE7;
+    --font-display: Georgia, 'Times New Roman', serif;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .header {
+    background: linear-gradient(165deg, #0F1A30 0%, #1B2A4A 60%, #2A3D6A 100%);
+    color: white;
+    padding: 48px 24px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -25%;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .header-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.15);
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 18px;
+    backdrop-filter: blur(8px);
+  }
+
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    line-height: 1.2;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+
+  .header p {
+    font-size: 14px;
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+
+  .content {
+    padding: 0 20px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .section {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 10px;
+  }
+
+  .section h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+
+  .section h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-top: 24px;
+    margin-bottom: 10px;
+  }
+
+  .section p, .section li {
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+
+  .section ul { padding-left: 20px; margin-bottom: 16px; }
+  .section li { margin-bottom: 6px; }
+
+  /* Stat bar */
+  .stat-row {
+    display: flex;
+    gap: 12px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+
+  .stat-card {
+    flex: 1;
+    min-width: 140px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    text-align: center;
+  }
+
+  .stat-card .stat-num {
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: var(--color-accent);
+    line-height: 1.2;
+  }
+
+  .stat-card .stat-label {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-top: 2px;
+  }
+
+  /* Keyword Table */
+  .kw-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 14px;
+  }
+
+  .kw-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--color-accent);
+    white-space: nowrap;
+  }
+
+  .kw-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+    vertical-align: top;
+  }
+
+  .kw-table tr:last-child td { border-bottom: none; }
+
+  .kw-table .kw { font-weight: 600; font-size: 14px; }
+
+  .kw-table .intent {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 100px;
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .intent-book { background: var(--color-accent-light); color: var(--color-accent); }
+  .intent-info { background: var(--color-blue-light); color: var(--color-blue); }
+  .intent-local { background: var(--color-gold-light); color: #9B6B70; }
+
+  .priority { font-weight: 600; }
+  .priority-high { color: var(--color-red); }
+  .priority-med { color: #B0808A; }
+
+  /* Audience Cards */
+  .audience-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .audience-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 17px;
+  }
+
+  .audience-text h4 { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+  .audience-text p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.55; margin-bottom: 0; }
+
+  .audience-meta {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  .audience-meta span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-accent);
+    background: var(--color-accent-light);
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+
+  /* Blog angle cards */
+  .blog-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 12px;
+  }
+
+  .blog-card .blog-target {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-blue);
+    margin-bottom: 4px;
+  }
+
+  .blog-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .blog-card p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.55; margin-bottom: 0; }
+
+  .blog-card .blog-keywords {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--color-border);
+    font-size: 12px;
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+
+  /* Callouts */
+  .callout {
+    background: var(--color-gold-light);
+    border-left: 3px solid var(--color-gold);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 16px 18px;
+    margin-top: 20px;
+  }
+
+  .callout p { font-size: 14px; color: var(--color-text); line-height: 1.6; margin-bottom: 0; }
+  .callout-blue { background: var(--color-blue-light); border-left-color: var(--color-blue); }
+  .callout-green { background: var(--color-accent-light); border-left-color: var(--color-accent); }
+
+  /* Employer profiles */
+  .employer-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+
+  .employer-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .employer-card p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 8px; }
+  .employer-card p:last-child { margin-bottom: 0; }
+
+  .employer-detail {
+    font-size: 13px;
+    color: var(--color-text);
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+
+  .employer-detail .label {
+    font-weight: 600;
+    color: var(--color-accent);
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+
+  /* Competitor section */
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+
+  .comp-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--color-accent);
+  }
+
+  .comp-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+    vertical-align: top;
+  }
+
+  .comp-table tr:last-child td { border-bottom: none; }
+
+  .footer {
+    text-align: center;
+    padding: 28px 20px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 600px) {
+    .kw-table, .comp-table { font-size: 13px; }
+    .kw-table th, .kw-table td, .comp-table th, .comp-table td { padding: 8px 8px; }
+    .hide-mobile { display: none; }
+    .employer-detail { flex-direction: column; gap: 2px; }
+    .employer-detail .label { min-width: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-badge">Internal Research · v2</div>
+  <h1>SEO & Content Research<br>Mid-Term Professional Rentals</h1>
+  <p>Refocused for Nate's target customer: working professionals staying 30 days to 12 months. Travel nurses, Caterpillar contractors, Rivian commuters, and corporate relocators.</p>
+</header>
+
+<div class="content">
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- MARKET CONTEXT -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Market Context</div>
+    <h2>Why Mid-Term Rentals in Central IL</h2>
+    <p>The Peoria–Bloomington-Normal corridor is a rare mid-market with three massive employment engines that all generate temporary housing demand: healthcare, heavy manufacturing, and EV production. These aren't tourists — they're working professionals with housing stipends, corporate relocation packages, or personal budgets who need a furnished home for 1–12 months.</p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-num">13,500+</div>
+        <div class="stat-label">OSF HealthCare employees<br>(Greater Peoria's #1 employer)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">8,000+</div>
+        <div class="stat-label">Rivian employees<br>(Normal, IL — 40 min away)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">151</div>
+        <div class="stat-label">Furnished rentals listed<br>on Travel Nurse Housing (Peoria)</div>
+      </div>
+    </div>
+
+    <p>Caterpillar still maintains its largest manufacturing facilities and 90% of its workforce in Peoria. Rivian employs 8,000+ at its Normal plant (38 miles away, ~40 min drive) and is actively expanding — investing $1.5 billion for the R2 SUV line launching in 2026, plus a new $120M supplier park that will bring hundreds of additional supplier jobs. This means a steady pipeline of engineers, technicians, contractors, and construction workers who need housing for months at a time.</p>
+
+    <div class="callout">
+      <p><strong>The pitch to Nate:</strong> His properties sit between two of the biggest employment corridors in downstate Illinois. A travel nurse on a 13-week contract at OSF or a Rivian contractor on a 6-month production ramp both need the same thing — a furnished home that feels like a home, not a hotel. Nate's direct booking site can be the go-to source for that, and blog content is how they find it.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TARGET AUDIENCE -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Target Audience</div>
+    <h2>Who Nate's Renters Are</h2>
+    <p>Every content decision — keywords, blog topics, page copy — flows from these five segments. They're ranked by estimated volume and booking value.</p>
+
+    <div class="audience-card">
+      <div class="audience-icon">🏥</div>
+      <div class="audience-text">
+        <h4>1. Travel Nurses & Medical Professionals</h4>
+        <p>OSF Saint Francis is the 5th largest medical center in Illinois with 600+ beds and is a Level I Trauma Center. UnityPoint Health Methodist is the other major system. Travel nurses on 13-week contracts are the bread and butter of mid-term rentals — they have housing stipends ($700–$3,000/mo), they're reliable tenants, and they often extend. Platforms like Furnished Finder and TravelNurseHousing.com already have 151 listings in Peoria — proving the demand exists.</p>
+        <div class="audience-meta">
+          <span>Typical stay: 3–6 months</span>
+          <span>Stipend-funded</span>
+          <span>Highest volume</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="audience-card">
+      <div class="audience-icon">🏗️</div>
+      <div class="audience-text">
+        <h4>2. Caterpillar Contractors, Consultants & Interns</h4>
+        <p>CAT maintains its largest manufacturing campus in Peoria with tens of thousands of direct and indirect employees. The constant cycle of project-based contractors, consultants, engineering interns (summer programs), and employees relocating to Peoria creates year-round demand. The nearby Woods + Meadow apartments market specifically to CAT interns and contractors — proof of the niche.</p>
+        <div class="audience-meta">
+          <span>Typical stay: 1–12 months</span>
+          <span>Corporate-funded</span>
+          <span>Highest value per stay</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="audience-card">
+      <div class="audience-icon">⚡</div>
+      <div class="audience-text">
+        <h4>3. Rivian Workers & EV Supplier Contractors</h4>
+        <p>Rivian's Normal plant is 38 miles (~40 min) from Peoria. They're in active expansion mode: the R2 SUV line launches 2026, a new $120M supplier park is under construction bringing hundreds of supplier jobs, and production is scaling to 215,000 vehicles/year. The Bloomington-Normal housing market is tighter (and more expensive), so Peoria is an affordable alternative for workers willing to commute. Many Rivian production roles are shift-based, making an off-peak commute feasible.</p>
+        <div class="audience-meta">
+          <span>Typical stay: 3–12 months</span>
+          <span>Self-funded or stipend</span>
+          <span>Growing fast — 2026 ramp</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="audience-card">
+      <div class="audience-icon">🏢</div>
+      <div class="audience-text">
+        <h4>4. Corporate Relocators & Project-Based Workers</h4>
+        <p>People relocating to Central Illinois who need a landing pad while they house-hunt. Also includes insurance adjusters, government contractors, construction crews on infrastructure projects, and professionals on temporary assignments. Peoria just ranked #1 nationally as the best city for first-time homebuyers in 2026 (Neighbors Bank study) — which means more people moving here.</p>
+        <div class="audience-meta">
+          <span>Typical stay: 1–6 months</span>
+          <span>Mixed funding</span>
+          <span>Year-round demand</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="audience-card">
+      <div class="audience-icon">🎓</div>
+      <div class="audience-text">
+        <h4>5. Visiting Faculty, Medical Residents & Students</h4>
+        <p>Bradley University, the University of Illinois College of Medicine Peoria campus, and the Saint Francis Medical Center College of Nursing all bring rotating residents, visiting professors, and graduate students who need furnished housing for a semester or academic year. Medical residents on clinical rotations at OSF or the Jump Trading Simulation & Education Center need 1–6 month housing.</p>
+        <div class="audience-meta">
+          <span>Typical stay: 3–12 months</span>
+          <span>Stipend-funded</span>
+          <span>Predictable schedule</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- EMPLOYER PROFILES -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Employer Profiles</div>
+    <h2>The Big Three Employment Engines</h2>
+    <p>Blog content should directly reference these employers by name — that's exactly what their workers are searching when they get their assignment or job offer.</p>
+
+    <div class="employer-card">
+      <h4>OSF HealthCare / Saint Francis Medical Center</h4>
+      <p>Greater Peoria's largest employer. OSF HealthCare operates 17 hospitals across Illinois and Michigan, but the flagship is right here in Peoria. It's a massive teaching hospital affiliated with the University of Illinois College of Medicine.</p>
+      <div class="employer-detail"><span class="label">Employees</span> 13,500+ in Greater Peoria (26,000 system-wide)</div>
+      <div class="employer-detail"><span class="label">Facility</span> 600+ bed Level I Trauma Center, Children's Hospital of Illinois, Cardiovascular Institute</div>
+      <div class="employer-detail"><span class="label">Housing demand</span> Travel nurses (13-week contracts, often extended), medical residents, clinical students, locum tenens physicians, traveling surgical techs</div>
+      <div class="employer-detail"><span class="label">Also nearby</span> UnityPoint Health Methodist, Saint Francis Medical Center College of Nursing</div>
+    </div>
+
+    <div class="employer-card">
+      <h4>Caterpillar Inc.</h4>
+      <p>Peoria is still CAT's operational heart — the largest manufacturing campus and ~90% of the workforce remain here even after the corporate HQ moved to Deerfield. This is a Fortune 500 company with a constant stream of project-based contractors, engineers, and interns.</p>
+      <div class="employer-detail"><span class="label">Workforce</span> Tens of thousands (direct + contractors). Region's 2nd largest employer cluster.</div>
+      <div class="employer-detail"><span class="label">Facility</span> Manufacturing, R&D, Caterpillar Visitor Center</div>
+      <div class="employer-detail"><span class="label">Housing demand</span> Project-based contractors (3–12 months), summer interns (May–Aug), consultants, relocating employees, visiting engineers</div>
+      <div class="employer-detail"><span class="label">Key detail</span> CAT often provides relocation allowances or contractor housing stipends</div>
+    </div>
+
+    <div class="employer-card">
+      <h4>Rivian Automotive</h4>
+      <p>The EV manufacturer's only active production plant is in Normal, IL — 38 miles east of Peoria. 2026 is a massive year: the R2 SUV line is launching, a new 1.2M sq ft supplier park is being completed, and production is ramping toward 215,000 vehicles/year.</p>
+      <div class="employer-detail"><span class="label">Employees</span> 8,000+ at Normal plant, plus hundreds more coming with supplier park</div>
+      <div class="employer-detail"><span class="label">Investment</span> $1.5B in R2 expansion + $120M supplier park (completing 2026)</div>
+      <div class="employer-detail"><span class="label">Drive from Peoria</span> 38 miles, ~40 minutes via I-74 and US-150</div>
+      <div class="employer-detail"><span class="label">Housing demand</span> Production workers, automation technicians, tool & die, paint techs, engineers, construction workers building the supplier park, EV supplier employees relocating</div>
+      <div class="employer-detail"><span class="label">Key detail</span> Bloomington-Normal housing is tighter and more expensive. Peoria offers a cheaper alternative with an easy commute. Shift workers on 2nd/3rd shift commute against traffic.</div>
+    </div>
+
+    <div class="callout callout-blue">
+      <p><strong>Timing matters:</strong> Rivian's R2 production launch and supplier park completion in 2026 will create a surge in temporary housing demand in the region. Blog content targeting "Rivian housing" keywords should be published now to establish rankings before the wave hits.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- KEYWORD RESEARCH -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Keyword Research</div>
+    <h2>Target Keywords for Mid-Term Rentals</h2>
+    <p>Completely refocused from the v1 research. These keywords reflect what a travel nurse, CAT contractor, or Rivian worker actually searches when they get their assignment and need a place to live.</p>
+
+    <h3>Primary Booking Keywords</h3>
+    <p>These should be targeted by the homepage and property detail pages. High intent — these people need housing now.</p>
+
+    <table class="kw-table">
+      <thead>
+        <tr>
+          <th>Keyword</th>
+          <th>Intent</th>
+          <th class="hide-mobile">Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="kw">furnished rental Peoria IL</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">monthly rental Peoria IL</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">extended stay Peoria IL</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">corporate housing Peoria IL</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">furnished apartment Peoria IL month to month</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">short term furnished housing Peoria IL</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">temporary housing Peoria IL</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">30 day rental Peoria IL</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-med">Medium</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Employer-Specific Keywords</h3>
+    <p>The money keywords. When someone searches "travel nurse housing Peoria" or "housing near Caterpillar," they have a start date in mind and a budget. These are bottom-of-funnel searches that blog posts and landing pages can rank for.</p>
+
+    <table class="kw-table">
+      <thead>
+        <tr>
+          <th>Keyword</th>
+          <th>Intent</th>
+          <th class="hide-mobile">Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="kw">travel nurse housing Peoria IL</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">furnished rental near OSF Peoria</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">housing near Caterpillar Peoria</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">Caterpillar intern housing Peoria</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">Caterpillar contractor housing Peoria IL</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">Rivian housing Normal IL</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">Rivian worker housing central Illinois</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">housing near Rivian plant Normal</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">furnished rental near UnityPoint Peoria</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-med">Medium</span></td></tr>
+        <tr><td class="kw">medical resident housing Peoria IL</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-med">Medium</span></td></tr>
+        <tr><td class="kw">Bradley University visiting faculty housing</td><td><span class="intent intent-book">Booking</span></td><td class="hide-mobile"><span class="priority priority-med">Medium</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Relocation & Lifestyle Keywords</h3>
+    <p>These people have already accepted a job and are researching the area. Blog content captures them while they're still planning and converts them to a booking.</p>
+
+    <table class="kw-table">
+      <thead>
+        <tr>
+          <th>Keyword</th>
+          <th>Intent</th>
+          <th class="hide-mobile">Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="kw">relocating to Peoria IL</td><td><span class="intent intent-info">Info</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">moving to Peoria IL what to know</td><td><span class="intent intent-info">Info</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">living in Peoria IL pros and cons</td><td><span class="intent intent-info">Info</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">is Peoria IL a good place to live</td><td><span class="intent intent-info">Info</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">cost of living Peoria IL</td><td><span class="intent intent-info">Info</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">best neighborhoods Peoria IL</td><td><span class="intent intent-info">Info</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">Peoria IL commute to Normal Bloomington</td><td><span class="intent intent-info">Info</span></td><td class="hide-mobile"><span class="priority priority-high">High</span></td></tr>
+        <tr><td class="kw">things to do in Peoria IL</td><td><span class="intent intent-info">Info</span></td><td class="hide-mobile"><span class="priority priority-med">Medium</span></td></tr>
+        <tr><td class="kw">best restaurants Peoria IL</td><td><span class="intent intent-local">Local</span></td><td class="hide-mobile"><span class="priority priority-med">Medium</span></td></tr>
+        <tr><td class="kw">Peoria IL grocery stores gyms near me</td><td><span class="intent intent-local">Local</span></td><td class="hide-mobile"><span class="priority priority-med">Medium</span></td></tr>
+        <tr><td class="kw">Peoria IL safe areas to live</td><td><span class="intent intent-info">Info</span></td><td class="hide-mobile"><span class="priority priority-med">Medium</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-green">
+      <p><strong>The keyword advantage:</strong> Furnished Finder charges landlords $199/year and takes no commission — but it also means Nate's listing is one of 151. A direct booking site with blog content targeting "travel nurse housing Peoria IL" or "Rivian worker housing central Illinois" lets him own the search result and skip the platform entirely. No listing fee, no competition on the same page, no algorithm changes.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- BLOG CONTENT PLAN -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Blog Content Plan</div>
+    <h2>Blog Posts for Mid-Term Renters</h2>
+    <p>Every blog post should serve one purpose: be the page that shows up when a professional Googles their way into figuring out where to live in Peoria. Each one ends with a CTA to Nate's properties.</p>
+
+    <h3>Tier 1 — Evergreen Employer Pages (Publish First)</h3>
+    <p>These are the anchor posts. They rank for the highest-value keywords and stay relevant year-round. Publish all of these at launch.</p>
+
+    <div class="blog-card">
+      <div class="blog-target">Travel Nurses</div>
+      <h4>The Travel Nurse's Guide to Housing in Peoria, IL</h4>
+      <p>Comprehensive guide covering OSF Saint Francis and UnityPoint Methodist — shift parking, badge office locations, which units most often post travel positions. Cover neighborhoods by commute time to each hospital. Include practical details: grocery stores, gyms, where to get scrubs, pharmacies. Position Luar Properties as the local alternative to Furnished Finder.</p>
+      <div class="blog-keywords">Keywords: travel nurse housing Peoria IL, furnished rental near OSF Peoria, travel nurse apartment Peoria</div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-target">Caterpillar</div>
+      <h4>Relocating to Peoria for Caterpillar? Here's Your Housing Guide</h4>
+      <p>Everything a new CAT contractor, intern, or employee needs. Which campus they'll likely report to, drive times from different neighborhoods, where the interns hang out, parking tips. Cover the summer intern influx (May–Aug) and the year-round contractor cycle. Mention the Caterpillar Visitor Center as a weekend activity.</p>
+      <div class="blog-keywords">Keywords: housing near Caterpillar Peoria, Caterpillar intern housing, Caterpillar contractor housing Peoria IL</div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-target">Rivian</div>
+      <h4>Working at Rivian? Why Peoria Is Your Best Housing Option</h4>
+      <p>The pitch: Peoria is 40 minutes from the Rivian plant in Normal, but rent is significantly cheaper and you get a full house instead of a Bloomington apartment. Cover the commute (I-74 to US-150, against traffic for shift workers), cost comparison, and what Peoria offers that Bloomington-Normal doesn't. Reference the R2 expansion and supplier park — this is timely content that will get shared in Rivian worker forums and Facebook groups.</p>
+      <div class="blog-keywords">Keywords: Rivian housing Normal IL, housing near Rivian plant, Rivian worker housing central Illinois, Peoria to Normal commute</div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-target">General Relocators</div>
+      <h4>The Ultimate Guide to Relocating to Peoria, IL</h4>
+      <p>The definitive "moving to Peoria" page. Neighborhoods ranked by safety, commute, vibe. Cost of living breakdown (Peoria just ranked #1 for first-time homebuyers nationally). Grocery stores, gyms, healthcare options, schools, weather expectations. Position Luar Properties as the landing pad — "Stay with us for a month while you find your permanent home."</p>
+      <div class="blog-keywords">Keywords: relocating to Peoria IL, moving to Peoria IL, cost of living Peoria IL, best neighborhoods Peoria IL</div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-target">Medical Residents</div>
+      <h4>Medical Resident Housing in Peoria: What You Need to Know</h4>
+      <p>Target medical residents and students rotating through OSF, the UI College of Medicine Peoria campus, or the Jump Trading Simulation Center. Cover affordable neighborhoods near the medical district, what to expect from Peoria nightlife (it exists), and how to make the most of a 3–12 month rotation.</p>
+      <div class="blog-keywords">Keywords: medical resident housing Peoria IL, student housing near OSF, UI College of Medicine Peoria housing</div>
+    </div>
+
+    <h3>Tier 2 — Lifestyle & Area Guides</h3>
+    <p>These support the Tier 1 posts by answering the "but what's it actually like to live there?" question. They also rank for high-volume informational keywords independently.</p>
+
+    <div class="blog-card">
+      <div class="blog-target">Lifestyle</div>
+      <h4>What It's Actually Like Living in Peoria, IL — A Local's Honest Take</h4>
+      <p>Not a tourist guide — a resident's perspective. The good (affordable, friendly, surprisingly great food scene), the honest (winters are cold, nightlife is limited), and the practical (you need a car). This post will rank for "living in Peoria IL pros and cons" and similar comparison queries.</p>
+      <div class="blog-keywords">Keywords: living in Peoria IL, is Peoria IL a good place to live, Peoria IL pros and cons</div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-target">Lifestyle</div>
+      <h4>Best Neighborhoods in Peoria for Professionals & Families</h4>
+      <p>Break down the neighborhoods by who they're best for: North Peoria (quiet, near Forest Park, Dunlap schools), Peoria Heights (walkable, boutiques, nightlife), West Peoria (affordable, close to Bradley), East Peoria (closer to Rivian commute). Include drive times to OSF, CAT campus, and I-74 for the Rivian commute.</p>
+      <div class="blog-keywords">Keywords: best neighborhoods Peoria IL, safe areas Peoria IL, where to live Peoria IL</div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-target">Lifestyle</div>
+      <h4>The Peoria Food & Drink Guide: Where Locals Actually Eat</h4>
+      <p>Black Band Distillery (James Beard winner), Donnelly's Irish Pub (best wings), Obed & Isaac's (beer cheese soup), The Blue Duck (breakfast sandwich), Emo's Dairy Mart (iconic ice cream), Bartonville Diner (Greek skillet), Ardor Breads, The Fish House, Peoria Heights strip (Pour Bros, Clink Bar, Twelve Bar). Write it like you're texting a friend who just moved here.</p>
+      <div class="blog-keywords">Keywords: best restaurants Peoria IL, where to eat Peoria IL, Peoria IL food guide</div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-target">Lifestyle</div>
+      <h4>Weekend in Peoria: What to Do When You're Not Working</h4>
+      <p>Tailored for someone who's here for work and has weekends free. Peoria Riverfront Museum, Wildlife Prairie Park, Grandview Drive, Peoria Zoo, Chiefs baseball (summer), Rivermen hockey (winter), Mackinaw Valley Vineyard, Northmoor Observatory stargazing, Forest Park trails. Not a tourist dump — curated itineraries by season.</p>
+      <div class="blog-keywords">Keywords: things to do Peoria IL, Peoria IL weekend activities, what to do in Peoria</div>
+    </div>
+
+    <h3>Tier 3 — Seasonal & Timely Content</h3>
+    <p>Published on a schedule tied to employer hiring cycles and seasonal demand. Lower priority than Tier 1 and 2, but good for keeping the blog fresh and capturing seasonal search spikes.</p>
+
+    <div class="blog-card">
+      <div class="blog-target">Seasonal · Spring</div>
+      <h4>Summer Internship Season in Peoria: Where CAT & OSF Interns Live</h4>
+      <p>Publish in March/April before intern housing decisions are made. Cover the intern experience, social scene, and why a furnished rental beats a sublet.</p>
+      <div class="blog-keywords">Keywords: Caterpillar summer intern Peoria, OSF intern housing, summer internship Peoria IL</div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-target">Seasonal · Year-Round</div>
+      <h4>Rivian R2 Production Ramp: What the Expansion Means for Housing in Central IL</h4>
+      <p>Timely content tied to the 2026 R2 launch and supplier park opening. Position Peoria as the smart housing play for the hundreds of new workers. Highly shareable in Rivian forums.</p>
+      <div class="blog-keywords">Keywords: Rivian Normal IL expansion, Rivian R2 production, housing near Rivian 2026</div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-target">Seasonal · Winter</div>
+      <h4>Surviving (and Enjoying) Winter in Peoria — A Newcomer's Guide</h4>
+      <p>For someone from a warmer climate arriving in October. What to expect, what to buy, where to eat comfort food, and indoor activities. Practical and warm in tone. Reduces the "I don't want to move to Illinois" anxiety.</p>
+      <div class="blog-keywords">Keywords: Peoria IL winter, moving to Peoria IL weather, what to do Peoria IL winter</div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-target">Seasonal · Fall</div>
+      <h4>Fall in Central Illinois: The Best Part of Living in Peoria</h4>
+      <p>Morton Pumpkin Festival, Oktoberfest, fall foliage on Grandview Drive, apple picking, Football Saturdays. Position fall as Peoria's best season to counter the "flat boring midwest" stereotype.</p>
+      <div class="blog-keywords">Keywords: Peoria IL fall activities, Morton Pumpkin Festival, things to do Peoria autumn</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- COMPETITIVE LANDSCAPE -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Competitive Landscape</div>
+    <h2>Where Mid-Term Renters Currently Search</h2>
+    <p>Nate's blog content needs to outperform these platforms in search for employer-specific and relocation queries — which is achievable because none of them publish local content.</p>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Platform</th>
+          <th>Model</th>
+          <th>Weakness</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Furnished Finder</strong></td>
+          <td>$199/yr listing fee, no commission. 151 listings in Peoria. The dominant platform for travel nurse housing.</td>
+          <td>No local content. Listings look identical. No SEO for employer-specific queries. Nate's listing competes with 150 others on the same page.</td>
+        </tr>
+        <tr>
+          <td><strong>Airbnb (Monthly)</strong></td>
+          <td>14-16% guest service fee + 3% host fee. Monthly discount option available but guests still pay platform fees.</td>
+          <td>Expensive for 30+ day stays due to fees. No employer-targeted content. Algorithm-dependent visibility.</td>
+        </tr>
+        <tr>
+          <td><strong>Apartments.com</strong></td>
+          <td>188 short-term listings in Peoria. $862–$1,251/mo average. Mostly apartment complexes.</td>
+          <td>Impersonal. No furnished homes. Not designed for the "I need a home, not a unit" renter.</td>
+        </tr>
+        <tr>
+          <td><strong>Extended Stay America</strong></td>
+          <td>Hotel chain with kitchenettes. Weekly/monthly rates.</td>
+          <td>It's a hotel room. No privacy, no yard, no washer/dryer, no home feeling. Fine for 1-2 weeks, terrible for 3+ months.</td>
+        </tr>
+        <tr>
+          <td><strong>CorporateHousing.com</strong></td>
+          <td>191 listings in Peoria area. Broker-style — they match tenants with properties.</td>
+          <td>Intermediary adds cost. No direct relationship. Generic listings.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <p><strong>Nate's edge:</strong> A direct booking site with blog content that speaks to specific employers and situations. "I'm a travel nurse starting at OSF in 3 weeks" or "I just took a job at Rivian and need a place to live" — Nate's blog post answers that exact query, and the CTA takes them straight to a booking with no platform fees, no competing listings, and a real person (Nate) on the other end.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- CONTENT STRATEGY -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Content Strategy</div>
+    <h2>How the Blog Drives Bookings</h2>
+
+    <h3>The Funnel</h3>
+    <p>Every blog post serves the same conversion path:</p>
+    <ul>
+      <li><strong>Search:</strong> Professional gets job offer / travel assignment → Googles "travel nurse housing Peoria IL" or "relocating to Peoria for Caterpillar"</li>
+      <li><strong>Discover:</strong> Nate's blog post is the top organic result because no platform creates this content</li>
+      <li><strong>Trust:</strong> The post reads like a local who knows the area, not a generic listing platform</li>
+      <li><strong>Convert:</strong> CTA at the bottom → "Book direct at Luar Properties — furnished, flexible, no platform fees. [Property Name] is 10 minutes from OSF / 40 minutes from Rivian."</li>
+    </ul>
+
+    <h3>Blog Post Template for This Audience</h3>
+    <ul>
+      <li><strong>H1 with employer name + housing keyword</strong> — These people search by employer name</li>
+      <li><strong>Practical tone, not salesy</strong> — Write like you're giving advice to a coworker, not pitching a product</li>
+      <li><strong>Include drive times, grocery stores, gyms, pharmacies</strong> — This is what a relocator actually needs</li>
+      <li><strong>Property tie-in feels natural, not forced</strong> — "We offer furnished rentals starting at 30 days — here's what's available"</li>
+      <li><strong>Add a neighborhood map or commute map</strong> — Visual content gets shared and linked to</li>
+    </ul>
+
+    <h3>Publishing Priority</h3>
+    <ul>
+      <li><strong>Month 1:</strong> Publish all 5 Tier 1 employer pages + the neighborhood guide</li>
+      <li><strong>Month 2:</strong> Publish remaining Tier 2 lifestyle posts</li>
+      <li><strong>Month 3+:</strong> One Tier 3 seasonal post per month, plus update Tier 1 posts with new info</li>
+    </ul>
+
+    <h3>Distribution Beyond Google</h3>
+    <p>These blog posts shouldn't just sit on the site waiting for Google to rank them. They should be actively shared in:</p>
+    <ul>
+      <li><strong>Travel nurse Facebook groups</strong> — "Travel Nurses - Peoria IL," "Travel Nurse Housing Tips," etc.</li>
+      <li><strong>Rivian worker forums and Facebook groups</strong> — Rivian employees actively discuss housing options online</li>
+      <li><strong>Reddit</strong> — r/TravelNursing, r/Rivian, r/PeoriaIL</li>
+      <li><strong>Furnished Finder profile</strong> — Link to the blog from Nate's Furnished Finder listing to drive traffic to the direct site</li>
+      <li><strong>Hospital bulletin boards</strong> — OSF and UnityPoint have physical and digital boards for travel staff resources</li>
+    </ul>
+
+    <div class="callout callout-green">
+      <p><strong>Bottom line:</strong> The blog isn't a "nice to have" for mid-term rentals — it's the entire acquisition strategy. Nate's properties aren't competing with 10,000 Airbnb listings on a search page. They're competing with a handful of corporate housing brokers and platform listings that all look the same. One well-written blog post that says "I'm a local host in Peoria, here's what you need to know about working at OSF / CAT / Rivian" will outperform all of them in organic search.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <p>Internal Research Document — Aitheos LLC<br>Compiled March 2026 · Not for client distribution<br>v2 — Refocused for mid-term professional rentals (30 days – 12 months)</p>
+</footer>
+
+</body>
+</html>

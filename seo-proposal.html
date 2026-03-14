@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO Start-Up Bundle — Luar Properties</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-bg: #FBF7F4;
+    --color-surface: #FFFFFF;
+    --color-surface-alt: #F5DFE1;
+    --color-text: #1B2A4A;
+    --color-text-secondary: #525252;
+    --color-accent: #1B2A4A;
+    --color-accent-light: #E8EDF5;
+    --color-accent-dark: #131E35;
+    --color-gold: #C4613A;
+    --color-gold-light: #FDF0EA;
+    --color-border: #E8E8E8;
+    --color-success: #1B2A4A;
+    --color-divider: #D4D4D4;
+    --color-blush: #E8B4B8;
+    --color-blush-light: #F5DFE1;
+    --color-terracotta: #C4613A;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', -apple-system, sans-serif;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── Cover Section ── */
+  .cover {
+    background: linear-gradient(165deg, var(--color-accent-dark) 0%, var(--color-accent) 60%, #243656 100%);
+    color: white;
+    padding: 60px 24px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    left: -20%;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .cover-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.15);
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(8px);
+  }
+
+  .cover h1 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+
+  .cover-subtitle {
+    font-size: 16px;
+    opacity: 0.85;
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+
+  .cover-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+    opacity: 0.7;
+  }
+
+  .cover-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cover-meta svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  /* ── Main Content ── */
+  .content {
+    padding: 0 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ── Section Styles ── */
+  .section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .section:last-child {
+    border-bottom: none;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 12px;
+  }
+
+  .section h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--color-text);
+  }
+
+  .section p {
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .section p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── Deliverable Cards ── */
+  .deliverable {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .deliverable-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .deliverable h3 {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: var(--color-text);
+  }
+
+  .deliverable p {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+
+  .deliverable p:last-child {
+    margin-bottom: 0;
+  }
+
+  .feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .feature-list li {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    padding: 7px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .feature-list li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 14px;
+    width: 12px;
+    height: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%231B2A4A'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  /* ── Pricing ── */
+  .pricing-card {
+    background: var(--color-surface);
+    border: 2px solid var(--color-accent);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 8px;
+  }
+
+  .pricing-header {
+    background: var(--color-accent);
+    color: white;
+    padding: 20px 24px;
+    text-align: center;
+  }
+
+  .pricing-header h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .pricing-header p {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 0;
+    color: white;
+  }
+
+  .pricing-body {
+    padding: 24px;
+  }
+
+  .price-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    font-size: 15px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .price-line:last-child {
+    border-bottom: none;
+  }
+
+  .price-line.total {
+    border-top: 2px solid var(--color-text);
+    border-bottom: none;
+    padding-top: 16px;
+    margin-top: 4px;
+    font-weight: 700;
+    font-size: 17px;
+  }
+
+  /* ── Callout Box ── */
+  .callout {
+    background: var(--color-blush-light);
+    border-left: 3px solid var(--color-blush);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 18px 20px;
+    margin: 20px 0;
+  }
+
+  .callout p {
+    font-size: 14px;
+    color: var(--color-text);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  .callout strong {
+    color: var(--color-text);
+  }
+
+  .callout-blue {
+    background: var(--color-accent-light);
+    border-left-color: var(--color-accent);
+  }
+
+  /* ── Amy Section ── */
+  .amy-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-top: 16px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .amy-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-blush-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .amy-info h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .amy-info p {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  /* ── Milestones ── */
+  .milestone {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .milestone:last-child {
+    margin-bottom: 0;
+  }
+
+  .milestone-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .milestone-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: 3px solid var(--color-accent-light);
+    flex-shrink: 0;
+  }
+
+  .milestone-line {
+    width: 2px;
+    flex: 1;
+    background: var(--color-border);
+    margin-top: 4px;
+  }
+
+  .milestone:last-child .milestone-line {
+    display: none;
+  }
+
+  .milestone-content {
+    padding-bottom: 4px;
+  }
+
+  .milestone-content h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .milestone-content .milestone-payment {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-terracotta);
+    margin-bottom: 6px;
+  }
+
+  .milestone-content p {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  /* ── Signature Area ── */
+  .signature-area {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    margin-top: 8px;
+  }
+
+  .sig-block {
+    margin-bottom: 32px;
+  }
+
+  .sig-block:last-child {
+    margin-bottom: 0;
+  }
+
+  .sig-block label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+  }
+
+  .sig-line {
+    border-bottom: 1px solid var(--color-text);
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+
+  .sig-sub {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+
+  /* ── Revision Note ── */
+  .revision-note {
+    background: var(--color-surface-alt);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .revision-note strong {
+    color: var(--color-text);
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 32px 20px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+  }
+
+  .footer a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .cover { animation: fadeUp 0.6s ease-out; }
+  .section { animation: fadeUp 0.5s ease-out both; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- COVER -->
+<!-- ══════════════════════════════════════════ -->
+<header class="cover">
+  <div class="cover-inner">
+    <div class="cover-badge">SEO Proposal</div>
+    <h1>SEO Start-Up Bundle<br>Luar Properties</h1>
+    <p class="cover-subtitle">A complete, turnkey SEO content strategy — with research, templates, standard operating procedures, and a trained team member ready to execute. Built to drive direct bookings from working professionals in Central Illinois.</p>
+    <div class="cover-meta">
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        Prepared for Nate — Luar Properties
+      </span>
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        March 2026
+      </span>
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Peoria, Illinois
+      </span>
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+        Prepared by Stephen Odanovich — Aitheos LLC
+      </span>
+    </div>
+  </div>
+</header>
+
+<div class="content">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- THE OPPORTUNITY -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Overview</div>
+    <h2>Why SEO Matters for Luar Properties</h2>
+    <p>A direct booking website is only valuable if people can find it. Right now, when a travel nurse Googles "furnished rental Peoria IL" or a Rivian contractor searches "housing near Rivian plant Normal," the results are dominated by Furnished Finder, Airbnb, and Apartments.com — platforms that charge fees, bury your listing among dozens of competitors, and own the customer relationship.</p>
+    <p>Blog content changes that. A single well-written article targeting "travel nurse housing Peoria IL" can rank above every platform listing because none of those platforms publish local, employer-specific content. That article becomes a permanent source of free traffic that sends qualified renters directly to your booking page — no ad spend, no platform fees, no algorithm changes to worry about.</p>
+    <p>This bundle gives you everything you need to execute that strategy in-house — the research, the roadmap, the templates, and the step-by-step procedures — so your team can publish one article per week and build a content library that compounds in value over time.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- WHAT'S INCLUDED -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Scope of Work</div>
+    <h2>What's Included</h2>
+    <p>This is a one-time deliverable — not an ongoing retainer. You receive a complete, self-contained system that your team can run independently from day one.</p>
+
+    <!-- 1. Strategy & Research -->
+    <div class="deliverable">
+      <div class="deliverable-number">1</div>
+      <h3>SEO Strategy &amp; Keyword Research</h3>
+      <p>The foundation of the entire content plan. Comprehensive market research tailored specifically to Luar Properties' target renters in the Peoria–Bloomington-Normal corridor.</p>
+      <ul class="feature-list">
+        <li>Target audience profiles for all five renter segments — travel nurses, Caterpillar contractors, Rivian workers, corporate relocators, and visiting faculty</li>
+        <li>Employer profiles for OSF HealthCare, Caterpillar, and Rivian with specific housing demand drivers</li>
+        <li>30+ target keywords mapped by intent (booking, informational, local) and priority</li>
+        <li>Competitive analysis of Furnished Finder, Airbnb, Apartments.com, Extended Stay America, and CorporateHousing.com — including their weaknesses your content can exploit</li>
+        <li>Content strategy showing how blog posts convert search traffic into direct bookings</li>
+      </ul>
+    </div>
+
+    <!-- 2. 12-Month Roadmap -->
+    <div class="deliverable">
+      <div class="deliverable-number">2</div>
+      <h3>12-Month Content Roadmap</h3>
+      <p>A month-by-month publishing calendar that tells your team exactly what to write, when to publish it, and where to share it — for a full year.</p>
+      <ul class="feature-list">
+        <li>24 blog post topics with titles, descriptions, target keywords, and distribution channels</li>
+        <li>7 scheduled content refreshes to keep anchor posts ranking</li>
+        <li>Three-tier system: Tier 1 employer pages (drive bookings), Tier 2 lifestyle guides (build trust), Tier 3 seasonal content (capture search spikes)</li>
+        <li>Publishing cadence of 1 new post per week (4 per month) with seasonal timing aligned to employer hiring cycles</li>
+        <li>Distribution guide for each post — which Facebook groups, Reddit communities, and platforms to share on</li>
+      </ul>
+    </div>
+
+    <!-- 3. Sample Article -->
+    <div class="deliverable">
+      <div class="deliverable-number">3</div>
+      <h3>Published Sample Article</h3>
+      <p>A fully finished, professionally written Tier 1 blog post — already published to the Luar Properties website — that serves as the quality benchmark for every future article.</p>
+      <ul class="feature-list">
+        <li>"The Travel Nurse's Guide to Housing in Peoria, IL" — 1,800+ words targeting the highest-volume audience</li>
+        <li>Covers OSF Saint Francis, Carle Health Methodist, neighborhoods, grocery stores, gyms, and practical relocation details</li>
+        <li>Naturally integrated CTA linking directly to the property booking page</li>
+        <li>Written in Nate's voice as a local host — the template for all future content</li>
+        <li>Published and live on the website with full blog listing page</li>
+      </ul>
+    </div>
+
+    <!-- 4. SOPs -->
+    <div class="deliverable">
+      <div class="deliverable-number">4</div>
+      <h3>Standard Operating Procedures</h3>
+      <p>Step-by-step execution guides that allow anyone on your team — regardless of SEO experience — to research, write, publish, and promote blog content independently.</p>
+      <ul class="feature-list">
+        <li><strong>How to Write a Blog Post:</strong> From selecting a topic off the roadmap to outlining, drafting, editing, and finalizing — with a fill-in-the-blank template for each content tier</li>
+        <li><strong>How to Publish to the Website:</strong> Formatting guide, image sizing, SEO title and meta description best practices, and CMS publishing steps</li>
+        <li><strong>How to Distribute Content:</strong> Specific Facebook groups, Reddit communities, and platforms to share each post — with copy-paste templates for social posts</li>
+        <li><strong>How to Refresh Existing Content:</strong> Quarterly update checklist — what to look for, what to update, how to re-share for another ranking boost</li>
+        <li><strong>How to Track Performance:</strong> Google Search Console setup guide, which metrics matter (impressions → clicks → bookings), and a monthly reporting template</li>
+        <li><strong>Voice &amp; Style Guide:</strong> Tone guidelines, formatting rules, and do's and don'ts to keep every article consistent with Nate's brand</li>
+      </ul>
+    </div>
+
+    <!-- 5. Training -->
+    <div class="deliverable">
+      <div class="deliverable-number">5</div>
+      <h3>Training &amp; Handoff Session</h3>
+      <p>A live walkthrough with the person who will be executing the content plan — covering the full system from strategy to publishing workflow.</p>
+      <ul class="feature-list">
+        <li>60–90 minute training session covering all SOPs and the content roadmap</li>
+        <li>Hands-on walkthrough: outline a real blog post together using the templates</li>
+        <li>Google Search Console setup and walkthrough</li>
+        <li>Q&A and troubleshooting for any questions about the process</li>
+        <li>30 days of follow-up support via text or email for questions that come up during the first month of execution</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- ONGOING EXECUTION -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Ongoing Execution</div>
+    <h2>Who Runs It After Handoff</h2>
+    <p>This bundle is designed to be executed entirely in-house. The SOPs are written so that someone with no SEO background can follow them and produce quality content from week one. The recommended cadence is one article per week — roughly 3–4 hours of work per post including research, writing, and publishing.</p>
+
+    <div class="amy-card">
+      <div class="amy-avatar">A</div>
+      <div class="amy-info">
+        <h4>Recommended: Amy Odanovich</h4>
+        <p>Amy already works with Luar Properties and knows the business, the properties, and the Peoria area. She's the ideal person to execute the content plan — following the SOPs, writing one article per week, and publishing to the blog. Amy would be compensated directly by Luar Properties at her existing hourly rate. No middleman, no agency markup — just consistent content from someone who's already on the team.</p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 20px;">
+      <p><strong>The math:</strong> At roughly 3–4 hours per article and one article per week, Amy's ongoing content work costs a fraction of what an agency or freelancer would charge for the same output. And because she has the SOPs, templates, and a full year's worth of topics already mapped out, there's no guesswork — she just follows the playbook.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- WHAT THIS DELIVERS -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Expected Results</div>
+    <h2>What to Expect</h2>
+    <p>SEO is a compounding investment — the content you publish in month one continues to drive traffic in month twelve and beyond. Here's a realistic timeline of what consistent weekly publishing delivers.</p>
+
+    <div style="margin-top: 24px;">
+      <div class="milestone">
+        <div class="milestone-marker">
+          <div class="milestone-dot"></div>
+          <div class="milestone-line"></div>
+        </div>
+        <div class="milestone-content">
+          <h4>Months 1–2: Foundation</h4>
+          <p>Employer-specific anchor posts go live. Google begins indexing the content. Impressions start appearing in Search Console within 4–8 weeks. Share posts in relevant Facebook groups and Reddit communities for immediate traffic while organic rankings build.</p>
+        </div>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-marker">
+          <div class="milestone-dot"></div>
+          <div class="milestone-line"></div>
+        </div>
+        <div class="milestone-content">
+          <h4>Months 3–6: Traction</h4>
+          <p>Lifestyle and area guides start ranking for informational queries. Internal links between posts strengthen the entire site's authority. Organic clicks increase as Google sees consistent, quality publishing. First direct bookings attributable to blog content.</p>
+        </div>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-marker">
+          <div class="milestone-dot"></div>
+        </div>
+        <div class="milestone-content">
+          <h4>Months 6–12: Compounding</h4>
+          <p>With 24+ posts published, the site has topical authority for mid-term rentals in Central Illinois. Older posts continue ranking and driving traffic without additional effort. Quarterly refreshes keep content current. Year 2 requires less effort for more results — the content library is doing the heavy lifting.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-blue" style="margin-top: 20px;">
+      <p><strong>The competitive advantage:</strong> None of your competitors — Furnished Finder, Airbnb, Apartments.com — publish local content targeting specific employers. A blog post titled "Relocating to Peoria for Caterpillar? Here's Your Housing Guide" has zero competition in organic search. You're not trying to outrank Amazon — you're filling a vacuum that nobody else is addressing.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- PRICING -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Investment</div>
+    <h2>Pricing</h2>
+    <p>This is a one-time, fixed-price deliverable. No monthly retainer, no recurring fees. You own everything — the research, the roadmap, the SOPs, and the templates — and your team runs it independently going forward.</p>
+
+    <div class="pricing-card">
+      <div class="pricing-header">
+        <h3>SEO Start-Up Bundle</h3>
+        <p>Strategy, templates, SOPs &amp; training</p>
+      </div>
+      <div class="pricing-body">
+        <div class="price-line">
+          <span>SEO strategy &amp; keyword research</span>
+          <span>Included</span>
+        </div>
+        <div class="price-line">
+          <span>12-month content roadmap</span>
+          <span>Included</span>
+        </div>
+        <div class="price-line">
+          <span>Published sample article (Tier 1)</span>
+          <span>Included</span>
+        </div>
+        <div class="price-line">
+          <span>Standard operating procedures (6 SOPs)</span>
+          <span>Included</span>
+        </div>
+        <div class="price-line">
+          <span>Training &amp; handoff session</span>
+          <span>Included</span>
+        </div>
+        <div class="price-line">
+          <span>30 days follow-up support</span>
+          <span>Included</span>
+        </div>
+        <div class="price-line total">
+          <span>Total Investment</span>
+          <span>$2,500</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 20px;">
+      <p><strong>For context:</strong> A single SEO blog article from a freelance writer runs $150–$400. An agency retainer for content marketing starts at $2,000–$5,000 per month. This bundle delivers a full year's strategy, 6 SOPs, a published sample article, and training — for less than two months of agency fees. And after the handoff, the only ongoing cost is Amy's hourly rate.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- PAYMENT -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Payment</div>
+    <h2>Payment Terms</h2>
+    <p>Simple, two-payment structure. A deposit to begin, with the balance due after delivery and training.</p>
+
+    <div style="margin-top: 24px;">
+      <div class="milestone">
+        <div class="milestone-marker">
+          <div class="milestone-dot"></div>
+          <div class="milestone-line"></div>
+        </div>
+        <div class="milestone-content">
+          <h4>Deposit — $500</h4>
+          <div class="milestone-payment">Due upon signed agreement</div>
+          <p>Covers initial work on SOPs, templates, and formatting the research and roadmap deliverables for handoff.</p>
+        </div>
+      </div>
+
+      <div class="milestone">
+        <div class="milestone-marker">
+          <div class="milestone-dot"></div>
+        </div>
+        <div class="milestone-content">
+          <h4>Final Payment — $2,000</h4>
+          <div class="milestone-payment">Due after training &amp; handoff</div>
+          <p>The remaining balance is collected after the training session is complete, all deliverables have been handed over, and the team is set up to execute independently.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- OPTIONAL ADD-ON -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Included</div>
+    <h2>Quarterly Strategy Check-In</h2>
+    <p>After the handoff, you may want a periodic review to make sure the content strategy is on track and adjust based on what's working. The bundle is designed to run independently, but a quarterly pulse check ensures nothing drifts off course.</p>
+    <p>Each quarter, I'll review what's been published, pull Google Search Console data, identify which keywords are gaining traction, and recommend any adjustments to the roadmap or keyword targeting. A 30-minute call plus a written summary of findings and recommendations.</p>
+    <p><strong>Complimentary — included with this engagement.</strong> As part of our friends &amp; family partnership with the Odanovich family, quarterly strategy check-ins are provided at no additional cost. I have a personal investment in Amy's success executing this strategy, and I want to make sure the roadmap continues to deliver results long after the initial handoff.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- AGREEMENT -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Agreement</div>
+    <h2>Let's Get Started</h2>
+    <p>By signing below, both parties agree to the scope of work and payment terms outlined in this proposal. Work begins upon signed agreement and receipt of the $500 deposit. The remaining $2,000 is due upon completion of the training and handoff session.</p>
+
+    <div class="signature-area">
+      <div class="sig-block">
+        <label>Client — Luar Properties</label>
+        <div class="sig-line"></div>
+        <div class="sig-sub">
+          <span>Nate — Owner</span>
+          <span>Date: _______________</span>
+        </div>
+      </div>
+      <div class="sig-block">
+        <label>Consultant — Aitheos LLC</label>
+        <div class="sig-line"></div>
+        <div class="sig-sub">
+          <span>Stephen Odanovich — AI Consulting &amp; Digital Services</span>
+          <span>Date: _______________</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <p>Luar Properties — SEO Start-Up Bundle Proposal<br>Prepared by <strong>Stephen Odanovich</strong> — Aitheos LLC<br><a href="mailto:stephen@aitheos.com">stephen@aitheos.com</a> · <a href="tel:2108150059">210-815-0059</a></p>
+</footer>
+
+</body>
+</html>

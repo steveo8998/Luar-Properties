@@ -780,6 +780,169 @@
     .contact-hero h1 { font-size: 28px; }
   }
 
+  /* ========== BLOG LISTING PAGE ========== */
+  .blog-hero {
+    background: linear-gradient(135deg, var(--dark-blue) 0%, #2C3E6B 100%);
+    padding: 64px 24px 48px;
+    text-align: center; color: var(--white);
+  }
+  .blog-hero h1 {
+    font-size: 36px; font-weight: 700; margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .blog-hero p {
+    font-size: 17px; opacity: 0.85; max-width: 540px;
+    margin: 0 auto; line-height: 1.6;
+  }
+  .blog-listing {
+    max-width: 800px; margin: -32px auto 0; padding: 0 24px 60px;
+    position: relative; z-index: 10;
+  }
+  .blog-preview-card {
+    background: var(--white); border-radius: var(--radius);
+    box-shadow: var(--shadow-md); overflow: hidden;
+    margin-bottom: 24px; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; flex-direction: row;
+  }
+  .blog-preview-card:hover {
+    transform: translateY(-3px); box-shadow: var(--shadow-lg);
+  }
+  .blog-preview-img {
+    width: 280px; min-height: 220px; object-fit: cover; flex-shrink: 0;
+  }
+  .blog-preview-body {
+    padding: 28px 28px; display: flex; flex-direction: column;
+    justify-content: center;
+  }
+  .blog-preview-tag {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--terracotta); margin-bottom: 8px;
+  }
+  .blog-preview-body h3 {
+    font-size: 20px; font-weight: 700; color: var(--dark-blue);
+    margin-bottom: 8px; line-height: 1.3;
+  }
+  .blog-preview-body p {
+    font-size: 14px; color: var(--gray-500); line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .blog-preview-meta {
+    font-size: 13px; color: var(--gray-400); display: flex;
+    gap: 12px; align-items: center;
+  }
+  .blog-preview-meta span { display: flex; align-items: center; gap: 4px; }
+  .blog-read-more {
+    font-size: 14px; font-weight: 600; color: var(--terracotta);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 4px;
+  }
+  .blog-coming-soon-card {
+    background: var(--cream); border: 2px dashed var(--gray-300);
+    border-radius: var(--radius); padding: 32px; text-align: center;
+    margin-bottom: 24px;
+  }
+  .blog-coming-soon-card h4 {
+    font-size: 16px; font-weight: 600; color: var(--gray-500); margin-bottom: 4px;
+  }
+  .blog-coming-soon-card p {
+    font-size: 14px; color: var(--gray-400);
+  }
+
+  @media (max-width: 700px) {
+    .blog-preview-card { flex-direction: column; }
+    .blog-preview-img { width: 100%; min-height: 180px; }
+    .blog-hero h1 { font-size: 28px; }
+  }
+
+  /* ========== BLOG ARTICLE PAGE ========== */
+  .blog-article-header {
+    background: linear-gradient(135deg, var(--dark-blue) 0%, #2C3E6B 100%);
+    padding: 56px 24px 40px; color: var(--white); text-align: center;
+  }
+  .blog-article-tag {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    background: var(--blush); color: var(--dark-blue);
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 16px;
+  }
+  .blog-article-header h1 {
+    font-size: 34px; font-weight: 700; max-width: 680px;
+    margin: 0 auto 12px; line-height: 1.25; letter-spacing: -0.5px;
+  }
+  .blog-article-header .blog-byline {
+    font-size: 15px; opacity: 0.75;
+  }
+  .blog-article-body {
+    max-width: 680px; margin: 0 auto; padding: 40px 24px 20px;
+  }
+  .blog-article-body p {
+    font-size: 16px; line-height: 1.8; color: var(--gray-600);
+    margin-bottom: 20px;
+  }
+  .blog-article-body h2 {
+    font-size: 24px; font-weight: 700; color: var(--dark-blue);
+    margin: 40px 0 16px; letter-spacing: -0.3px;
+  }
+  .blog-article-body h3 {
+    font-size: 19px; font-weight: 700; color: var(--dark-blue);
+    margin: 32px 0 12px;
+  }
+  .blog-article-body strong { color: var(--gray-800); }
+  .blog-article-body ul, .blog-article-body ol {
+    padding-left: 24px; margin-bottom: 20px;
+  }
+  .blog-article-body li {
+    font-size: 16px; line-height: 1.8; color: var(--gray-600);
+    margin-bottom: 8px;
+  }
+  .blog-article-body hr {
+    border: none; border-top: 1px solid var(--gray-200);
+    margin: 36px 0;
+  }
+  .blog-article-body em { color: var(--gray-500); }
+  .blog-cta-box {
+    background: var(--cream); border: 1px solid var(--gray-200);
+    border-radius: var(--radius); padding: 32px;
+    text-align: center; margin: 40px 0;
+  }
+  .blog-cta-box h3 {
+    font-size: 22px; font-weight: 700; color: var(--dark-blue);
+    margin: 0 0 8px;
+  }
+  .blog-cta-box p {
+    font-size: 15px; color: var(--gray-500); margin-bottom: 20px;
+    max-width: 480px; margin-left: auto; margin-right: auto;
+  }
+  .blog-cta-btn {
+    display: inline-block; background: var(--terracotta); color: var(--white);
+    padding: 14px 36px; border-radius: var(--radius-sm);
+    font-size: 15px; font-weight: 600; text-decoration: none;
+    cursor: pointer; border: none; transition: background 0.2s, transform 0.1s;
+  }
+  .blog-cta-btn:hover { background: #b3552f; transform: translateY(-1px); }
+  .blog-author-card {
+    display: flex; align-items: center; gap: 16px;
+    padding: 24px 0; border-top: 1px solid var(--gray-200);
+    margin-top: 32px;
+  }
+  .blog-author-avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--blush-light); display: flex; align-items: center;
+    justify-content: center; font-size: 22px; font-weight: 600;
+    color: var(--dark-blue); flex-shrink: 0;
+  }
+  .blog-author-info .author-name {
+    font-size: 15px; font-weight: 600; color: var(--dark-blue);
+  }
+  .blog-author-info .author-desc {
+    font-size: 14px; color: var(--gray-500); line-height: 1.5;
+  }
+
+  @media (max-width: 540px) {
+    .blog-article-header h1 { font-size: 26px; }
+  }
+
   /* Demo badge */
   .demo-banner {
     background: var(--dark-blue); color: var(--blush); text-align: center;
@@ -811,6 +974,7 @@
     <div class="logo" onclick="showScreen('screen-home')">Luar <span>Properties</span></div>
     <div class="nav-links">
       <a href="#" onclick="showScreen('screen-home'); return false;">Properties</a>
+      <a href="#" onclick="showScreen('screen-blog'); return false;">Blog</a>
       <a href="#" onclick="showScreen('screen-contact'); return false;">Contact</a>
     </div>
   </nav>
@@ -890,6 +1054,7 @@
     <div class="logo" onclick="showScreen('screen-home')">Luar <span>Properties</span></div>
     <div class="nav-links">
       <a href="#" onclick="showScreen('screen-home'); return false;">← All Properties</a>
+      <a href="#" onclick="showScreen('screen-blog'); return false;">Blog</a>
       <a href="#" onclick="showScreen('screen-contact'); return false;">Contact</a>
     </div>
   </nav>
@@ -970,7 +1135,7 @@
       <!-- Calendar -->
       <div class="calendar-section">
         <h3>Select your dates</h3>
-        <p style="font-size: 14px; color: var(--gray-500); margin-bottom: 16px;">Minimum stay: 7 nights</p>
+        <p style="font-size: 14px; color: var(--gray-500); margin-bottom: 16px;">Select your preferred dates, or skip ahead to see the booking flow.</p>
         <div class="cal-nav">
           <select id="cal-month-select" onchange="renderCalendar()"></select>
         </div>
@@ -1042,11 +1207,11 @@
           <span>2 guests</span>
         </div>
 
-        <button class="btn-book" id="btn-reserve" disabled onclick="showScreen('screen-checkout')">
-          Check availability
+        <button class="btn-book" id="btn-reserve" onclick="showScreen('screen-checkout')">
+          Reserve
         </button>
 
-        <div class="price-breakdown" id="price-breakdown" style="display: none;">
+        <div class="price-breakdown" id="price-breakdown">
           <div class="price-line">
             <span id="nightly-calc">$95 × 7 nights</span>
             <span id="nightly-total">$665</span>
@@ -1267,6 +1432,7 @@
     <div class="logo" onclick="showScreen('screen-home')">Luar <span>Properties</span></div>
     <div class="nav-links">
       <a href="#" onclick="showScreen('screen-home'); return false;">Properties</a>
+      <a href="#" onclick="showScreen('screen-blog'); return false;">Blog</a>
       <a href="#" onclick="showScreen('screen-contact'); return false;" style="color: var(--dark-blue); font-weight: 600;">Contact</a>
     </div>
   </nav>
@@ -1328,6 +1494,203 @@
     <h2>Message Sent!</h2>
     <p>Thanks for reaching out! We'll get back to you within 24 hours. In the meantime, feel free to browse our properties.</p>
     <button class="btn-home" onclick="showScreen('screen-home')">Browse Properties</button>
+  </div>
+
+  <footer class="footer">
+    <div class="logo">Luar <span>Properties</span></div>
+    <p style="margin-top: 8px;">Peoria, IL · © 2026 Luar Properties. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- ==================== SCREEN 6: BLOG LISTING ==================== -->
+<div class="screen" id="screen-blog">
+  <nav class="nav">
+    <div class="logo" onclick="showScreen('screen-home')">Luar <span>Properties</span></div>
+    <div class="nav-links">
+      <a href="#" onclick="showScreen('screen-home'); return false;">Properties</a>
+      <a href="#" onclick="showScreen('screen-blog'); return false;" style="color: var(--dark-blue); font-weight: 600;">Blog</a>
+      <a href="#" onclick="showScreen('screen-contact'); return false;">Contact</a>
+    </div>
+  </nav>
+
+  <div class="blog-hero">
+    <h1>Local Guides &<br>Housing Tips</h1>
+    <p>Everything you need to know about living and working in Peoria, IL — written by a local host who knows the area inside and out.</p>
+  </div>
+
+  <div class="blog-listing">
+    <!-- Blog Post 1 — Live -->
+    <div class="blog-preview-card" onclick="showScreen('screen-blog-travel-nurse')">
+      <img class="blog-preview-img" src="https://a0.muscache.com/im/pictures/hosting/Hosting-1595135392900618145/original/96cac663-a918-4342-b979-64e4bd9ce67f.jpeg" alt="Travel nurse housing in Peoria">
+      <div class="blog-preview-body">
+        <div class="blog-preview-tag">Travel Nurses · Tier 1</div>
+        <h3>The Travel Nurse's Guide to Housing in Peoria, IL</h3>
+        <p>Everything you need to know about OSF Saint Francis, Carle Health Methodist, the best neighborhoods, grocery stores, gyms, and what makes Peoria a great assignment city.</p>
+        <div class="blog-preview-meta">
+          <span>By Nate</span>
+          <span>·</span>
+          <span>8 min read</span>
+          <span>·</span>
+          <span>March 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coming Soon Posts -->
+    <div class="blog-coming-soon-card">
+      <h4>Coming Soon: Relocating to Peoria for Caterpillar?</h4>
+      <p>Your complete housing guide for CAT contractors, interns, and relocating employees.</p>
+    </div>
+    <div class="blog-coming-soon-card">
+      <h4>Coming Soon: Working at Rivian? Why Peoria Is Your Best Housing Option</h4>
+      <p>The commute, the cost savings, and why Peoria beats Bloomington-Normal for Rivian workers.</p>
+    </div>
+    <div class="blog-coming-soon-card">
+      <h4>Coming Soon: The Ultimate Guide to Relocating to Peoria, IL</h4>
+      <p>Neighborhoods, cost of living, schools, and everything else a newcomer needs to know.</p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="logo">Luar <span>Properties</span></div>
+    <p style="margin-top: 8px;">Peoria, IL · © 2026 Luar Properties. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- ==================== SCREEN 7: BLOG ARTICLE — TRAVEL NURSE ==================== -->
+<div class="screen" id="screen-blog-travel-nurse">
+  <nav class="nav">
+    <div class="logo" onclick="showScreen('screen-home')">Luar <span>Properties</span></div>
+    <div class="nav-links">
+      <a href="#" onclick="showScreen('screen-blog'); return false;">← All Posts</a>
+      <a href="#" onclick="showScreen('screen-contact'); return false;">Contact</a>
+    </div>
+  </nav>
+
+  <div class="blog-article-header">
+    <div class="blog-article-tag">Travel Nurses</div>
+    <h1>The Travel Nurse's Guide to Housing in Peoria, IL</h1>
+    <div class="blog-byline">By Nate · March 2026 · 8 min read</div>
+  </div>
+
+  <div class="blog-article-body">
+    <p>If you just accepted a travel assignment in Peoria, Illinois — congratulations. You're heading to a city with two major hospital systems, a surprisingly great food scene, and a cost of living that'll make your housing stipend stretch further than you'd expect.</p>
+
+    <p>I'm Nate, and I run Luar Properties — furnished rentals designed specifically for professionals like you who need a real home for 30 days to 12 months. Not a hotel room with a microwave. Not a stranger's spare bedroom. A full house with a kitchen, laundry, parking, and enough space to actually live your life between shifts.</p>
+
+    <p>I put this guide together because I've hosted dozens of travel nurses, and the same questions come up every time: <em>Which hospital am I closest to? Where do I get groceries? Is there a gym nearby? What's the neighborhood like?</em> So here's everything you need to know.</p>
+
+    <hr>
+
+    <h2>The Hospitals: Where You'll Be Working</h2>
+
+    <h3>OSF Saint Francis Medical Center</h3>
+
+    <p>OSF Saint Francis is the flagship hospital of the OSF HealthCare system and the fifth-largest medical center in Illinois. It's also the area's only Level I Trauma Center, which means it handles the most critical cases in the region and needs experienced travel nurses year-round.</p>
+
+    <p>Here's what you need to know before your first shift:</p>
+
+    <p><strong>Size and scope.</strong> OSF Saint Francis is a 600+ bed facility and home to several major specialty centers — the Children's Hospital of Illinois, the OSF HealthCare Cancer Institute (the largest comprehensive cancer center between Chicago and St. Louis), the Cardiovascular Institute, and the Illinois Neurological Institute. If you're in a specialty unit, there's a good chance your assignment is here.</p>
+
+    <p><strong>Teaching hospital.</strong> OSF is a primary teaching affiliate of the University of Illinois College of Medicine at Peoria. You'll work alongside medical residents and students, and the Jump Trading Simulation & Education Center on campus is one of the most advanced simulation centers in the country. The environment is collaborative — travel nurses are a regular part of the team, not an afterthought.</p>
+
+    <p><strong>Common travel nurse departments.</strong> Based on recent postings, OSF regularly brings in travel nurses for Med-Surg, ICU, Cardiac Cath Lab, Interventional Radiology, OR, Labor & Delivery, and Emergency. Thirteen-week contracts are standard, but many nurses extend to 26 weeks or longer.</p>
+
+    <p><strong>Parking and logistics.</strong> OSF has designated parking areas with shuttle service. Your unit manager or staffing coordinator will give you parking details during orientation. Badge access is typically set up on your first day at the security office in the main lobby.</p>
+
+    <p><strong>Location.</strong> OSF sits on the northeast side of Peoria, just off I-74 and Route 150. From our property on Western Avenue, it's about a 10-minute drive — easy even on shift-change traffic.</p>
+
+    <h3>Carle Health Methodist (Formerly UnityPoint Health Methodist)</h3>
+
+    <p>Methodist is Peoria's other major hospital system. It recently transitioned from UnityPoint Health to Carle Health, but the building, the staff, and the need for travel nurses haven't changed.</p>
+
+    <p><strong>Size and scope.</strong> Methodist is a smaller facility compared to OSF, but it's a well-respected community hospital with a strong nursing culture. It holds Magnet designation, which means it meets the highest national standards for nursing excellence. If work environment matters to you (and it should), that designation says a lot.</p>
+
+    <p><strong>Common departments.</strong> Methodist posts travel positions in Med-Surg, Telemetry, ICU, and Emergency. Contract lengths are similar to OSF — 13 weeks with extension options.</p>
+
+    <p><strong>Location.</strong> Methodist sits just south of downtown Peoria, about a 10-minute drive from our property. The commute is straightforward — down Western Avenue or via I-74, depending on your direction.</p>
+
+    <hr>
+
+    <h2>Your Neighborhood: The Western Avenue Corridor</h2>
+
+    <p>Most of Peoria's travel nurse housing is scattered across the city, and quality varies wildly. Our property at Luar Properties is located on Western Avenue near Bradley University — and there's a reason that area is one of the best spots for traveling professionals.</p>
+
+    <p><strong>Central to everything.</strong> Western Avenue runs north-south through the heart of Peoria. From our front door, you're 10 minutes to OSF, 10 minutes to Methodist, 5 minutes to I-74 (if you ever need to head toward Bloomington-Normal), and walking distance to Bradley University's campus — which means coffee shops, restaurants, and a college-town energy without the college-town chaos.</p>
+
+    <p><strong>Grocery stores nearby.</strong> You won't have to drive far for groceries. Hy-Vee on Knoxville Avenue (5 minutes) is the go-to for most of our tenants — full deli, pharmacy, good produce. Kroger on University Street is another 5-minute drive. If you want to stock up, there's a Costco on Allen Road, about 12 minutes north.</p>
+
+    <p><strong>Gyms.</strong> Planet Fitness on North Sheridan Road (about 7 minutes) is the budget-friendly option — $15/month, no contract, 24-hour access. Anytime Fitness has a location nearby as well. If you want something more serious, Titan Fitness and the Riverplex Recreation Center (downtown, on the riverfront) are both solid options.</p>
+
+    <p><strong>Pharmacies.</strong> Walgreens and CVS are both within a few minutes on War Memorial Drive and Knoxville Avenue. OSF also has an outpatient pharmacy on campus if you need anything filled between shifts.</p>
+
+    <p><strong>Scrubs and supplies.</strong> Peoria has a couple of uniform and scrub shops, but most travel nurses order online and ship to the house. We have a full-size mailbox and covered porch, so packages don't sit in the rain.</p>
+
+    <hr>
+
+    <h2>What You're Coming Home To</h2>
+
+    <p>This is where Luar Properties is different from a Furnished Finder listing or an extended-stay hotel. Our property near Bradley and the hospitals is a spacious, fully furnished 5-bedroom home built for people who are actually living here — not just passing through.</p>
+
+    <p>Here's what's included:</p>
+
+    <p><strong>The space.</strong> Five bedrooms, 1.5 bathrooms, room for up to 10 guests. Whether you're solo and want the extra room for a home office, or you're traveling with a partner or splitting the house with another nurse on assignment, there's space to spread out.</p>
+
+    <p><strong>A real kitchen.</strong> Fully equipped — pots, pans, dishes, utensils, coffee maker, toaster, everything you need to cook real meals. After a 12-hour shift, the last thing you want is another takeout order. Our kitchen has been refreshed with modern appliances and a stylish dining area so cooking actually feels good, not like a chore.</p>
+
+    <p><strong>In-unit laundry.</strong> Washer and dryer in the house. No laundromat runs, no shared machines with the floor above you. Throw your scrubs in before your post-shift shower and they're ready by morning.</p>
+
+    <p><strong>Free parking.</strong> On-premises parking, no permits, no garage fees. Just pull in and you're home.</p>
+
+    <p><strong>WiFi, TV, and air conditioning.</strong> High-speed internet, smart TV for your days off, and central air — because Peoria summers are humid and you deserve to sleep in a cool house.</p>
+
+    <p><strong>Outdoor space.</strong> BBQ grill and outdoor dining area. In the warmer months, this is where you'll decompress. In the colder months, the large living room and natural light throughout the house keep things from feeling like a cave.</p>
+
+    <p><strong>Security.</strong> Exterior security cameras and smoke alarms. You're in a safe, residential neighborhood near a university campus.</p>
+
+    <p><strong>The price.</strong> Starting from $95 per night. When you book direct with us, you save 10% compared to platform pricing — no Airbnb service fees, no middleman markups. For stays over 28 days, we offer additional long-stay discounts. Your housing stipend goes further, and you keep more of your paycheck.</p>
+
+    <hr>
+
+    <h2>How Peoria Compares to Other Assignment Locations</h2>
+
+    <p>If you've worked in Chicago, St. Louis, or Indianapolis, Peoria is going to feel different — in a good way.</p>
+
+    <p><strong>Cost of living is genuinely low.</strong> Peoria consistently ranks among the most affordable metro areas in the Midwest, and in 2026, it was named the #1 city in the country for first-time homebuyers. Your housing stipend covers a full house here, not a studio apartment with street parking.</p>
+
+    <p><strong>Traffic is nonexistent.</strong> Your commute is 10 minutes. Not "10 minutes if you leave at 5:45 AM and avoid the highway." Just 10 minutes, every time, any shift.</p>
+
+    <p><strong>The food scene is better than you expect.</strong> This isn't a fast-food desert. Peoria has Black Band Distillery (a James Beard Award winner), Obed & Isaac's (try the beer cheese soup), The Blue Duck Barbecue Tavern, Donnelly's Irish Pub (best wings in town), and Ardor Breads & Provisions for when you want something artisan on your day off. Peoria Heights — a small village tucked into the bluffs — has a walkable strip of bars and restaurants including Pour Bros Craft Taproom and Clink Wine Bar.</p>
+
+    <p><strong>Things to do on your days off.</strong> The Peoria Riverfront Museum, Wildlife Prairie Park, Forest Park (miles of trails), the Peoria Zoo, Grandview Drive (Teddy Roosevelt once called it the world's most beautiful drive), Peoria Chiefs minor league baseball in summer, and Rivermen hockey in winter. It's not a metropolis, but you won't be bored.</p>
+
+    <p><strong>Winters are real.</strong> I'll be honest — December through February is cold. Average lows in the teens, occasional snowstorms, and gray skies. But the house has central heat, the roads get plowed quickly, and Peoria people are warm even when the weather isn't. If you're coming from the South, pack layers and invest in a good pair of boots. You'll adjust faster than you think.</p>
+
+    <hr>
+
+    <h2>What Other Travel Nurses Say About Peoria</h2>
+
+    <p>The most common thing I hear from nurses finishing their contracts is: "I didn't expect to like it here this much." Peoria is a small city, but it has real restaurants, real community, and real hospitals doing serious work. The pace of life is slower than a major metro, which is either a pro or a con depending on what you need — but after a string of 12-hour shifts, most people appreciate the quiet.</p>
+
+    <p>The other thing I hear: "I wish I'd found this place instead of starting on Furnished Finder." The platforms are fine for browsing, but you're one listing among 150+, the photos all look the same, and there's no human on the other end explaining the neighborhood or answering questions at 10 PM. When you book directly with me, you get my cell number. If the heat goes out or you need a restaurant recommendation or you locked yourself out at 2 AM after a night shift, I'm a text away.</p>
+
+    <!-- CTA Box -->
+    <div class="blog-cta-box">
+      <h3>Ready to Book Your Peoria Stay?</h3>
+      <p>Our furnished 5-bedroom home near Bradley & the hospitals is purpose-built for travel nurses. From $95/night — no platform fees, no competing listings.</p>
+      <button class="blog-cta-btn" onclick="showScreen('screen-detail')">View Property & Check Availability →</button>
+    </div>
+
+    <p>Have questions? Reach out anytime — I'm happy to talk through your dates, your stipend, or anything else about Peoria. Welcome to town.</p>
+
+    <!-- Author Card -->
+    <div class="blog-author-card">
+      <div class="blog-author-avatar">N</div>
+      <div class="blog-author-info">
+        <div class="author-name">Nate · Luar Properties</div>
+        <div class="author-desc">Local host in Peoria, IL. Providing furnished homes for traveling professionals, corporate stays, and relocations since 2024.</div>
+      </div>
+    </div>
   </div>
 
   <footer class="footer">
@@ -1436,7 +1799,7 @@
   const NIGHTLY_RATE = 95;
   const CLEANING_FEE = 150;
   const TAX_RATE = 0.07;
-  const MIN_STAY = 7;
+  const MIN_STAY = 1;
   const DISCOUNT_RATE = 0.10;
 
   // Long-stay discount tiers (configurable by admin)
@@ -1661,15 +2024,13 @@
       checkoutEl.classList.remove('filled');
     }
 
+    // Always keep button enabled for demo
+    btn.disabled = false;
+    btn.textContent = 'Reserve';
+
     if (checkinDate && checkoutDate) {
       const nights = Math.round((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
-
-      if (nights < MIN_STAY) {
-        btn.textContent = `Minimum stay is ${MIN_STAY} nights`;
-        btn.disabled = true;
-        breakdown.style.display = 'none';
-        return;
-      }
+      if (nights < 1) { return; }
 
       const nightlyTotal = NIGHTLY_RATE * nights;
       const directDiscount = Math.round(nightlyTotal * DISCOUNT_RATE);
@@ -1739,8 +2100,6 @@
       btn.disabled = false;
     } else {
       breakdown.style.display = 'none';
-      btn.textContent = 'Check availability';
-      btn.disabled = true;
     }
   }
 
