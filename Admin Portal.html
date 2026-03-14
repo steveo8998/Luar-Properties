@@ -1825,6 +1825,32 @@
                   </div>
                 </div>
               </div>
+
+              <h3 style="margin-top:24px;">Long-Stay Discounts</h3>
+              <p class="form-desc" style="margin-bottom:16px;">Set additional discount percentages for extended stays. These stack on top of the direct booking discount.</p>
+              <div class="pricing-fees-grid">
+                <div class="fee-card">
+                  <div class="fee-label">30+ Nights</div>
+                  <div class="fee-input-wrap">
+                    <input type="text" class="fee-input" id="editDiscount30" placeholder="0">
+                    <span class="fee-prefix">%</span>
+                  </div>
+                </div>
+                <div class="fee-card">
+                  <div class="fee-label">90+ Nights</div>
+                  <div class="fee-input-wrap">
+                    <input type="text" class="fee-input" id="editDiscount90" placeholder="0">
+                    <span class="fee-prefix">%</span>
+                  </div>
+                </div>
+                <div class="fee-card">
+                  <div class="fee-label">180+ Nights</div>
+                  <div class="fee-input-wrap">
+                    <input type="text" class="fee-input" id="editDiscount180" placeholder="0">
+                    <span class="fee-prefix">%</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- Save Actions -->
@@ -2020,6 +2046,9 @@ let properties = [
     cleaningFee: 100,
     taxRate: 12,
     minStay: 7,
+    discount30: 5,
+    discount90: 10,
+    discount180: 15,
     hostawayId: '284917',
     icalUrl: ''
   },
@@ -2039,6 +2068,9 @@ let properties = [
     cleaningFee: 125,
     taxRate: 12,
     minStay: 7,
+    discount30: 5,
+    discount90: 10,
+    discount180: 15,
     hostawayId: '301482',
     icalUrl: ''
   }
@@ -2213,6 +2245,9 @@ function editProperty(id) {
   document.getElementById('editCleaningFee').value = p.cleaningFee;
   document.getElementById('editTaxRate').value = p.taxRate;
   document.getElementById('editMinStay').value = p.minStay;
+  document.getElementById('editDiscount30').value = p.discount30 || 0;
+  document.getElementById('editDiscount90').value = p.discount90 || 0;
+  document.getElementById('editDiscount180').value = p.discount180 || 0;
   document.getElementById('editHostawayId').value = p.hostawayId || '';
   document.getElementById('editIcalUrl').value = p.icalUrl || '';
 
@@ -2250,6 +2285,9 @@ function clearEditForm() {
   document.getElementById('editCleaningFee').value = '';
   document.getElementById('editTaxRate').value = '';
   document.getElementById('editMinStay').value = '';
+  document.getElementById('editDiscount30').value = '';
+  document.getElementById('editDiscount90').value = '';
+  document.getElementById('editDiscount180').value = '';
   document.getElementById('editHostawayId').value = '';
   document.getElementById('editIcalUrl').value = '';
   currentAmenities = [];
@@ -2296,6 +2334,9 @@ function saveProperty() {
     cleaningFee: parseInt(document.getElementById('editCleaningFee').value) || 0,
     taxRate: parseFloat(document.getElementById('editTaxRate').value) || 0,
     minStay: parseInt(document.getElementById('editMinStay').value) || 1,
+    discount30: parseFloat(document.getElementById('editDiscount30').value) || 0,
+    discount90: parseFloat(document.getElementById('editDiscount90').value) || 0,
+    discount180: parseFloat(document.getElementById('editDiscount180').value) || 0,
     hostawayId: document.getElementById('editHostawayId').value.trim(),
     icalUrl: document.getElementById('editIcalUrl').value.trim()
   };

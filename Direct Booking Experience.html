@@ -355,9 +355,102 @@
   .calendar-section h3 {
     font-size: 18px; font-weight: 600; margin-bottom: 16px;
   }
+  .cal-nav {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px;
+  }
+  .cal-nav select {
+    padding: 8px 12px; border: 1px solid var(--gray-300);
+    border-radius: var(--radius-sm); font-size: 14px;
+    font-family: inherit; color: var(--gray-800);
+    background: var(--white); cursor: pointer;
+  }
+  .cal-nav select:focus {
+    outline: none; border-color: var(--dark-blue);
+    box-shadow: 0 0 0 3px rgba(27,42,74,0.08);
+  }
+
+  /* Duration quick-select buttons */
+  .duration-section {
+    margin-top: 20px; padding: 20px 0;
+    border-top: 1px solid var(--gray-200);
+  }
+  .duration-section h4 {
+    font-size: 15px; font-weight: 600; color: var(--dark-blue);
+    margin-bottom: 4px;
+  }
+  .duration-section .duration-hint {
+    font-size: 13px; color: var(--gray-500); margin-bottom: 14px;
+  }
+  .duration-buttons {
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .duration-btn {
+    flex: 1; min-width: 100px;
+    padding: 14px 12px; border: 2px solid var(--gray-200);
+    border-radius: var(--radius-sm); background: var(--white);
+    cursor: pointer; text-align: center; transition: all 0.2s;
+  }
+  .duration-btn:hover {
+    border-color: var(--dark-blue); background: rgba(27,42,74,0.03);
+  }
+  .duration-btn.active {
+    border-color: var(--dark-blue); background: rgba(27,42,74,0.06);
+  }
+  .duration-btn .dur-label {
+    font-size: 15px; font-weight: 600; color: var(--gray-800);
+    display: block; margin-bottom: 4px;
+  }
+  .duration-btn .dur-discount {
+    font-size: 12px; font-weight: 600; color: #2E7D32;
+    background: #E8F5E9; padding: 2px 8px;
+    border-radius: 10px; display: inline-block;
+  }
+  .duration-btn .dur-no-discount {
+    font-size: 12px; color: var(--gray-400);
+    display: inline-block;
+  }
+  @media (max-width: 540px) {
+    .duration-buttons { flex-direction: column; }
+    .duration-btn { min-width: unset; }
+  }
+
+  /* Long-stay discount line */
+  .price-line.long-stay-discount {
+    color: #2E7D32; font-weight: 500;
+  }
+  .price-line.long-stay-discount.hidden { display: none; }
   .mini-calendar {
     display: grid; grid-template-columns: repeat(7, 1fr);
     gap: 2px; max-width: 350px;
+  }
+
+  /* Map section */
+  .map-section {
+    padding: 20px 0; border-top: 1px solid var(--gray-200);
+  }
+  .map-section h3 {
+    font-size: 18px; font-weight: 600; margin-bottom: 12px;
+  }
+  .map-section p {
+    font-size: 14px; color: var(--gray-500); margin-bottom: 16px;
+  }
+  .map-embed {
+    border-radius: var(--radius); overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .map-link-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px; background: var(--dark-blue); color: var(--white);
+    font-size: 14px; font-weight: 500;
+    border-radius: 0 0 var(--radius) var(--radius);
+    transition: background 0.2s;
+  }
+  .map-link-bar:hover {
+    background: #243761;
+  }
+  .map-link-bar span:last-child {
+    font-size: 13px; opacity: 0.7;
   }
   .cal-header {
     font-size: 12px; font-weight: 600; text-align: center;
@@ -878,7 +971,33 @@
       <div class="calendar-section">
         <h3>Select your dates</h3>
         <p style="font-size: 14px; color: var(--gray-500); margin-bottom: 16px;">Minimum stay: 7 nights</p>
+        <div class="cal-nav">
+          <select id="cal-month-select" onchange="renderCalendar()"></select>
+        </div>
         <div class="mini-calendar" id="calendar"></div>
+
+        <div class="duration-section">
+          <h4>Planning a longer stay?</h4>
+          <p class="duration-hint">Select a check-in date above, then choose a duration for extra savings.</p>
+          <div class="duration-buttons">
+            <div class="duration-btn" onclick="selectDuration(30)" id="dur-30">
+              <span class="dur-label">1 Month</span>
+              <span class="dur-discount">+5% off</span>
+            </div>
+            <div class="duration-btn" onclick="selectDuration(90)" id="dur-90">
+              <span class="dur-label">3 Months</span>
+              <span class="dur-discount">+10% off</span>
+            </div>
+            <div class="duration-btn" onclick="selectDuration(180)" id="dur-180">
+              <span class="dur-label">6 Months</span>
+              <span class="dur-discount">+15% off</span>
+            </div>
+            <div class="duration-btn" onclick="selectDuration(365)" id="dur-365">
+              <span class="dur-label">12 Months</span>
+              <span class="dur-discount">+15% off</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="rules-section">
@@ -887,6 +1006,18 @@
         <div class="rule-item">🕚 Checkout before 11:00 AM</div>
         <div class="rule-item">👥 10 guests maximum</div>
         <div class="rule-item">🔑 Self check-in with keypad</div>
+      </div>
+
+      <div class="map-section">
+        <h3>Where you'll be</h3>
+        <p>Peoria, Illinois — near Bradley University, OSF Saint Francis Medical Center, and I-74.</p>
+        <div class="map-embed">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3040.5!2d-89.617!3d40.693!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880a596e2be1b36f%3A0x0!2s1847+W+Moss+Ave%2C+Peoria%2C+IL+61606!5e0!3m2!1sen!2sus!4v1710000000000" width="100%" height="220" style="border:0; border-radius: 12px 12px 0 0; display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <a class="map-link-bar" href="https://www.google.com/maps/search/?api=1&query=1847+W+Moss+Ave+Peoria+IL+61606" target="_blank" rel="noopener noreferrer" style="text-decoration:none; cursor:pointer;">
+            <span>📍 Peoria, IL 61606</span>
+            <span>Open in Google Maps →</span>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -923,6 +1054,10 @@
           <div class="price-line discount">
             <span>Direct booking discount (10%)</span>
             <span id="discount-amount">-$67</span>
+          </div>
+          <div class="price-line long-stay-discount hidden" id="longstay-line">
+            <span id="longstay-label">Long-stay discount (5%)</span>
+            <span id="longstay-amount">-$30</span>
           </div>
           <div class="price-line">
             <span>Cleaning fee</span>
@@ -1025,6 +1160,10 @@
           <span>Direct booking discount (10%)</span>
           <span id="checkout-discount">-$67</span>
         </div>
+        <div class="price-line long-stay-discount hidden" id="checkout-longstay-line">
+          <span id="checkout-longstay-label">Long-stay discount (5%)</span>
+          <span id="checkout-longstay-amount">-$30</span>
+        </div>
         <div class="price-line">
           <span>Cleaning fee</span>
           <span>$150</span>
@@ -1092,6 +1231,10 @@
           <div class="price-line discount">
             <span>Direct booking discount (10%)</span>
             <span id="confirm-discount">-$67</span>
+          </div>
+          <div class="price-line long-stay-discount hidden" id="confirm-longstay-line">
+            <span id="confirm-longstay-label">Long-stay discount (5%)</span>
+            <span id="confirm-longstay-amount">-$30</span>
           </div>
           <div class="price-line">
             <span>Cleaning fee</span>
@@ -1296,8 +1439,23 @@
   const MIN_STAY = 7;
   const DISCOUNT_RATE = 0.10;
 
+  // Long-stay discount tiers (configurable by admin)
+  const LONGSTAY_TIERS = [
+    { minNights: 180, rate: 0.15, label: 'Long-stay discount (15%)' },
+    { minNights: 90,  rate: 0.10, label: 'Long-stay discount (10%)' },
+    { minNights: 30,  rate: 0.05, label: 'Long-stay discount (5%)' },
+  ];
+
+  function getLongStayDiscount(nights) {
+    for (const tier of LONGSTAY_TIERS) {
+      if (nights >= tier.minNights) return tier;
+    }
+    return null;
+  }
+
   let checkinDate = null;
   let checkoutDate = null;
+  let activeDuration = null;
 
   // Blocked dates (simulated existing bookings)
   const blockedRanges = [
@@ -1310,18 +1468,50 @@
     return blockedRanges.some(r => date >= r.start && date <= r.end);
   }
 
+  const monthNames = ['January','February','March','April','May','June',
+                      'July','August','September','October','November','December'];
+
+  // Build the month dropdown (current month through end of next year)
+  function initCalendarDropdown() {
+    const select = document.getElementById('cal-month-select');
+    const now = new Date();
+    const startMonth = now.getMonth();
+    const startYear = now.getFullYear();
+    const endYear = startYear + 1;
+
+    for (let y = startYear; y <= endYear; y++) {
+      const mStart = (y === startYear) ? startMonth : 0;
+      const mEnd = 11;
+      for (let m = mStart; m <= mEnd; m++) {
+        const opt = document.createElement('option');
+        opt.value = `${y}-${m}`;
+        opt.textContent = monthNames[m] + ' ' + y;
+        select.appendChild(opt);
+      }
+    }
+    // Default to current month
+    select.value = `${startYear}-${startMonth}`;
+  }
+
   function renderCalendar() {
     const cal = document.getElementById('calendar');
     cal.innerHTML = '';
 
+    const select = document.getElementById('cal-month-select');
+    const [selYear, selMonth] = select.value.split('-').map(Number);
+
+    // Show selected month + next month
     const months = [
-      { year: 2026, month: 2 }, // March
-      { year: 2026, month: 3 }, // April
+      { year: selYear, month: selMonth },
     ];
+    // Add next month
+    if (selMonth === 11) {
+      months.push({ year: selYear + 1, month: 0 });
+    } else {
+      months.push({ year: selYear, month: selMonth + 1 });
+    }
 
     const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-    const monthNames = ['January','February','March','April','May','June',
-                        'July','August','September','October','November','December'];
 
     months.forEach(({ year, month }) => {
       // Month label
@@ -1385,17 +1575,59 @@
     if (!checkinDate || (checkinDate && checkoutDate)) {
       checkinDate = date;
       checkoutDate = null;
+      activeDuration = null;
     } else {
       if (date <= checkinDate) {
         checkinDate = date;
         checkoutDate = null;
+        activeDuration = null;
       } else {
         checkoutDate = date;
+        activeDuration = null;
       }
     }
 
+    updateDurationButtons();
     renderCalendar();
     updateBookingCard();
+  }
+
+  function selectDuration(days) {
+    if (!checkinDate) {
+      // Flash the calendar to hint they need a check-in first
+      const calSection = document.querySelector('.calendar-section h3');
+      calSection.style.color = 'var(--terracotta)';
+      setTimeout(() => calSection.style.color = '', 1500);
+      scrollToCalendar();
+      return;
+    }
+    activeDuration = days;
+    checkoutDate = new Date(checkinDate);
+    checkoutDate.setDate(checkoutDate.getDate() + days);
+
+    // Jump calendar to show checkout month
+    const select = document.getElementById('cal-month-select');
+    const checkoutMonth = checkoutDate.getMonth();
+    const checkoutYear = checkoutDate.getFullYear();
+    // Set dropdown to one month before checkout so it's visible
+    let showMonth = checkoutMonth - 1;
+    let showYear = checkoutYear;
+    if (showMonth < 0) { showMonth = 11; showYear--; }
+    const targetVal = `${showYear}-${showMonth}`;
+    if ([...select.options].some(o => o.value === targetVal)) {
+      select.value = targetVal;
+    }
+
+    updateDurationButtons();
+    renderCalendar();
+    updateBookingCard();
+  }
+
+  function updateDurationButtons() {
+    [30, 90, 180, 365].forEach(d => {
+      const btn = document.getElementById('dur-' + d);
+      if (btn) btn.classList.toggle('active', activeDuration === d);
+    });
   }
 
   function formatDate(date) {
@@ -1440,36 +1672,67 @@
       }
 
       const nightlyTotal = NIGHTLY_RATE * nights;
-      const discountAmount = Math.round(nightlyTotal * DISCOUNT_RATE);
-      const discountedNightly = nightlyTotal - discountAmount;
-      const taxAmount = Math.round((discountedNightly + CLEANING_FEE) * TAX_RATE);
-      const grandTotal = discountedNightly + CLEANING_FEE + taxAmount;
+      const directDiscount = Math.round(nightlyTotal * DISCOUNT_RATE);
+      const afterDirect = nightlyTotal - directDiscount;
 
-      document.getElementById('nightly-calc').textContent = `$${NIGHTLY_RATE} × ${nights} nights`;
-      document.getElementById('nightly-total').textContent = `$${nightlyTotal}`;
-      document.getElementById('discount-amount').textContent = `-$${discountAmount}`;
-      document.getElementById('tax-amount').textContent = `$${taxAmount}`;
-      document.getElementById('grand-total').textContent = `$${grandTotal}`;
+      // Long-stay discount (applied after direct booking discount)
+      const longStay = getLongStayDiscount(nights);
+      const longStayAmount = longStay ? Math.round(afterDirect * longStay.rate) : 0;
+      const afterAllDiscounts = afterDirect - longStayAmount;
+
+      const taxAmount = Math.round((afterAllDiscounts + CLEANING_FEE) * TAX_RATE);
+      const grandTotal = afterAllDiscounts + CLEANING_FEE + taxAmount;
+
+      // Format helper for large numbers
+      const fmt = (n) => n.toLocaleString('en-US');
+
+      document.getElementById('nightly-calc').textContent = `$${NIGHTLY_RATE} × ${fmt(nights)} nights`;
+      document.getElementById('nightly-total').textContent = `$${fmt(nightlyTotal)}`;
+      document.getElementById('discount-amount').textContent = `-$${fmt(directDiscount)}`;
+
+      // Long-stay discount line (show/hide)
+      const lsLine = document.getElementById('longstay-line');
+      const lsLineCheckout = document.getElementById('checkout-longstay-line');
+      const lsLineConfirm = document.getElementById('confirm-longstay-line');
+      if (longStay) {
+        lsLine.classList.remove('hidden');
+        document.getElementById('longstay-label').textContent = longStay.label;
+        document.getElementById('longstay-amount').textContent = `-$${fmt(longStayAmount)}`;
+        lsLineCheckout.classList.remove('hidden');
+        document.getElementById('checkout-longstay-label').textContent = longStay.label;
+        document.getElementById('checkout-longstay-amount').textContent = `-$${fmt(longStayAmount)}`;
+        lsLineConfirm.classList.remove('hidden');
+        document.getElementById('confirm-longstay-label').textContent = longStay.label;
+        document.getElementById('confirm-longstay-amount').textContent = `-$${fmt(longStayAmount)}`;
+      } else {
+        lsLine.classList.add('hidden');
+        lsLineCheckout.classList.add('hidden');
+        lsLineConfirm.classList.add('hidden');
+      }
+
+      document.getElementById('tax-amount').textContent = `$${fmt(taxAmount)}`;
+      document.getElementById('grand-total').textContent = `$${fmt(grandTotal)}`;
 
       // Update checkout screen
+      const checkoutYear = checkoutDate.getFullYear();
       document.getElementById('checkout-dates').textContent =
-        formatShort(checkinDate) + ' – ' + formatShort(checkoutDate) + ', 2026';
-      document.getElementById('checkout-nightly').textContent = `$${NIGHTLY_RATE} × ${nights} nights`;
-      document.getElementById('checkout-nightly-total').textContent = `$${nightlyTotal}`;
-      document.getElementById('checkout-discount').textContent = `-$${discountAmount}`;
-      document.getElementById('checkout-tax').textContent = `$${taxAmount}`;
-      document.getElementById('checkout-total').textContent = `$${grandTotal}`;
-      document.getElementById('pay-amount').textContent = `$${grandTotal}`;
+        formatShort(checkinDate) + ' – ' + formatShort(checkoutDate) + ', ' + checkoutYear;
+      document.getElementById('checkout-nightly').textContent = `$${NIGHTLY_RATE} × ${fmt(nights)} nights`;
+      document.getElementById('checkout-nightly-total').textContent = `$${fmt(nightlyTotal)}`;
+      document.getElementById('checkout-discount').textContent = `-$${fmt(directDiscount)}`;
+      document.getElementById('checkout-tax').textContent = `$${fmt(taxAmount)}`;
+      document.getElementById('checkout-total').textContent = `$${fmt(grandTotal)}`;
+      document.getElementById('pay-amount').textContent = `$${fmt(grandTotal)}`;
 
       // Update confirmation screen
       document.getElementById('confirm-checkin').textContent = formatDate(checkinDate);
       document.getElementById('confirm-checkout').textContent = formatDate(checkoutDate);
-      document.getElementById('confirm-nights').textContent = nights;
-      document.getElementById('confirm-nightly').textContent = `$${NIGHTLY_RATE} × ${nights} nights`;
-      document.getElementById('confirm-nightly-total').textContent = `$${nightlyTotal}`;
-      document.getElementById('confirm-discount').textContent = `-$${discountAmount}`;
-      document.getElementById('confirm-tax').textContent = `$${taxAmount}`;
-      document.getElementById('confirm-total').textContent = `$${grandTotal}`;
+      document.getElementById('confirm-nights').textContent = fmt(nights);
+      document.getElementById('confirm-nightly').textContent = `$${NIGHTLY_RATE} × ${fmt(nights)} nights`;
+      document.getElementById('confirm-nightly-total').textContent = `$${fmt(nightlyTotal)}`;
+      document.getElementById('confirm-discount').textContent = `-$${fmt(directDiscount)}`;
+      document.getElementById('confirm-tax').textContent = `$${fmt(taxAmount)}`;
+      document.getElementById('confirm-total').textContent = `$${fmt(grandTotal)}`;
 
       breakdown.style.display = 'block';
       btn.textContent = 'Reserve';
@@ -1493,6 +1756,7 @@
   }
 
   // Initialize
+  initCalendarDropdown();
   renderCalendar();
 </script>
 </body>
