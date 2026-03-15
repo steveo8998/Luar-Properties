@@ -2026,9 +2026,6 @@
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // Determine effective hover end for preview
-    const effectiveHover = (checkinDate && !checkoutDate && hoverDate && hoverDate > checkinDate) ? hoverDate : null;
-
     monthsToRender.forEach(({ year, month }) => {
       const grid = document.createElement('div');
       grid.className = 'month-grid';
@@ -2055,6 +2052,7 @@
       for (let d = 1; d <= daysInMonth; d++) {
         const cell = document.createElement('div');
         cell.className = 'cal-day';
+        cell.dataset.date = `${year}-${month}-${d}`;
 
         const inner = document.createElement('div');
         inner.className = 'cal-day-inner';
@@ -2077,36 +2075,29 @@
           // Click handler
           cell.addEventListener('click', () => selectDate(new Date(year, month, d)));
 
-          // Hover handler for range preview
+          // Hover handler — lightweight class toggle, no re-render
           cell.addEventListener('mouseenter', () => {
             if (checkinDate && !checkoutDate) {
               hoverDate = new Date(year, month, d);
               hoverDate.setHours(0, 0, 0, 0);
-              renderCalendar();
+              applyHoverClasses();
             }
           });
         }
 
-        // === Highlight logic ===
+        // === Selection highlight logic (confirmed ranges only) ===
         const isCheckin = checkinDate && sameDay(date, checkinDate);
         const isCheckout = checkoutDate && sameDay(date, checkoutDate);
         const inConfirmedRange = checkinDate && checkoutDate && date > checkinDate && date < checkoutDate;
-        const inHoverRange = effectiveHover && date > checkinDate && date < effectiveHover;
-        const isHoverEnd = effectiveHover && sameDay(date, effectiveHover);
 
         if (isCheckin && checkoutDate) {
           cell.classList.add('selected', 'range-start');
         } else if (isCheckin) {
           cell.classList.add('selected');
-          if (effectiveHover) cell.classList.add('range-start');
         } else if (isCheckout) {
           cell.classList.add('selected', 'range-end');
         } else if (inConfirmedRange) {
           cell.classList.add('in-range');
-        } else if (inHoverRange && !isPast && !isBlockedDay) {
-          cell.classList.add('hover-range');
-        } else if (isHoverEnd && !isPast && !isBlockedDay) {
-          cell.classList.add('hover-range-end');
         }
 
         grid.appendChild(cell);
@@ -2119,15 +2110,56 @@
     updateDurationButtons();
   }
 
+  // Lightweight hover preview — toggles classes without rebuilding DOM
+  function applyHoverClasses() {
+    const allDays = document.querySelectorAll('#calendar-months .cal-day[data-date]');
+    const effectiveHover = (checkinDate && !checkoutDate && hoverDate && hoverDate > checkinDate) ? hoverDate : null;
+
+    allDays.forEach(cell => {
+      // Remove old hover classes
+      cell.classList.remove('hover-range', 'hover-range-start', 'hover-range-end', 'range-start');
+
+      if (!effectiveHover) return;
+
+      const parts = cell.dataset.date.split('-').map(Number);
+      const cellDate = new Date(parts[0], parts[1], parts[2]);
+      cellDate.setHours(0, 0, 0, 0);
+
+      const isCheckin = sameDay(cellDate, checkinDate);
+      const inHover = cellDate > checkinDate && cellDate < effectiveHover;
+      const isHoverEnd = sameDay(cellDate, effectiveHover);
+
+      if (isCheckin) {
+        cell.classList.add('range-start');
+      } else if (inHover && !cell.classList.contains('blocked')) {
+        cell.classList.add('hover-range');
+      } else if (isHoverEnd && !cell.classList.contains('blocked')) {
+        cell.classList.add('hover-range-end');
+      }
+    });
+  }
+
+  function clearHoverClasses() {
+    hoverDate = null;
+    document.querySelectorAll('#calendar-months .cal-day').forEach(cell => {
+      cell.classList.remove('hover-range', 'hover-range-start', 'hover-range-end');
+      // Also remove range-start from checkin if no confirmed checkout
+      if (!checkoutDate && cell.classList.contains('range-start') && !cell.classList.contains('selected')) {
+        // keep it if it's the selected checkin
+      }
+    });
+    // Simpler: just re-remove hover-only classes
+    document.querySelectorAll('#calendar-months .cal-day.range-start:not(.selected)').forEach(cell => {
+      if (!checkoutDate) cell.classList.remove('range-start');
+    });
+  }
+
   // Clear hover when mouse leaves the calendar area
   document.addEventListener('DOMContentLoaded', () => {
     const calContainer = document.getElementById('calendar-months');
     if (calContainer) {
       calContainer.addEventListener('mouseleave', () => {
-        if (hoverDate) {
-          hoverDate = null;
-          renderCalendar();
-        }
+        clearHoverClasses();
       });
     }
   });
