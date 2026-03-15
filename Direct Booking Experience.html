@@ -348,48 +348,162 @@
     color: #2E7D32; font-weight: 500;
   }
 
-  /* ========== MINI CALENDAR ========== */
+  /* ========== CALENDAR ========== */
   .calendar-section {
-    padding: 20px 0; border-top: 1px solid var(--gray-200);
+    padding: 24px 0; border-top: 1px solid var(--gray-200);
   }
   .calendar-section h3 {
-    font-size: 18px; font-weight: 600; margin-bottom: 16px;
+    font-size: 22px; font-weight: 600; margin-bottom: 4px;
   }
-  .cal-nav {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 16px;
-  }
-  .cal-nav select {
-    padding: 8px 12px; border: 1px solid var(--gray-300);
-    border-radius: var(--radius-sm); font-size: 14px;
-    font-family: inherit; color: var(--gray-800);
-    background: var(--white); cursor: pointer;
-  }
-  .cal-nav select:focus {
-    outline: none; border-color: var(--dark-blue);
-    box-shadow: 0 0 0 3px rgba(27,42,74,0.08);
+  .calendar-section .cal-subtitle {
+    font-size: 14px; color: var(--gray-500); margin-bottom: 20px;
   }
 
-  /* Duration quick-select buttons */
-  .duration-section {
-    margin-top: 20px; padding: 20px 0;
-    border-top: 1px solid var(--gray-200);
+  /* Arrow navigation header */
+  .cal-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px; padding: 0 4px;
   }
-  .duration-section h4 {
-    font-size: 15px; font-weight: 600; color: var(--dark-blue);
-    margin-bottom: 4px;
+  .cal-arrow {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid var(--gray-300); background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s; font-size: 16px;
+    color: var(--gray-600); flex-shrink: 0;
+  }
+  .cal-arrow:hover:not(:disabled) {
+    border-color: var(--dark-blue); color: var(--dark-blue);
+    background: rgba(27,42,74,0.04);
+  }
+  .cal-arrow:disabled {
+    opacity: 0.3; cursor: not-allowed;
+  }
+  .cal-nav-months {
+    display: flex; gap: 48px; justify-content: center; flex: 1;
+  }
+  .cal-nav-month-label {
+    font-size: 15px; font-weight: 600; color: var(--gray-800);
+    text-align: center; min-width: 140px;
+  }
+
+  /* Dual-month grid container */
+  .calendar-months {
+    display: flex; gap: 32px;
+    transition: opacity 0.15s ease;
+  }
+  .calendar-months.fading { opacity: 0; }
+  .month-grid {
+    flex: 1; min-width: 0;
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+  }
+
+  /* Day headers (Su Mo Tu ...) */
+  .cal-header {
+    font-size: 12px; font-weight: 600; text-align: center;
+    padding: 8px 0; color: var(--gray-400);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  /* Day cells */
+  .cal-day {
+    text-align: center; padding: 0; font-size: 14px;
+    cursor: pointer; transition: background 0.1s, color 0.1s;
+    position: relative; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cal-day-inner {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 2; transition: background 0.1s, color 0.1s;
+  }
+  .cal-day:hover:not(.blocked):not(.empty) .cal-day-inner {
+    background: var(--gray-100);
+  }
+
+  /* Blocked / past dates — greyed out, no strikethrough */
+  .cal-day.blocked {
+    color: var(--gray-300); cursor: default; pointer-events: none;
+  }
+  .cal-day.blocked .cal-day-inner { color: var(--gray-300); }
+
+  /* Empty cells */
+  .cal-day.empty { cursor: default; pointer-events: none; }
+
+  /* Today indicator */
+  .cal-day.today:not(.selected) .cal-day-inner {
+    border: 2px solid var(--dark-blue);
+  }
+
+  /* Selected endpoints (check-in / check-out) */
+  .cal-day.selected .cal-day-inner {
+    background: var(--dark-blue); color: var(--white); border-radius: 50%;
+  }
+  .cal-day.selected:hover .cal-day-inner {
+    background: var(--dark-blue); color: var(--white);
+  }
+
+  /* In-range band (between check-in and check-out) */
+  .cal-day.in-range {
+    background: var(--blush-light);
+  }
+  .cal-day.in-range .cal-day-inner {
+    color: var(--dark-blue);
+  }
+
+  /* Pill shape: round left side on range-start day */
+  .cal-day.range-start {
+    background: linear-gradient(to right, transparent 50%, var(--blush-light) 50%);
+    border-radius: 0;
+  }
+  .cal-day.range-start .cal-day-inner {
+    background: var(--dark-blue); color: var(--white);
+  }
+
+  /* Pill shape: round right side on range-end day */
+  .cal-day.range-end {
+    background: linear-gradient(to left, transparent 50%, var(--blush-light) 50%);
+    border-radius: 0;
+  }
+  .cal-day.range-end .cal-day-inner {
+    background: var(--dark-blue); color: var(--white);
+  }
+
+  /* Hover preview range (tentative) */
+  .cal-day.hover-range {
+    background: rgba(232, 180, 184, 0.35);
+  }
+  .cal-day.hover-range-start {
+    background: linear-gradient(to right, transparent 50%, rgba(232, 180, 184, 0.35) 50%);
+  }
+  .cal-day.hover-range-end .cal-day-inner {
+    background: var(--gray-200); color: var(--dark-blue);
+  }
+  .cal-day.hover-range-end {
+    background: linear-gradient(to left, transparent 50%, rgba(232, 180, 184, 0.35) 50%);
+  }
+
+  /* Duration quick-select — integrated tightly below calendar */
+  .duration-section {
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid var(--gray-100);
+  }
+  .duration-section .duration-label {
+    font-size: 14px; font-weight: 600; color: var(--gray-800);
+    margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
   }
   .duration-section .duration-hint {
-    font-size: 13px; color: var(--gray-500); margin-bottom: 14px;
+    font-size: 12px; color: var(--gray-400); font-weight: 400;
   }
   .duration-buttons {
-    display: flex; gap: 10px; flex-wrap: wrap;
+    display: flex; gap: 8px; flex-wrap: wrap;
   }
   .duration-btn {
-    flex: 1; min-width: 100px;
-    padding: 14px 12px; border: 2px solid var(--gray-200);
-    border-radius: var(--radius-sm); background: var(--white);
+    flex: 1; min-width: 0;
+    padding: 10px 8px; border: 1.5px solid var(--gray-200);
+    border-radius: 20px; background: var(--white);
     cursor: pointer; text-align: center; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
   }
   .duration-btn:hover {
     border-color: var(--dark-blue); background: rgba(27,42,74,0.03);
@@ -397,22 +511,33 @@
   .duration-btn.active {
     border-color: var(--dark-blue); background: rgba(27,42,74,0.06);
   }
+  .duration-btn.disabled {
+    opacity: 0.45; cursor: default; pointer-events: none;
+  }
   .duration-btn .dur-label {
-    font-size: 15px; font-weight: 600; color: var(--gray-800);
-    display: block; margin-bottom: 4px;
+    font-size: 13px; font-weight: 600; color: var(--gray-800);
+    white-space: nowrap;
   }
   .duration-btn .dur-discount {
-    font-size: 12px; font-weight: 600; color: #2E7D32;
-    background: #E8F5E9; padding: 2px 8px;
-    border-radius: 10px; display: inline-block;
+    font-size: 11px; font-weight: 600; color: #2E7D32;
+    background: #E8F5E9; padding: 2px 6px;
+    border-radius: 10px; white-space: nowrap;
   }
   .duration-btn .dur-no-discount {
-    font-size: 12px; color: var(--gray-400);
-    display: inline-block;
+    font-size: 11px; color: var(--gray-400);
   }
-  @media (max-width: 540px) {
-    .duration-buttons { flex-direction: column; }
-    .duration-btn { min-width: unset; }
+
+  /* Mobile: single month calendar */
+  @media (max-width: 700px) {
+    .calendar-months { gap: 0; }
+    .calendar-months .month-grid:nth-child(2) { display: none; }
+    .cal-nav-months { gap: 0; }
+    .cal-nav-months .cal-nav-month-label:nth-child(2) { display: none; }
+    .duration-buttons { flex-wrap: wrap; }
+    .duration-btn { min-width: calc(50% - 4px); flex: unset; }
+  }
+  @media (max-width: 400px) {
+    .duration-btn { min-width: 100%; }
   }
 
   /* Long-stay discount line */
@@ -420,10 +545,6 @@
     color: #2E7D32; font-weight: 500;
   }
   .price-line.long-stay-discount.hidden { display: none; }
-  .mini-calendar {
-    display: grid; grid-template-columns: repeat(7, 1fr);
-    gap: 2px; max-width: 350px;
-  }
 
   /* Map section */
   .map-section {
@@ -451,34 +572,6 @@
   }
   .map-link-bar span:last-child {
     font-size: 13px; opacity: 0.7;
-  }
-  .cal-header {
-    font-size: 12px; font-weight: 600; text-align: center;
-    padding: 8px 0; color: var(--gray-500);
-  }
-  .cal-day {
-    text-align: center; padding: 10px 0; font-size: 14px;
-    border-radius: 50%; cursor: pointer; transition: all 0.15s;
-    position: relative;
-  }
-  .cal-day:hover:not(.blocked):not(.empty) {
-    background: var(--gray-100);
-  }
-  .cal-day.blocked {
-    color: var(--gray-300); text-decoration: line-through;
-    cursor: not-allowed;
-  }
-  .cal-day.selected {
-    background: var(--dark-blue); color: var(--white);
-  }
-  .cal-day.in-range {
-    background: var(--blush-light); color: var(--dark-blue);
-    border-radius: 0;
-  }
-  .cal-day.empty { cursor: default; }
-  .cal-month-label {
-    grid-column: 1 / -1; font-size: 16px; font-weight: 600;
-    padding: 12px 0 8px; text-align: center;
   }
 
   /* ========== CHECKOUT SCREEN ========== */
@@ -1133,33 +1226,46 @@
       </div>
 
       <!-- Calendar -->
-      <div class="calendar-section">
+      <div class="calendar-section" id="calendar-section">
         <h3>Select your dates</h3>
-        <p style="font-size: 14px; color: var(--gray-500); margin-bottom: 16px;">Select your preferred dates, or skip ahead to see the booking flow.</p>
-        <div class="cal-nav">
-          <select id="cal-month-select" onchange="renderCalendar()"></select>
-        </div>
-        <div class="mini-calendar" id="calendar"></div>
+        <p class="cal-subtitle">Select your preferred dates, or skip ahead to see the booking flow.</p>
 
+        <!-- Arrow navigation -->
+        <div class="cal-nav">
+          <button class="cal-arrow" id="cal-prev" onclick="navigateMonth(-1)" aria-label="Previous month">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="cal-nav-months" id="cal-nav-labels"></div>
+          <button class="cal-arrow" id="cal-next" onclick="navigateMonth(1)" aria-label="Next month">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <!-- Dual month grids -->
+        <div class="calendar-months" id="calendar-months"></div>
+
+        <!-- Duration quick-select (integrated) -->
         <div class="duration-section">
-          <h4>Planning a longer stay?</h4>
-          <p class="duration-hint">Select a check-in date above, then choose a duration for extra savings.</p>
+          <div class="duration-label">
+            Long stay?
+            <span class="duration-hint" id="duration-hint">Select check-in first</span>
+          </div>
           <div class="duration-buttons">
-            <div class="duration-btn" onclick="selectDuration(30)" id="dur-30">
-              <span class="dur-label">1 Month</span>
-              <span class="dur-discount">+5% off</span>
+            <div class="duration-btn disabled" onclick="selectDuration(30)" id="dur-30">
+              <span class="dur-label">1 Mo</span>
+              <span class="dur-discount">+5%</span>
             </div>
-            <div class="duration-btn" onclick="selectDuration(90)" id="dur-90">
-              <span class="dur-label">3 Months</span>
-              <span class="dur-discount">+10% off</span>
+            <div class="duration-btn disabled" onclick="selectDuration(90)" id="dur-90">
+              <span class="dur-label">3 Mo</span>
+              <span class="dur-discount">+10%</span>
             </div>
-            <div class="duration-btn" onclick="selectDuration(180)" id="dur-180">
-              <span class="dur-label">6 Months</span>
-              <span class="dur-discount">+15% off</span>
+            <div class="duration-btn disabled" onclick="selectDuration(180)" id="dur-180">
+              <span class="dur-label">6 Mo</span>
+              <span class="dur-discount">+15%</span>
             </div>
-            <div class="duration-btn" onclick="selectDuration(365)" id="dur-365">
-              <span class="dur-label">12 Months</span>
-              <span class="dur-discount">+15% off</span>
+            <div class="duration-btn disabled" onclick="selectDuration(365)" id="dur-365">
+              <span class="dur-label">12 Mo</span>
+              <span class="dur-discount">+15%</span>
             </div>
           </div>
         </div>
@@ -1819,6 +1925,16 @@
   let checkinDate = null;
   let checkoutDate = null;
   let activeDuration = null;
+  let hoverDate = null; // for live hover preview
+
+  // Calendar navigation state
+  const now = new Date();
+  let calMonth = now.getMonth();
+  let calYear = now.getFullYear();
+  const calMinMonth = now.getMonth();
+  const calMinYear = now.getFullYear();
+  const calMaxYear = now.getFullYear() + 1;
+  const calMaxMonth = 11;
 
   // Blocked dates (simulated existing bookings)
   const blockedRanges = [
@@ -1833,108 +1949,192 @@
 
   const monthNames = ['January','February','March','April','May','June',
                       'July','August','September','October','November','December'];
+  const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
-  // Build the month dropdown (current month through end of next year)
-  function initCalendarDropdown() {
-    const select = document.getElementById('cal-month-select');
-    const now = new Date();
-    const startMonth = now.getMonth();
-    const startYear = now.getFullYear();
-    const endYear = startYear + 1;
+  function isMobile() {
+    return window.innerWidth <= 700;
+  }
 
-    for (let y = startYear; y <= endYear; y++) {
-      const mStart = (y === startYear) ? startMonth : 0;
-      const mEnd = 11;
-      for (let m = mStart; m <= mEnd; m++) {
-        const opt = document.createElement('option');
-        opt.value = `${y}-${m}`;
-        opt.textContent = monthNames[m] + ' ' + y;
-        select.appendChild(opt);
-      }
+  function canGoPrev() {
+    return !(calYear === calMinYear && calMonth === calMinMonth);
+  }
+  function canGoNext() {
+    if (isMobile()) {
+      return !(calYear === calMaxYear && calMonth === calMaxMonth);
     }
-    // Default to current month
-    select.value = `${startYear}-${startMonth}`;
+    // Desktop shows 2 months, so the second month is calMonth+1
+    let nextM = calMonth + 1, nextY = calYear;
+    if (nextM > 11) { nextM = 0; nextY++; }
+    return !(nextY === calMaxYear && nextM === calMaxMonth);
+  }
+
+  function navigateMonth(dir) {
+    const container = document.getElementById('calendar-months');
+    container.classList.add('fading');
+    setTimeout(() => {
+      calMonth += dir;
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      if (calMonth < 0) { calMonth = 11; calYear--; }
+      // Clamp
+      if (calYear < calMinYear || (calYear === calMinYear && calMonth < calMinMonth)) {
+        calYear = calMinYear; calMonth = calMinMonth;
+      }
+      if (calYear > calMaxYear || (calYear === calMaxYear && calMonth > calMaxMonth)) {
+        calYear = calMaxYear; calMonth = calMaxMonth;
+      }
+      renderCalendar();
+      container.classList.remove('fading');
+    }, 120);
+  }
+
+  function getSecondMonth() {
+    let m2 = calMonth + 1, y2 = calYear;
+    if (m2 > 11) { m2 = 0; y2++; }
+    return { month: m2, year: y2 };
+  }
+
+  function sameDay(a, b) {
+    return a && b && a.getFullYear() === b.getFullYear() &&
+      a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
   }
 
   function renderCalendar() {
-    const cal = document.getElementById('calendar');
-    cal.innerHTML = '';
+    const container = document.getElementById('calendar-months');
+    const labels = document.getElementById('cal-nav-labels');
+    container.innerHTML = '';
+    labels.innerHTML = '';
 
-    const select = document.getElementById('cal-month-select');
-    const [selYear, selMonth] = select.value.split('-').map(Number);
+    // Update arrow states
+    document.getElementById('cal-prev').disabled = !canGoPrev();
+    document.getElementById('cal-next').disabled = !canGoNext();
 
-    // Show selected month + next month
-    const months = [
-      { year: selYear, month: selMonth },
-    ];
-    // Add next month
-    if (selMonth === 11) {
-      months.push({ year: selYear + 1, month: 0 });
-    } else {
-      months.push({ year: selYear, month: selMonth + 1 });
+    // Determine months to show
+    const monthsToRender = [{ year: calYear, month: calMonth }];
+    if (!isMobile()) {
+      const m2 = getSecondMonth();
+      monthsToRender.push(m2);
     }
 
-    const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    // Render nav labels
+    monthsToRender.forEach(({ year, month }) => {
+      const lbl = document.createElement('div');
+      lbl.className = 'cal-nav-month-label';
+      lbl.textContent = monthNames[month] + ' ' + year;
+      labels.appendChild(lbl);
+    });
 
-    months.forEach(({ year, month }) => {
-      // Month label
-      const label = document.createElement('div');
-      label.className = 'cal-month-label';
-      label.textContent = monthNames[month] + ' ' + year;
-      cal.appendChild(label);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Determine effective hover end for preview
+    const effectiveHover = (checkinDate && !checkoutDate && hoverDate && hoverDate > checkinDate) ? hoverDate : null;
+
+    monthsToRender.forEach(({ year, month }) => {
+      const grid = document.createElement('div');
+      grid.className = 'month-grid';
 
       // Day headers
       dayNames.forEach(d => {
         const hdr = document.createElement('div');
         hdr.className = 'cal-header';
         hdr.textContent = d;
-        cal.appendChild(hdr);
+        grid.appendChild(hdr);
       });
 
       const firstDay = new Date(year, month, 1).getDay();
       const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const today = new Date();
-      today.setHours(0,0,0,0);
 
-      // Empty cells
+      // Empty leading cells
       for (let i = 0; i < firstDay; i++) {
         const empty = document.createElement('div');
         empty.className = 'cal-day empty';
-        cal.appendChild(empty);
+        grid.appendChild(empty);
       }
 
       // Day cells
       for (let d = 1; d <= daysInMonth; d++) {
         const cell = document.createElement('div');
         cell.className = 'cal-day';
-        cell.textContent = d;
+
+        const inner = document.createElement('div');
+        inner.className = 'cal-day-inner';
+        inner.textContent = d;
+        cell.appendChild(inner);
 
         const date = new Date(year, month, d);
+        date.setHours(0, 0, 0, 0);
         const isPast = date < today;
+        const isBlockedDay = isBlocked(date);
 
-        if (isPast || isBlocked(date)) {
+        // Today marker
+        if (sameDay(date, today)) {
+          cell.classList.add('today');
+        }
+
+        if (isPast || isBlockedDay) {
           cell.classList.add('blocked');
         } else {
-          cell.addEventListener('click', () => selectDate(date));
+          // Click handler
+          cell.addEventListener('click', () => selectDate(new Date(year, month, d)));
+
+          // Hover handler for range preview
+          cell.addEventListener('mouseenter', () => {
+            if (checkinDate && !checkoutDate) {
+              hoverDate = new Date(year, month, d);
+              hoverDate.setHours(0, 0, 0, 0);
+              renderCalendar();
+            }
+          });
         }
 
-        // Highlight selection
-        if (checkinDate && date.getTime() === checkinDate.getTime()) {
+        // === Highlight logic ===
+        const isCheckin = checkinDate && sameDay(date, checkinDate);
+        const isCheckout = checkoutDate && sameDay(date, checkoutDate);
+        const inConfirmedRange = checkinDate && checkoutDate && date > checkinDate && date < checkoutDate;
+        const inHoverRange = effectiveHover && date > checkinDate && date < effectiveHover;
+        const isHoverEnd = effectiveHover && sameDay(date, effectiveHover);
+
+        if (isCheckin && checkoutDate) {
+          cell.classList.add('selected', 'range-start');
+        } else if (isCheckin) {
           cell.classList.add('selected');
-        }
-        if (checkoutDate && date.getTime() === checkoutDate.getTime()) {
-          cell.classList.add('selected');
-        }
-        if (checkinDate && checkoutDate && date > checkinDate && date < checkoutDate) {
+          if (effectiveHover) cell.classList.add('range-start');
+        } else if (isCheckout) {
+          cell.classList.add('selected', 'range-end');
+        } else if (inConfirmedRange) {
           cell.classList.add('in-range');
+        } else if (inHoverRange && !isPast && !isBlockedDay) {
+          cell.classList.add('hover-range');
+        } else if (isHoverEnd && !isPast && !isBlockedDay) {
+          cell.classList.add('hover-range-end');
         }
 
-        cal.appendChild(cell);
+        grid.appendChild(cell);
       }
+
+      container.appendChild(grid);
     });
+
+    // Update duration buttons state
+    updateDurationButtons();
   }
 
+  // Clear hover when mouse leaves the calendar area
+  document.addEventListener('DOMContentLoaded', () => {
+    const calContainer = document.getElementById('calendar-months');
+    if (calContainer) {
+      calContainer.addEventListener('mouseleave', () => {
+        if (hoverDate) {
+          hoverDate = null;
+          renderCalendar();
+        }
+      });
+    }
+  });
+
   function selectDate(date) {
+    date.setHours(0, 0, 0, 0);
+    hoverDate = null;
     if (!checkinDate || (checkinDate && checkoutDate)) {
       checkinDate = date;
       checkoutDate = null;
@@ -1957,7 +2157,7 @@
 
   function selectDuration(days) {
     if (!checkinDate) {
-      // Flash the calendar to hint they need a check-in first
+      // Flash the calendar heading to hint they need a check-in first
       const calSection = document.querySelector('.calendar-section h3');
       calSection.style.color = 'var(--terracotta)';
       setTimeout(() => calSection.style.color = '', 1500);
@@ -1968,17 +2168,19 @@
     checkoutDate = new Date(checkinDate);
     checkoutDate.setDate(checkoutDate.getDate() + days);
 
-    // Jump calendar to show checkout month
-    const select = document.getElementById('cal-month-select');
-    const checkoutMonth = checkoutDate.getMonth();
-    const checkoutYear = checkoutDate.getFullYear();
-    // Set dropdown to one month before checkout so it's visible
-    let showMonth = checkoutMonth - 1;
-    let showYear = checkoutYear;
-    if (showMonth < 0) { showMonth = 11; showYear--; }
-    const targetVal = `${showYear}-${showMonth}`;
-    if ([...select.options].some(o => o.value === targetVal)) {
-      select.value = targetVal;
+    // Navigate calendar to show checkout month
+    const coMonth = checkoutDate.getMonth();
+    const coYear = checkoutDate.getFullYear();
+    // Show the month before checkout so both months are visible
+    if (isMobile()) {
+      calMonth = coMonth;
+      calYear = coYear;
+    } else {
+      let showMonth = coMonth - 1;
+      let showYear = coYear;
+      if (showMonth < 0) { showMonth = 11; showYear--; }
+      calMonth = showMonth;
+      calYear = showYear;
     }
 
     updateDurationButtons();
@@ -1987,9 +2189,17 @@
   }
 
   function updateDurationButtons() {
+    const hasCheckin = !!checkinDate;
+    const hint = document.getElementById('duration-hint');
+    if (hint) {
+      hint.textContent = hasCheckin ? 'Auto-fills checkout' : 'Select check-in first';
+    }
     [30, 90, 180, 365].forEach(d => {
       const btn = document.getElementById('dur-' + d);
-      if (btn) btn.classList.toggle('active', activeDuration === d);
+      if (btn) {
+        btn.classList.toggle('active', activeDuration === d);
+        btn.classList.toggle('disabled', !hasCheckin);
+      }
     });
   }
 
@@ -2104,7 +2314,7 @@
   }
 
   function scrollToCalendar() {
-    document.getElementById('calendar').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById('calendar-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   // ===== CONTACT FORM =====
@@ -2114,9 +2324,15 @@
     document.getElementById('contact-sent-section').style.display = 'block';
   }
 
-  // Initialize
-  initCalendarDropdown();
+  // Initialize calendar
   renderCalendar();
+
+  // Re-render on resize (switch between single/dual month)
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(renderCalendar, 150);
+  });
 </script>
 </body>
 </html>
